@@ -1,0 +1,69 @@
+<div class="mb-3">
+    <p-button 
+        type="button" 
+        icon="pi pi-chevron-left" 
+        (onClick)="prev()" 
+        [disabled]="isFirstPage()" 
+        styleClass="p-button-text" />
+    <p-button 
+        type="button" 
+        icon="pi pi-refresh" 
+        (onClick)="reset()" 
+        styleClass="p-button-text" />
+    <p-button 
+        type="button" 
+        icon="pi pi-chevron-right" 
+        (onClick)="next()" 
+        [disabled]="isLastPage()" 
+        styleClass="p-button-text" />
+</div>
+<p-table
+    [value]="cryptocurrencies"
+    [paginator]="true"
+    [rows]="5"
+    [first]="first"
+    [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    (onPage)="pageChange($event)"
+    [rowsPerPageOptions]="[10, 25, 50]"
+>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:8%">Id</th>
+            <th style="width:8%">COIN</th>
+            <th style="width:8%">NAME</th>
+            <th style="width:8%">SUPPLY</th>
+            <th style="width:8%">MAX SUPPLY</th>
+            <th style="width:8%">MARKET CAP</th>
+            <th style="width:8%">VOLUME USD 24HR</th>
+            <th style="width:8%">PRICE USD</th>
+            <th style="width:8%">CHANGE PERCENT 24HR</th>
+            <th style="width:8%">VWAP 24HR</th>
+            <th style="width:8%">Explorer</th>
+            <th style="width:8%">CURRENCY EXCHANGE</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-cryptocurrencies>
+        <tr>
+            <td>{{ cryptocurrencies.id }}</td>
+            <td>{{ cryptocurrencies.coin }}</td>
+            <td>{{ cryptocurrencies.name }}</td>
+            <td>{{ cryptocurrencies.supply }}</td>
+            <td>{{ cryptocurrencies.maxSupply }}</td>
+            <td>{{ cryptocurrencies.marketCap }}</td>
+            <td>{{ cryptocurrencies.volumeUsd24Hr }}</td>
+            <td>{{ cryptocurrencies.priceUsd }}</td>
+            <td>{{ cryptocurrencies.changePercent24Hr }}</td>
+            <td>{{ cryptocurrencies.vwap24Hr }}</td>
+            <td>{{ cryptocurrencies.explorer }}</td>
+            <td>{{ cryptocurrencies.currencyExchange }}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+        <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" />
+    </ng-template>
+    <ng-template pTemplate="paginatorright">
+        <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text" />
+    </ng-template>
+</p-table>

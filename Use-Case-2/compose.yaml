@@ -1,0 +1,50 @@
+name: "use-case-2"
+services:
+
+  db:
+    image: mysql:8.4.0
+    environment:
+      MYSQL_DATABASE: stb_database
+      MYSQL_USER: stefan
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3308:3308"
+    volumes:
+      - db-data:/var/lib/mysql
+    restart: unless-stopped
+
+  backend:
+      build:
+        context: ./backend
+        dockerfile: Dockerfile
+      ports:
+        - '8081:8081'
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/stb_database
+        SPRING_DATASOURCE_USERNAME: stefan
+        SPRING_DATASOURCE_PASSWORD: password
+        SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      depends_on:
+        - db
+      restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend/backend-app
+      dockerfile: Dockerfile
+    ports:
+      - "4201:4201"
+    restart: unless-stopped
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /usr/src/app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./frontend/package.json
+       
+volumes:
+  db-data:
