@@ -4,7 +4,7 @@ services:
   db:
     image: mysql:8.4.0
     environment:
-      MYSQL_DATABASE: stb_database
+      MYSQL_DATABASE: crypto_db
       MYSQL_USER: stefan
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: rootpassword
@@ -21,7 +21,7 @@ services:
       ports:
         - '8081:8081'
       environment:
-        SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/stb_database
+        SPRING_DATASOURCE_URL: jdbc:mysql://db:3308/crypto_db
         SPRING_DATASOURCE_USERNAME: stefan
         SPRING_DATASOURCE_PASSWORD: password
         SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -31,7 +31,7 @@ services:
 
   frontend:
     build:
-      context: ./frontend/backend-app
+      context: ./frontend/crypto-dashboard-frontend
       dockerfile: Dockerfile
     ports:
       - "4201:4201"
