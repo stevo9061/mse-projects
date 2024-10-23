@@ -1,5 +1,6 @@
 package app.web.cryptodashboard.service;
 
+import app.web.cryptodashboard.model.CryptoApiResponse;
 import app.web.cryptodashboard.model.CryptoCurrency;
 import app.web.cryptodashboard.model.CryptoCurrencyDTO;
 import app.web.cryptodashboard.repository.CryptoCurrencyRepository;
@@ -23,37 +24,46 @@ public class CryptoCurrencyService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String API_Url = "https://api.coincap.io/v2/assets/";
-
 
     public CryptoCurrencyService(CryptoCurrencyRepository cryptoCurrencyRepository) {
         this.cryptoCurrencyRepository = cryptoCurrencyRepository;
     }
 
+    private static final String API_Url = "https://api.coincap.io/v2/assets/";
+
+
     @Transactional
     public void fetchAndSaveCryptoData() {
 
         // Get API-Data
-        ResponseEntity<CryptoCurrencyDTO[]> response = restTemplate.getForEntity(API_Url, CryptoCurrencyDTO[].class);
-        CryptoCurrencyDTO[] cryptoDataArray = response.getBody();
+        ResponseEntity<CryptoApiResponse> response = restTemplate.getForEntity(API_Url, CryptoApiResponse.class);
+        CryptoApiResponse apiResponse = response.getBody();
 
 
-        if (cryptoDataArray != null) {
-            for (CryptoCurrencyDTO dto : cryptoDataArray) {
-                CryptoCurrency crypto = new CryptoCurrency();
-                crypto.setSymbol(dto.getSymbol());
-                crypto.setName(dto.getName());
-                crypto.setSupply(new BigDecimal(dto.getSupply()));
-                crypto.setMaxSupply(new BigDecimal(dto.getMaxSupply()));
-                crypto.setMarketcapUsd(new BigDecimal(dto.getMarketcapUsd()));
-                crypto.setVolumeUsd24hr(new BigDecimal(dto.getVolumeUsd24hr()));
-                crypto.setPriceUsd(new BigDecimal(dto.getPriceUsd()));
-                crypto.setChangePercent24hr(new BigDecimal(dto.getChangePercent24hr()));
-                crypto.setVwap24hr(new BigDecimal(dto.getVwap24hr()));
-                crypto.setExplorer(dto.getExplorer());
+        if (apiResponse != null && apiResponse.getData() != null) {
+            for (CryptoCurrencyDTO dto : apiResponse.getData()) {
 
-                // save and reload
-                cryptoCurrencyRepository.save(crypto);
+                // Check whether the entry already exists
+                CryptoCurrency existingCrypto = cryptoCurrencyRepository.findBySymbol(dto.getSymbol());
+
+                if (existingCrypto != null) {
+                    existingCrypto.setSymbol(dto.getSymbol());
+                    existingCrypto.setName(dto.getName());
+                    existingCrypto.setPriceUsd(new BigDecimal(dto.getPriceUsd()));
+                    existingCrypto.setMarketcapUsd(new BigDecimal(dto.getMarketCapUsd()));
+                    existingCrypto.setVolumeUsd24hr(new BigDecimal(dto.getVolumeUsd24Hr()));
+                    existingCrypto.setVwap24hr(new BigDecimal(dto.getVwap24Hr()));
+                    existingCrypto.setChangePercent24hr(new BigDecimal(dto.getChangePercent24Hr()));
+                    existingCrypto.setSupply(new BigDecimal(dto.getSupply()));
+                    existingCrypto.setMaxSupply(new BigDecimal(dto.getMaxSupply()));
+                    existingCrypto.setExplorer(dto.getExplorer());
+                    cryptoCurrencyRepository.save(existingCrypto);
+                } else {
+                    // Add new entry
+                    CryptoCurrency newCrypto = mapDtoToEntity(dto);
+                    cryptoCurrencyRepository.save(newCrypto);
+                }
+
             }
         }
 
@@ -68,30 +78,30 @@ public class CryptoCurrencyService {
     }
 
 
-    // Mapping: DTO zu Entity
+    // Mapping: DTO to Entity
     private CryptoCurrency mapDtoToEntity(CryptoCurrencyDTO dto) {
 
         CryptoCurrency crypto = new CryptoCurrency();
         crypto.setSymbol(dto.getSymbol());
         crypto.setName(dto.getName());
-        crypto.setSupply(new BigDecimal(dto.getSupply()));
-        crypto.setMaxSupply(new BigDecimal(dto.getMaxSupply()));
-        crypto.setMarketcapUsd(new BigDecimal(dto.getMarketcapUsd()));
-        crypto.setVolumeUsd24hr(new BigDecimal(dto.getVolumeUsd24hr()));
-        crypto.setPriceUsd(new BigDecimal(dto.getPriceUsd()));
-        crypto.setChangePercent24hr(new BigDecimal(dto.getChangePercent24hr()));
-        crypto.setVwap24hr(new BigDecimal(dto.getVwap24hr()));
+        crypto.setSupply(dto.getSupply() != null ? new BigDecimal(dto.getSupply()) : BigDecimal.ZERO);
+        crypto.setMaxSupply(dto.getMaxSupply() != null ? new BigDecimal(dto.getMaxSupply()) : BigDecimal.ZERO);
+        crypto.setMarketcapUsd(dto.getMarketCapUsd() != null ? new BigDecimal(dto.getMarketCapUsd()) : BigDecimal.ZERO);
+        crypto.setVolumeUsd24hr(dto.getVolumeUsd24Hr() != null ? new BigDecimal(dto.getVolumeUsd24Hr()) : BigDecimal.ZERO);
+        crypto.setPriceUsd(dto.getPriceUsd() != null ? new BigDecimal(dto.getPriceUsd()) : BigDecimal.ZERO);
+        crypto.setChangePercent24hr(dto.getChangePercent24Hr() != null ? new BigDecimal(dto.getChangePercent24Hr()) : BigDecimal.ZERO);
+        crypto.setVwap24hr(dto.getVwap24Hr() != null ? new BigDecimal(dto.getVwap24Hr()) : BigDecimal.ZERO);
         crypto.setExplorer(dto.getExplorer());
 
         return crypto;
     }
 
 
-    // Mapping: Entity zu DTO
+    // Mapping: Entity to DTO
     private CryptoCurrencyDTO mapEntityToDto(CryptoCurrency crypto) {
 
         return new CryptoCurrencyDTO(
-                crypto.getId(),
+                crypto.getId().toString(),
                 crypto.getSymbol(),
                 crypto.getName(),
                 crypto.getSupply().toString(),

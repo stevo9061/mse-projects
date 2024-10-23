@@ -11,7 +11,7 @@ import lombok.Setter;
 public class CryptoCurrencyDTO {
 
 
-    private Long id;
+    private String id;
 
     private String symbol;
 
@@ -21,15 +21,15 @@ public class CryptoCurrencyDTO {
 
     private String maxSupply;
 
-    private String marketcapUsd;
+    private String marketCapUsd;
 
-    private String volumeUsd24hr;
+    private String volumeUsd24Hr;
 
     private String priceUsd;
 
-    private String changePercent24hr;
+    private String changePercent24Hr;
 
-    private String vwap24hr;
+    private String vwap24Hr;
 
     private String explorer;
 
