@@ -47,17 +47,16 @@
     <ng-template pTemplate="body" let-cryptocurrencies>
         <tr>
             <td>{{ cryptocurrencies.id }}</td>
-            <td>{{ cryptocurrencies.coin }}</td>
+            <td>{{ cryptocurrencies.symbol }}</td>
             <td>{{ cryptocurrencies.name }}</td>
             <td>{{ cryptocurrencies.supply }}</td>
             <td>{{ cryptocurrencies.maxSupply }}</td>
-            <td>{{ cryptocurrencies.marketCap }}</td>
+            <td>{{ cryptocurrencies.marketCapUsd }}</td>
             <td>{{ cryptocurrencies.volumeUsd24Hr }}</td>
             <td>{{ cryptocurrencies.priceUsd }}</td>
             <td>{{ cryptocurrencies.changePercent24Hr }}</td>
             <td>{{ cryptocurrencies.vwap24Hr }}</td>
             <td>{{ cryptocurrencies.explorer }}</td>
-            <td>{{ cryptocurrencies.currencyExchange }}</td>
         </tr>
     </ng-template>
     <ng-template pTemplate="paginatorleft">
