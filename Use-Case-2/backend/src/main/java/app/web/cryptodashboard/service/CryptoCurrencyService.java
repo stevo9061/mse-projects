@@ -4,6 +4,7 @@ import app.web.cryptodashboard.model.CryptoApiResponse;
 import app.web.cryptodashboard.model.CryptoCurrency;
 import app.web.cryptodashboard.model.CryptoCurrencyDTO;
 import app.web.cryptodashboard.repository.CryptoCurrencyRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,6 +78,15 @@ public class CryptoCurrencyService {
         List<CryptoCurrency> cryptoList = cryptoCurrencyRepository.findAll();
 
         return cryptoList.stream().map(this::mapEntityToDto).collect(Collectors.toList());
+    }
+
+    public CryptoCurrencyDTO getCryptoCurrencyByID(Long id) {
+
+        Optional<CryptoCurrency> optionalCryptoCurrencyByID = cryptoCurrencyRepository.findById(id);
+
+        CryptoCurrency cryptoCurrencyByID = optionalCryptoCurrencyByID.orElseThrow(() -> new IllegalArgumentException( ("Cryptocurrency not found for ID: + id));")));
+
+        return mapEntityToDto(cryptoCurrencyByID);
     }
 
 

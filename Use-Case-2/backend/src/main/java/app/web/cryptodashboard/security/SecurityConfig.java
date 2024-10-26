@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // deactivate CSRF for easy development
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
-                                .requestMatchers("encodedPassword","/api/crypto/fetch-and-save", "/api/crypto/all").permitAll()
+                                .requestMatchers("encodedPassword","/api/crypto/fetch-and-save", "/api/crypto/all", "/api/crypto/{id}").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
