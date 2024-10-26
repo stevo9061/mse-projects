@@ -19,11 +19,13 @@ public class CryptoCurrencyController {
     private CryptoCurrencyService cryptoCurrencyService;
 
     @GetMapping("/fetch-and-save")
-    public ResponseEntity<String> fetchAndSaveCryptoData() {
+    public ResponseEntity<List<CryptoCurrencyDTO>> fetchAndSaveCryptoData() {
 
         cryptoCurrencyService.fetchAndSaveCryptoData();
 
-        return ResponseEntity.ok("Fetched and saved crypto data successfully.");
+        List<CryptoCurrencyDTO> cryptoList = cryptoCurrencyService.getAllCryptoCurrencies();
+
+        return ResponseEntity.ok(cryptoList);
     }
 
     @GetMapping("/all")
