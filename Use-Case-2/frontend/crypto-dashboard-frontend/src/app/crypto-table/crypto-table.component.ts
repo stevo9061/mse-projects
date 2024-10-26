@@ -29,18 +29,22 @@ export class CryptoTableComponent {
     this.http.get<Cryptocurrency[]>('http://localhost:8080/api/crypto/fetch-and-save')
       .subscribe({
         next: (data: Cryptocurrency[]) => {
-          this.cryptocurrencies = data; // fetch data from api into the table
+//          console.log(data); // debugging: looking at the structure and types of data
+          this.cryptocurrencies = data.map(crypto => ({
+            ...crypto,
+            supply: Number(crypto.supply) || 0,
+            maxSupply: Number(crypto.maxSupply) || 0,
+            marketCapUsd: Number(crypto.marketCapUsd) || 0,
+            volumeUsd24Hr: Number(crypto.volumeUsd24Hr) || 0,
+            priceUsd: Number(crypto.priceUsd) || 0,
+            changePercent24Hr: Number(crypto.changePercent24Hr) || 0,
+            vwap24hr: Number(crypto.vwap24hr) || 0,
+          }));
         },
         error: (error: any) => {
           console.error('Error fetching cryptocurrencies', error);
         }
       });
-/* 
-    this.cryptocurrencies = [
-      { id: 1, coin: 'BTC', name: 'Bitcoin', supply: 192345, maxSupply: 21000000, marketCap: 132034543, volumeUsd24Hr: 13452345, price: 66817, changePercent24Hr: 1.8, vwap24Hr: 66080, explorer: 'https://lalelu.at' },
-      { id: 2, coin: 'ETH', name: 'Ethereum', supply: 192345, maxSupply: 21000000, marketCap: 132034543, volumeUsd24Hr: 13452345, price: 66817, changePercent24Hr: 1.8, vwap24Hr: 66080, explorer: 'https://lalelu.at' },
-    ]; */
-
   }
 
   next() {

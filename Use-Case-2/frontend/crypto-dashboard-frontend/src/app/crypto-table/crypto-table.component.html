@@ -20,7 +20,7 @@
 <p-table
     [value]="cryptocurrencies"
     [paginator]="true"
-    [rows]="5"
+    [rows]="20"
     [first]="first"
     [showCurrentPageReport]="true"
     [tableStyle]="{ 'min-width': '50rem' }"
@@ -41,7 +41,6 @@
             <th style="width:8%">CHANGE PERCENT 24HR</th>
             <th style="width:8%">VWAP 24HR</th>
             <th style="width:8%">Explorer</th>
-            <th style="width:8%">CURRENCY EXCHANGE</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-cryptocurrencies>
@@ -49,13 +48,13 @@
             <td>{{ cryptocurrencies.id }}</td>
             <td>{{ cryptocurrencies.symbol }}</td>
             <td>{{ cryptocurrencies.name }}</td>
-            <td>{{ cryptocurrencies.supply }}</td>
-            <td>{{ cryptocurrencies.maxSupply }}</td>
-            <td>{{ cryptocurrencies.marketCapUsd }}</td>
-            <td>{{ cryptocurrencies.volumeUsd24Hr }}</td>
-            <td>{{ cryptocurrencies.priceUsd }}</td>
-            <td>{{ cryptocurrencies.changePercent24Hr }}</td>
-            <td>{{ cryptocurrencies.vwap24Hr }}</td>
+            <td>{{ +cryptocurrencies.supply | number: '1.2-2' }}</td>
+            <td>{{ cryptocurrencies.maxSupply | number: '1.0-0' }}</td>
+            <td>{{ cryptocurrencies.marketCapUsd | number: '1.2-2' }}</td>
+            <td>{{ cryptocurrencies.volumeUsd24Hr | number: '1.2-2' }}</td>
+            <td>{{ cryptocurrencies.priceUsd | number: '1.2-2' }}</td>
+            <td>{{ cryptocurrencies.changePercent24Hr | number: '1.2-2' }}</td>
+            <td>{{ cryptocurrencies.vwap24Hr | number: '1.2-2' }}</td>
             <td>{{ cryptocurrencies.explorer }}</td>
         </tr>
     </ng-template>
