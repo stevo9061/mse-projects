@@ -49,14 +49,15 @@ public class CryptoCurrencyService {
                 if (existingCrypto != null) {
                     existingCrypto.setSymbol(dto.getSymbol());
                     existingCrypto.setName(dto.getName());
-                    existingCrypto.setPriceUsd(new BigDecimal(dto.getPriceUsd()));
-                    existingCrypto.setMarketcapUsd(new BigDecimal(dto.getMarketCapUsd()));
-                    existingCrypto.setVolumeUsd24hr(new BigDecimal(dto.getVolumeUsd24Hr()));
-                    existingCrypto.setVwap24hr(new BigDecimal(dto.getVwap24Hr()));
-                    existingCrypto.setChangePercent24hr(new BigDecimal(dto.getChangePercent24Hr()));
-                    existingCrypto.setSupply(new BigDecimal(dto.getSupply()));
-                    existingCrypto.setMaxSupply(new BigDecimal(dto.getMaxSupply()));
+                    existingCrypto.setSupply(dto.getSupply() != null ? new BigDecimal(dto.getSupply()) : BigDecimal.ZERO);
+                    existingCrypto.setMaxSupply(dto.getMaxSupply() != null ? new BigDecimal(dto.getMaxSupply()) : BigDecimal.ZERO);
+                    existingCrypto.setMarketcapUsd(dto.getMarketCapUsd() != null ? new BigDecimal(dto.getMarketCapUsd()) : BigDecimal.ZERO);
+                    existingCrypto.setVolumeUsd24hr(dto.getVolumeUsd24Hr() != null ? new BigDecimal(dto.getVolumeUsd24Hr()) : BigDecimal.ZERO);
+                    existingCrypto.setPriceUsd(dto.getPriceUsd() != null ? new BigDecimal(dto.getPriceUsd()) : BigDecimal.ZERO);
+                    existingCrypto.setChangePercent24hr(dto.getChangePercent24Hr() != null ? new BigDecimal(dto.getChangePercent24Hr()) : BigDecimal.ZERO);
+                    existingCrypto.setVwap24hr(dto.getVwap24Hr() != null ? new BigDecimal(dto.getVwap24Hr()) : BigDecimal.ZERO);
                     existingCrypto.setExplorer(dto.getExplorer());
+
                     cryptoCurrencyRepository.save(existingCrypto);
                 } else {
                     // Add new entry
