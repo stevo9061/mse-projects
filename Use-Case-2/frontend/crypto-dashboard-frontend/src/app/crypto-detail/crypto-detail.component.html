@@ -1,0 +1,40 @@
+<div class="crypto-detail">
+    <h2>{{ crypto?.name }} ({{ crypto?.symbol }}) Details</h2>
+  <p>Aktueller Preis: {{ crypto?.priceUsd | number: '1.2-2' }} USD</p>
+  <p>Marktkapitalisierung: {{ crypto?.marketCapUsd | number: '1.2-2' }} USD</p>
+  <p>Anzahl im Umlauf: {{ crypto?.supply | number: '1.2-2' }}</p>
+  <p>Maximale Anzahl: {{ crypto?.maxSupply | number: '1.2-2' }}</p>
+  <p>Volumen (24h): {{ crypto?.volumeUsd24Hr | number: '1.2-2' }} USD</p>
+  <p>Änderung (24h): {{ crypto?.changePercent24Hr | number: '1.2-2' }} %</p>
+  <p>VWAP (24h): {{ crypto?.vwap24hr | number: '1.2-2' }}</p>
+  <p>Explorer: <a [href]="crypto?.explorer" target="_blank">{{ crypto?.explorer }}</a></p>
+</div>
+
+<h3>Cryptocurrency Exchange Rate</h3>
+<p> Auf dieser Seite werden detaillierte Wechselkursinformaitonen zu einer ausgewählten Kryptowährung angezeigt</p>
+
+<div>
+    <p-multiSelect
+        [options]="currencies || []"
+        optionLabel="value"
+        [(ngModel)]="selectedCurrencies"
+        (click)="loadCurrencies()"
+        (onChange)="onCurrencySelected($event.value)"
+        placeholder="Select currencies">
+    </p-multiSelect>
+
+<!--     <p-dropdown        (click)="loadCurrencies()"
+
+        [options]="currencies || []"
+        optionLabel="name"
+        (onChange)="onCurrencySelected($event.value)">
+    </p-dropdown>
+-->
+
+    <h3>Ausgewählte Währungen</h3>
+    <ul>
+        <li *ngFor="let currency of selectedCurrencies">
+            {{ currency.key }} - {{ currency.value }}
+        </li>
+    </ul>
+</div>

@@ -41,6 +41,7 @@
             <th style="width:8%">CHANGE PERCENT 24HR</th>
             <th style="width:8%">VWAP 24HR</th>
             <th style="width:8%">Explorer</th>
+            <th style="width:8%">CURRENCY EXCHANGE</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-cryptocurrencies>
@@ -56,6 +57,9 @@
             <td>{{ cryptocurrencies.changePercent24Hr | number: '1.2-2' }}</td>
             <td>{{ cryptocurrencies.vwap24Hr | number: '1.2-2' }}</td>
             <td>{{ cryptocurrencies.explorer }}</td>
+            <td>
+                <button pButton type="button" label="Details" (click)="goToDetails(cryptocurrencies.id)"></button>
+            </td>
         </tr>
     </ng-template>
     <ng-template pTemplate="paginatorleft">

@@ -3,13 +3,14 @@ import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { CommonModule } from '@angular/common'
 import { ButtonModule } from 'primeng/button';
-import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Cryptocurrency } from '../models/cryptocurrency.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crypto-table',
   standalone: true,
-  imports: [TableModule, PaginatorModule, ButtonModule, CommonModule, HttpClientModule],
+  imports: [TableModule, PaginatorModule, ButtonModule, CommonModule],
   templateUrl: './crypto-table.component.html',
   styleUrl: './crypto-table.component.css'
 })
@@ -18,7 +19,7 @@ export class CryptoTableComponent {
   first = 0;
   rows = 20;
 
-  constructor(private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
   ngOnInit() {
     this.loadCryptocurrencies()
@@ -45,6 +46,10 @@ export class CryptoTableComponent {
           console.error('Error fetching cryptocurrencies', error);
         }
       });
+  }
+
+  goToDetails(cryptoId: string) {
+    this.router.navigate(['/crypto-details', cryptoId])
   }
 
   next() {
