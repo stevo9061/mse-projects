@@ -13,6 +13,8 @@ export class CryptoService {
 
   private currencyUrl = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json';
 
+  private baseCurrencyUrl = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/';
+
   constructor(private http: HttpClient) { }
 
   getAllCryptos(): Observable<Cryptocurrency[]> {
@@ -23,8 +25,15 @@ export class CryptoService {
     return this.http.get<Cryptocurrency>(`${this.cryptoUrl}/${id}`);
   }
 
-  getAllCurrencies(): Observable<Currency> { // data type of api is an object
-    return this.http.get<Currency>(this.currencyUrl);
+  // data type of api is an object, so we need to cast it into an array
+  getCurrenciesWithBase(baseCurrency: string): Observable<{ [key: string]: string }> {
+    const url = `${this.baseCurrencyUrl}/${baseCurrency}.json`;
+    return this.http.get<{ [key: string]: string }>(url);
   }
+
+  getCurrencyNames(): Observable<{ [key: string]: string }> {
+    const url = this.currencyUrl;
+    return this.http.get<{ [key: string]: string }>(url);
+}
 
 }

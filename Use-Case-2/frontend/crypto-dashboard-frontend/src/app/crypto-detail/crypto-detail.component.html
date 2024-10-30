@@ -1,40 +1,88 @@
+<h1> Cryptocurrency Exchange Rate</h1>
+<h2> This page displays detailed exchange rate information for a selected cryptocurrency. </h2>
 <div class="crypto-detail">
     <h2>{{ crypto?.name }} ({{ crypto?.symbol }}) Details</h2>
-  <p>Aktueller Preis: {{ crypto?.priceUsd | number: '1.2-2' }} USD</p>
-  <p>Marktkapitalisierung: {{ crypto?.marketCapUsd | number: '1.2-2' }} USD</p>
-  <p>Anzahl im Umlauf: {{ crypto?.supply | number: '1.2-2' }}</p>
-  <p>Maximale Anzahl: {{ crypto?.maxSupply | number: '1.2-2' }}</p>
-  <p>Volumen (24h): {{ crypto?.volumeUsd24Hr | number: '1.2-2' }} USD</p>
-  <p>Änderung (24h): {{ crypto?.changePercent24Hr | number: '1.2-2' }} %</p>
-  <p>VWAP (24h): {{ crypto?.vwap24hr | number: '1.2-2' }}</p>
-  <p>Explorer: <a [href]="crypto?.explorer" target="_blank">{{ crypto?.explorer }}</a></p>
+    <div class="details-container">
+        <div class="detail-item">
+            <label>Current price:</label>
+            <span>{{ crypto?.priceUsd | number: '1.2-2' }} USD</span>
+        </div>
+        <div class="detail-item">
+            <label>Market capitalisation:</label>
+            <span>{{ crypto?.marketCapUsd | number: '1.2-2' }} USD</span>
+        </div>
+        <div class="detail-item">
+            <label>Number in circulation:</label>
+            <span>{{ crypto?.supply | number: '1.2-2' }}</span>
+        </div>
+        <div class="detail-item">
+            <label>Maximum supply:</label>
+            <span>{{ crypto?.maxSupply | number: '1.2-2' }}</span>
+        </div>
+        <div class="detail-item">
+            <label>Volume (24h):</label>
+            <span>{{ crypto?.volumeUsd24Hr | number: '1.2-2' }} USD</span>
+        </div>
+        <div class="detail-item">
+            <label>Change (24h):</label>
+            <span>{{ crypto?.changePercent24Hr | number: '1.2-2' }} %</span>
+        </div>
+        <div class="detail-item">
+            <label>VWAP (24h):</label>
+            <span>{{ crypto?.vwap24hr | number: '1.2-2' }}</span>
+        </div>
+        <div class="detail-item">
+            <label>Explorer:</label>
+            <a [href]="crypto?.explorer" target="_blank">{{ crypto?.explorer }}</a>
+        </div>
+    </div>
+</div>
+<div class="crypto-calc">
+    <h3>Bitcoin to USD Conversion</h3>
+    <div class="details-container">
+        <!-- Input fields for Bitcoin and USD -->
+        <div class="detail-item">
+            <label>Bitcoin:</label>
+            <input
+                id="bitcoinAmount"
+                type="number"
+                [(ngModel)]="bitcoinAmount"
+                (input)="calculateUsdFromBitcoin()"
+                placeholder="Quantity in BTC"
+                class="input-field"
+            />
+        </div>
+
+        <div class="detail-item">
+            <label>USD:</label>
+            <input
+                id="usdAmount"
+                type="number"
+                [(ngModel)]="usdAmount"
+                (input)="calculateBitcoinFromUsd()"
+                placeholder="Amount in USD"
+                class="input-field"
+            />
+        </div>
+    </div>
 </div>
 
 <h3>Cryptocurrency Exchange Rate</h3>
-<p> Auf dieser Seite werden detaillierte Wechselkursinformaitonen zu einer ausgewählten Kryptowährung angezeigt</p>
+<p>This page displays detailed exchange rate information for a selected cryptocurrency</p>
 
 <div>
     <p-multiSelect
         [options]="currencies || []"
-        optionLabel="value"
+        optionLabel="key"
         [(ngModel)]="selectedCurrencies"
-        (click)="loadCurrencies()"
         (onChange)="onCurrencySelected($event.value)"
         placeholder="Select currencies">
     </p-multiSelect>
 
-<!--     <p-dropdown        (click)="loadCurrencies()"
-
-        [options]="currencies || []"
-        optionLabel="name"
-        (onChange)="onCurrencySelected($event.value)">
-    </p-dropdown>
--->
-
-    <h3>Ausgewählte Währungen</h3>
+    <h3>Selected currencies</h3>
     <ul>
-        <li *ngFor="let currency of selectedCurrencies">
-            {{ currency.key }} - {{ currency.value }}
+        <li *ngFor="let currency of convertedCurrencies">
+            {{ currency.key }}: {{ currency.value | number: '1.2-2' }}
         </li>
     </ul>
 </div>
