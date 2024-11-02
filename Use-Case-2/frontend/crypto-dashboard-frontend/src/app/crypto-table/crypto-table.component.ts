@@ -30,7 +30,6 @@ export class CryptoTableComponent {
     this.http.get<Cryptocurrency[]>('http://localhost:8080/api/crypto/fetch-and-save')
       .subscribe({
         next: (data: Cryptocurrency[]) => {
-//          console.log(data); // debugging: looking at the structure and types of data
           this.cryptocurrencies = data.map(crypto => ({
             ...crypto,
             supply: Number(crypto.supply) || 0,

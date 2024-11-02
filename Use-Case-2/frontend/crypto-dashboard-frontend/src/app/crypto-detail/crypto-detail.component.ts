@@ -123,17 +123,15 @@ export class CryptoDetailComponent implements OnInit {
       }));
   }
   
-  loadCurrencyNames(): Promise<void> {
+  async loadCurrencyNames(): Promise<void> {
 
-   return lastValueFrom(this.cryptoService.getCurrencyNames())
-      .then((names) => {
-        this.currencyNames = names;
-        console.log('Loaded currency names:', this.currencyNames);
-      })
-      .catch((error) => {
-        console.error('Error when retrieving currency names:', error);
-      });
-
+    try {
+      const names = await lastValueFrom(this.cryptoService.getCurrencyNames());
+      this.currencyNames = names;
+      console.log('Loaded currency names:', this.currencyNames);
+    } catch (error) {
+      console.error('Error when retrieving currency names:', error);
+    }
 
 }
 
