@@ -38,17 +38,17 @@
     </div>
 </div>
 <div class="crypto-calc">
-    <h3>Bitcoin to USD Conversion</h3>
+    <h3>{{ crypto?.name }} to USD Conversion</h3>
     <div class="details-container">
-        <!-- Input fields for Bitcoin and USD -->
+        <!-- Input fields for selected Crypto and USD -->
         <div class="detail-item">
-            <label>Bitcoin:</label>
+            <label>{{ crypto?.name }}:</label>
             <input
                 id="bitcoinAmount"
                 type="number"
-                [(ngModel)]="bitcoinAmount"
-                (input)="calculateUsdFromBitcoin()"
-                placeholder="Quantity in BTC"
+                [(ngModel)]="cryptoAmount"
+                (input)="calculateUsdFromCrypto()"
+                placeholder="Quantity in {{ crypto?.symbol}}"
                 class="input-field"
             />
         </div>
@@ -59,7 +59,7 @@
                 id="usdAmount"
                 type="number"
                 [(ngModel)]="usdAmount"
-                (input)="calculateBitcoinFromUsd()"
+                (input)="calculateCryptoFromUsd()"
                 placeholder="Amount in USD"
                 class="input-field"
             />

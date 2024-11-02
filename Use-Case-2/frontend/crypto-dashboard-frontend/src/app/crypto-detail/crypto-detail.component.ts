@@ -25,7 +25,7 @@ export class CryptoDetailComponent implements OnInit {
   //currencies: Array<{ key: string; value: string }> = [];
   selectedCurrencies: Currency[] = [];
 
-  bitcoinAmount: number = 1;
+  cryptoAmount: number = 1;
   usdAmount: number = 0;
   convertedCurrencies: { key: string; value: number }[] = [];
   currencyNames: { [key: string]: string } = {};
@@ -52,7 +52,7 @@ export class CryptoDetailComponent implements OnInit {
 
         // Initial calculation of the USD value and convertedCurrencies for 1 BTC
         if (this.crypto && this.crypto.priceUsd) {
-          this.usdAmount = this.bitcoinAmount * Number(this.crypto.priceUsd);
+          this.usdAmount = this.cryptoAmount * Number(this.crypto.priceUsd);
         }
 
         this.updateConvertedCurrencies();
@@ -63,19 +63,19 @@ export class CryptoDetailComponent implements OnInit {
   });
   }
 
-  // Calculates the USD amount from the Bitcoin amount
-  calculateUsdFromBitcoin(): void {
+  // Calculates the USD amount from the selected Crypto amount
+  calculateUsdFromCrypto(): void {
     if (this.crypto && this.crypto.priceUsd) {
-      this.usdAmount = this.bitcoinAmount * this.crypto.priceUsd;
+      this.usdAmount = this.cryptoAmount * this.crypto.priceUsd;
       
       this.updateConvertedCurrencies();
     }
   }
 
-  // Calculates the Bitcoin amount from the USD amount
-  calculateBitcoinFromUsd(): void {
+  // Calculates the selected Crypto amount from the USD amount
+  calculateCryptoFromUsd(): void {
     if (this.crypto && this.crypto.priceUsd) {
-      this.bitcoinAmount = this.usdAmount / this.crypto.priceUsd; 
+      this.cryptoAmount = this.usdAmount / this.crypto.priceUsd; 
       this.updateConvertedCurrencies(); 
     }
   }
@@ -113,11 +113,11 @@ export class CryptoDetailComponent implements OnInit {
   
   updateConvertedCurrencies(): void {
 
-    if (!this.currencies || this.currencies.length === 0 || this.bitcoinAmount === 0) return;
+    if (!this.currencies || this.currencies.length === 0 || this.cryptoAmount === 0) return;
     
     this.convertedCurrencies = this.selectedCurrencies.map((currency => {
       const conversionRate = parseFloat(currency.value);
-      const convertedValue = conversionRate * this.bitcoinAmount;
+      const convertedValue = conversionRate * this.cryptoAmount;
 
       return { key: currency.key, value: convertedValue};
       }));
