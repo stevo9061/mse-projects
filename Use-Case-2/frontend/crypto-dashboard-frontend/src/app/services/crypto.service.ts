@@ -13,7 +13,7 @@ export class CryptoService {
 
   private currencyUrl = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json';
 
-  private baseCurrencyUrl = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/';
+  private baseCurrencyUrl = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies';
 
   constructor(private http: HttpClient) { }
 
@@ -33,6 +33,7 @@ export class CryptoService {
 
   getCurrencyNames(): Observable<{ [key: string]: string }> {
     const url = this.currencyUrl;
+    console.log('url:', url);
     return this.http.get<{ [key: string]: string }>(url);
 }
 

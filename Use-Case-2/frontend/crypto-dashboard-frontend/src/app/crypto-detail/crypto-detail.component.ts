@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { Currency } from '../models/currency.model';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-crypto-detail',
@@ -35,6 +36,9 @@ export class CryptoDetailComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
 
+    // Load the currency names for dropdown
+    this.loadCurrencyNames().then(() => {
+
     // Checks whether an ID is present in the URL and loads the corresponding crypto data
     if (id) {
       this.cryptoService.getCryptoById(id).subscribe((data) => {
@@ -52,15 +56,11 @@ export class CryptoDetailComponent implements OnInit {
         }
 
         this.updateConvertedCurrencies();
-
-
-        // Load the currency names for dropdown
-//        this.loadCurrencyNames();
-
       });
 
-      
+
     }
+  });
   }
 
   // Calculates the USD amount from the Bitcoin amount
@@ -82,15 +82,15 @@ export class CryptoDetailComponent implements OnInit {
 
   // Loads the currencies each time the dropdown is opened
   loadCurrencies(baseCurrency: string) {
+
+
     this.cryptoService.getCurrenciesWithBase(baseCurrency)
-  //this.http.get<{ [key: string]: string }>(`https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${baseCurrency}.json`)
       .subscribe({
         next: (data) => {
         // casting object from api into array
           this.currencies = Object.entries(data[baseCurrency]).map(([key, value]) => ({
             // Combine name and abbreviation
-            key: key,
-  //          key: `${this.currencyNames[key]} - ${key}`, 
+            key: `${this.currencyNames[key] ? this.currencyNames[key] : "Name not available"} - ${key}`, 
             value: value
           }));
           console.log('Loaded currencies:', this.currencies);
@@ -123,16 +123,18 @@ export class CryptoDetailComponent implements OnInit {
       }));
   }
   
-  loadCurrencyNames() {
+  loadCurrencyNames(): Promise<void> {
 
-    this.cryptoService.getCurrencyNames().subscribe({
-      next: (names) => {
+   return lastValueFrom(this.cryptoService.getCurrencyNames())
+      .then((names) => {
         this.currencyNames = names;
-      },
-      error: (error) => {
+        console.log('Loaded currency names:', this.currencyNames);
+      })
+      .catch((error) => {
         console.error('Error when retrieving currency names:', error);
-      }
-  });
+      });
+
+
 }
 
 }
