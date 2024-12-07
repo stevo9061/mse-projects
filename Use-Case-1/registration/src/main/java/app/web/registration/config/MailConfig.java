@@ -1,4 +1,4 @@
-package app.web.registration.service;
+package app.web.registration.config;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.context.annotation.Bean;

@@ -1,0 +1,50 @@
+name: "use-case-1"
+services:
+
+  db:
+    image: mysql:8.4.0
+    environment:
+      MYSQL_DATABASE: user_db
+      MYSQL_USER: stefan
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    restart: unless-stopped
+
+  registration:
+      build:
+        context: ./registration
+        dockerfile: Dockerfile
+      ports:
+        - '8080:8080'
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/user_db
+        SPRING_DATASOURCE_USERNAME: stefan
+        SPRING_DATASOURCE_PASSWORD: password
+        SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      depends_on:
+        - db
+      volumes:
+      - ./registration/mail-settings.env:/app/mail-settings.env  
+      restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend/registration-app
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    restart: unless-stopped
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /usr/src/app
+        - action: rebuild
+          path: ./frontend/package.json
+       
+volumes:
+  db-data:
