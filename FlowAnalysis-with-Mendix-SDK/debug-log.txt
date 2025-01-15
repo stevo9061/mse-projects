@@ -1,0 +1,19 @@
+[2025-01-12T21:56:47.335Z] Anzahl der Microflows in der App: 313 
+[2025-01-15T15:21:43.752Z] Anzahl der Microflows in der App: 313 
+[2025-01-15T15:22:55.866Z] Anzahl der Microflows in der App: 313 
+[2025-01-15T15:23:48.801Z] Anzahl der Microflows in der App: 313 
+[2025-01-15T15:23:54.066Z] Untersuche Seite: LoginPage 
+[2025-01-15T15:23:54.067Z] Widget erkannt: Pages$LayoutGrid 
+[2025-01-15T15:23:54.067Z] Widget erkannt: Pages$SnippetCallWidget 
+[2025-01-15T15:23:54.067Z] SnippetCallWidget gefunden, lade zugehöriges Snippet. 
+[2025-01-15T15:23:54.152Z] Snippet "LoginSnippet" wird traversiert. 
+[2025-01-15T15:23:54.153Z] Widget erkannt: Pages$DivContainer 
+[2025-01-15T15:23:54.153Z] Widget erkannt: Pages$DivContainer 
+[2025-01-15T15:23:54.153Z] Widget erkannt: Pages$ValidationMessage 
+[2025-01-15T15:23:54.153Z] Widget erkannt: Pages$LoginIdTextBox 
+[2025-01-15T15:23:54.153Z] Widget erkannt: Pages$PasswordTextBox 
+[2025-01-15T15:23:54.153Z] Widget erkannt: Pages$LoginButton 
+[2025-01-15T15:23:54.154Z] Widget erkannt: Pages$ActionButton 
+[2025-01-15T15:23:54.154Z] Widget erkannt: Pages$ActionButton 
+[2025-01-15T15:23:54.154Z] Widget erkannt: Pages$ActionButton 
+[2025-01-15T15:23:54.154Z] Seite "LoginPage" enthält insgesamt 11 Widgets (inklusive Snippets). 
