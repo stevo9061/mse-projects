@@ -1,0 +1,9 @@
+[2025-01-26T20:18:59.271Z] Anzahl der verwendeten Microflows: 2 
+[2025-01-26T20:18:59.278Z] Verwendeter Microflow: convertStringToLong 
+[2025-01-26T20:18:59.278Z] Verwendeter Microflow: currencyExchangeOneObject 
+[2025-01-26T20:18:59.278Z] Beginne mit der Berechnung der Cyclomatic Complexity... 
+[2025-01-26T20:18:59.280Z] Microflow "convertStringToLong" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T20:18:59.281Z] Microflow "currencyExchangeOneObject" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T20:18:59.281Z] Gesamte Cyclomatic Complexity aller Microflows: 3 
+[2025-01-26T20:19:01.088Z] Anzahl der verwendeten Nanoflows: 0 
+[2025-01-26T20:19:01.089Z] Gesamte Cyclomatic Complexity aller Nanoflows: 0 

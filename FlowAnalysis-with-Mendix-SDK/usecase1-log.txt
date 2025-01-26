@@ -1,0 +1,219 @@
+[2025-01-26T19:51:04.206Z] Starte Main-Funktion... 
+[2025-01-26T19:53:43.218Z] Anzahl der verwendeten Microflows: 105 
+[2025-01-26T19:53:43.219Z] Verwendeter Microflow: SUB_BuildScopeString 
+[2025-01-26T19:53:43.220Z] Verwendeter Microflow: SUB_GetClientConfiguration 
+[2025-01-26T19:53:43.220Z] Verwendeter Microflow: Default_CreateIDPConfiguration 
+[2025-01-26T19:53:43.220Z] Verwendeter Microflow: SUB_CreateUserClaim 
+[2025-01-26T19:53:43.220Z] Verwendeter Microflow: UserAccountValidation 
+[2025-01-26T19:53:43.220Z] Verwendeter Microflow: SF_CheckForDuplicateAccount 
+[2025-01-26T19:53:43.220Z] Verwendeter Microflow: OEN_SetOutgoingServer 
+[2025-01-26T19:53:43.220Z] Verwendeter Microflow: SUB_Add_SelectedClaim 
+[2025-01-26T19:53:43.220Z] Verwendeter Microflow: ACT_ShowCusomExceptionMessage 
+[2025-01-26T19:53:43.220Z] Verwendeter Microflow: SUB_DeleteAssociatedConfigurations 
+[2025-01-26T19:53:43.220Z] Verwendeter Microflow: SUB_Get_CustomTokenParsing 
+[2025-01-26T19:53:43.220Z] Verwendeter Microflow: GetValidUntilDateTime 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: GetAuthorizationURL 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: SUB_AutomaticClientCreation 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: SUB_EmailAccount_CheckServerConnection 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: Decrypt 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: SUB_GetEmailTemplateAttachments 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: SUB_Get_ClientAuthenticationMethod 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: SUB_HandleUserProvisioning 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: SUB_Get_ResponseMode 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: SUB_TokenProcessing 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: ACT_ImportClientGrantConfiguration 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: DS_GetAssociatedPubKey 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: SUB_EmailMessage_SetAttachments 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: SUB_BuildClaimString 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: SF_CreateAndSendEmailForSignup 
+[2025-01-26T19:53:43.221Z] Verwendeter Microflow: CreateClaimwithFriendlyName 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: SUB_CreateOrUpdate_UserProvisioning 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: Sub_GetEntityAttribute 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: SUB_ValidateOrCreateClaim 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: IVK_SyncObjects 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: SUB_ChangeRoleToUserRole 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: Sub_GetUserType 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: SUB_HandleClientConfiguration 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: SUB_ValidateAccessToken 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: VAL_BatchDetails 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: Create_ClaimEntityAttributeMap 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: GetNewAccessTokenUsingRefreshToken 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: SUB_GetNewOAuthToken_AuthCodeGrantFlow 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: SUB_Update_OIDCUserRole 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: SF_SendEmailRecoverPassword 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: OEN_SetIncomingServer 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: VAL_EmailTemplateRecipients 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: handleAuthorizationCode 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: SUB_GetFirstOAuthProvider 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: SUB_RetrieveEmails 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: GetAccessToken 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: SUB_Add_SelectedScope 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: SUB_ClientCreation 
+[2025-01-26T19:53:43.222Z] Verwendeter Microflow: CreateClaim 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: GetDefaultClientConfiguration 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: DecryptForgotPasswordURL 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: SUB_Add_ACRValues 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: FindObjectType 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: UpdateUserHelper 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: Sub_Val_ProvisioningConfiguration 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: SF_CreateForgotPasswordRequest 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: SUB_CreateLogItem 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: Sub_GetCustomUserProvisioning 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: SUB_ClientGrantCreation 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: CreateOrUpdateUser 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: SF_CreateAndSendEmailForReset 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: Sub_Val_UserProvisioningConfiguration 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: SUB_UpdateClientConfiguration 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: MergeTokenData 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: Encrypt 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: GenerateUIDAndURL 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: GetCurrentToken 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: SF_CreateAndSendEmail 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: SUB_Create_ClientConfigClaims 
+[2025-01-26T19:53:43.223Z] Verwendeter Microflow: SUB_GetCallbackURL 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: SUB_HandlingClaims 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: ACT_Delete_ClaimEntityAttributeList 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: SUB_DuplicateTokenList 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: CUSTOM_UserProvisioning 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: SUB_DefaultUserProvisioning 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: CreateOrUpdate_UserProvisioning 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: SUB_EmailAccount_SubscribeForEmailNotification 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: SUB_GenerateOAuthNonce 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: Sub_handleUserProvisioning 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: Custom_CreateIDPConfiguration 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: SUB_UpdateClientGrantConfiguration 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: ACT_Save_Configuration 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: CreateNewUserFromSignup 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: GetDefaultAuthorizationURL 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: GET 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: RefreshModelReflection 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: SUB_Get_UserParsing 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: CheckNonceValue 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: SUB_EmailAccount_Save 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: DecodeAndVerifyJWT 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: Sub_Val_ClaimEntityAttributeConfiguration 
+[2025-01-26T19:53:43.224Z] Verwendeter Microflow: webCallback 
+[2025-01-26T19:53:43.225Z] Verwendeter Microflow: SUB_Decrypt 
+[2025-01-26T19:53:43.225Z] Verwendeter Microflow: SUB_CheckAccountAndProcessUserRoles 
+[2025-01-26T19:53:43.225Z] Verwendeter Microflow: ACT_SaveClientGrantConfiguration 
+[2025-01-26T19:53:43.225Z] Verwendeter Microflow: ACT_SaveConfiguration 
+[2025-01-26T19:53:43.225Z] Verwendeter Microflow: ACT_ImportConfiguration 
+[2025-01-26T19:53:43.225Z] Verwendeter Microflow: Sub_UpdateClaimEntityAttributeMap 
+[2025-01-26T19:53:43.225Z] Verwendeter Microflow: Sub_Val_PrincipalAttributeClaimConfiguration 
+[2025-01-26T19:53:43.225Z] Verwendeter Microflow: VAL_EmailRecipients 
+[2025-01-26T19:53:43.225Z] Verwendeter Microflow: SUB_EmailAccount_OAuthToken_ReplaceExpired 
+[2025-01-26T19:53:43.225Z] Verwendeter Microflow: SUB_GetNewOAuthToken_ClientCredentialsGrantFlow 
+[2025-01-26T19:53:43.225Z] Verwendeter Microflow: SUB_SendEmail 
+[2025-01-26T19:53:43.225Z] Verwendeter Microflow: UserProvisioning_Sample 
+[2025-01-26T19:53:43.225Z] Beginne mit der Berechnung der Cyclomatic Complexity... 
+[2025-01-26T19:53:43.232Z] Microflow "SUB_BuildScopeString" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.234Z] Microflow "SUB_GetClientConfiguration" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.235Z] Microflow "Default_CreateIDPConfiguration" hat eine Cyclomatic Complexity von 4 
+[2025-01-26T19:53:43.236Z] Microflow "SUB_CreateUserClaim" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.238Z] Microflow "UserAccountValidation" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.239Z] Microflow "SF_CheckForDuplicateAccount" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.240Z] Microflow "OEN_SetOutgoingServer" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.242Z] Microflow "SUB_Add_SelectedClaim" hat eine Cyclomatic Complexity von 4 
+[2025-01-26T19:53:43.243Z] Microflow "ACT_ShowCusomExceptionMessage" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.244Z] Microflow "SUB_DeleteAssociatedConfigurations" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.245Z] Microflow "SUB_Get_CustomTokenParsing" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.247Z] Microflow "GetValidUntilDateTime" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.248Z] Microflow "GetAuthorizationURL" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.249Z] Microflow "SUB_AutomaticClientCreation" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.251Z] Microflow "SUB_EmailAccount_CheckServerConnection" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.252Z] Microflow "Decrypt" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.253Z] Microflow "SUB_GetEmailTemplateAttachments" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.254Z] Microflow "SUB_Get_ClientAuthenticationMethod" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.256Z] Microflow "SUB_HandleUserProvisioning" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.257Z] Microflow "SUB_Get_ResponseMode" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.258Z] Microflow "SUB_TokenProcessing" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.259Z] Microflow "ACT_ImportClientGrantConfiguration" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.261Z] Microflow "DS_GetAssociatedPubKey" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.262Z] Microflow "SUB_EmailMessage_SetAttachments" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.263Z] Microflow "SUB_BuildClaimString" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.264Z] Microflow "SF_CreateAndSendEmailForSignup" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.266Z] Microflow "CreateClaimwithFriendlyName" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.267Z] Microflow "SUB_CreateOrUpdate_UserProvisioning" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.268Z] Microflow "Sub_GetEntityAttribute" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.270Z] Microflow "SUB_ValidateOrCreateClaim" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.271Z] Microflow "IVK_SyncObjects" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.272Z] Microflow "SUB_ChangeRoleToUserRole" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.275Z] Microflow "Sub_GetUserType" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.276Z] Microflow "SUB_HandleClientConfiguration" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.277Z] Microflow "SUB_ValidateAccessToken" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.279Z] Microflow "VAL_BatchDetails" hat eine Cyclomatic Complexity von 9 
+[2025-01-26T19:53:43.280Z] Microflow "Create_ClaimEntityAttributeMap" hat eine Cyclomatic Complexity von 4 
+[2025-01-26T19:53:43.280Z] Microflow "GetNewAccessTokenUsingRefreshToken" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.282Z] Microflow "SUB_GetNewOAuthToken_AuthCodeGrantFlow" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.283Z] Microflow "SUB_Update_OIDCUserRole" hat eine Cyclomatic Complexity von 5 
+[2025-01-26T19:53:43.284Z] Microflow "SF_SendEmailRecoverPassword" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.286Z] Microflow "OEN_SetIncomingServer" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.287Z] Microflow "VAL_EmailTemplateRecipients" hat eine Cyclomatic Complexity von 11 
+[2025-01-26T19:53:43.288Z] Microflow "handleAuthorizationCode" hat eine Cyclomatic Complexity von 10 
+[2025-01-26T19:53:43.290Z] Microflow "SUB_GetFirstOAuthProvider" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.291Z] Microflow "SUB_RetrieveEmails" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.293Z] Microflow "GetAccessToken" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.294Z] Microflow "SUB_Add_SelectedScope" hat eine Cyclomatic Complexity von 4 
+[2025-01-26T19:53:43.295Z] Microflow "SUB_ClientCreation" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.297Z] Microflow "CreateClaim" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.298Z] Microflow "GetDefaultClientConfiguration" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.299Z] Microflow "DecryptForgotPasswordURL" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.301Z] Microflow "SUB_Add_ACRValues" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.302Z] Microflow "FindObjectType" hat eine Cyclomatic Complexity von 6 
+[2025-01-26T19:53:43.303Z] Microflow "UpdateUserHelper" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.305Z] Microflow "Sub_Val_ProvisioningConfiguration" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.306Z] Microflow "SF_CreateForgotPasswordRequest" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.307Z] Microflow "SUB_CreateLogItem" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.309Z] Microflow "Sub_GetCustomUserProvisioning" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.310Z] Microflow "SUB_ClientGrantCreation" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.311Z] Microflow "CreateOrUpdateUser" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.313Z] Microflow "SF_CreateAndSendEmailForReset" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.314Z] Microflow "Sub_Val_UserProvisioningConfiguration" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.315Z] Microflow "SUB_UpdateClientConfiguration" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.317Z] Microflow "MergeTokenData" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.318Z] Microflow "Encrypt" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.319Z] Microflow "GenerateUIDAndURL" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.321Z] Microflow "GetCurrentToken" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.322Z] Microflow "SF_CreateAndSendEmail" hat eine Cyclomatic Complexity von 5 
+[2025-01-26T19:53:43.323Z] Microflow "SUB_Create_ClientConfigClaims" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.325Z] Microflow "SUB_GetCallbackURL" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.326Z] Microflow "SUB_HandlingClaims" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.326Z] Microflow "ACT_Delete_ClaimEntityAttributeList" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.328Z] Microflow "SUB_DuplicateTokenList" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.329Z] Microflow "CUSTOM_UserProvisioning" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.330Z] Microflow "SUB_DefaultUserProvisioning" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.332Z] Microflow "CreateOrUpdate_UserProvisioning" hat eine Cyclomatic Complexity von 4 
+[2025-01-26T19:53:43.333Z] Microflow "SUB_EmailAccount_SubscribeForEmailNotification" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.335Z] Microflow "SUB_GenerateOAuthNonce" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.336Z] Microflow "Sub_handleUserProvisioning" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.337Z] Microflow "Custom_CreateIDPConfiguration" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.338Z] Microflow "SUB_UpdateClientGrantConfiguration" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.340Z] Microflow "ACT_Save_Configuration" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.341Z] Microflow "CreateNewUserFromSignup" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.342Z] Microflow "GetDefaultAuthorizationURL" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.344Z] Microflow "GET" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.345Z] Microflow "RefreshModelReflection" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.346Z] Microflow "SUB_Get_UserParsing" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.347Z] Microflow "CheckNonceValue" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.349Z] Microflow "SUB_EmailAccount_Save" hat eine Cyclomatic Complexity von 4 
+[2025-01-26T19:53:43.350Z] Microflow "DecodeAndVerifyJWT" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.351Z] Microflow "Sub_Val_ClaimEntityAttributeConfiguration" hat eine Cyclomatic Complexity von 3 
+[2025-01-26T19:53:43.352Z] Microflow "webCallback" hat eine Cyclomatic Complexity von 5 
+[2025-01-26T19:53:43.355Z] Microflow "SUB_Decrypt" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.357Z] Microflow "SUB_CheckAccountAndProcessUserRoles" hat eine Cyclomatic Complexity von 5 
+[2025-01-26T19:53:43.358Z] Microflow "ACT_SaveClientGrantConfiguration" hat eine Cyclomatic Complexity von 6 
+[2025-01-26T19:53:43.359Z] Microflow "ACT_SaveConfiguration" hat eine Cyclomatic Complexity von 8 
+[2025-01-26T19:53:43.361Z] Microflow "ACT_ImportConfiguration" hat eine Cyclomatic Complexity von 8 
+[2025-01-26T19:53:43.362Z] Microflow "Sub_UpdateClaimEntityAttributeMap" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.363Z] Microflow "Sub_Val_PrincipalAttributeClaimConfiguration" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.365Z] Microflow "VAL_EmailRecipients" hat eine Cyclomatic Complexity von 16 
+[2025-01-26T19:53:43.366Z] Microflow "SUB_EmailAccount_OAuthToken_ReplaceExpired" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:43.367Z] Microflow "SUB_GetNewOAuthToken_ClientCredentialsGrantFlow" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.369Z] Microflow "SUB_SendEmail" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.370Z] Microflow "UserProvisioning_Sample" hat eine Cyclomatic Complexity von 2 
+[2025-01-26T19:53:43.370Z] Gesamte Cyclomatic Complexity aller Microflows: 287 
+[2025-01-26T19:53:56.661Z] Anzahl der verwendeten Nanoflows: 3 
+[2025-01-26T19:53:56.663Z] Nanoflow "ACT_ToggleShowSecret" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:56.664Z] Nanoflow "RefreshToSigninURL" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:56.666Z] Nanoflow "Open_ClaimsForClaimEntityAttribute" hat eine Cyclomatic Complexity von 1 
+[2025-01-26T19:53:56.666Z] Gesamte Cyclomatic Complexity aller Nanoflows: 3 

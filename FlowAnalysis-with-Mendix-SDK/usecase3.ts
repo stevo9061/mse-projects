@@ -8,7 +8,7 @@ import * as fs from "fs";
 
 function logToFile(message: string) {
     const timestamp = new Date().toISOString();
-    fs.appendFileSync("usecase1-log.txt", `[${timestamp}] ${message}\n`);
+    fs.appendFileSync("usecase2-log.txt", `[${timestamp}] ${message}\n`);
 }
 
 console.log = (message?: any, ...optionalParams: any[]) => {
@@ -16,14 +16,13 @@ console.log = (message?: any, ...optionalParams: any[]) => {
     logToFile(formattedMessage);
 };
 
-async function main() { 
-
-    console.log("Starte Main-Funktion...");
+async function main() {
     const client = new MendixPlatformClient();
-    const app = await client.getApp("7c43ad0e-fa7d-4495-b9e5-61737578894f");
+    const app = await client.getApp("463b8de2-64ad-4c57-a149-4f758388b0f8");
     const workingCopy = await app.createTemporaryWorkingCopy("main");
     const model = await workingCopy.openModel();
 
+  
   // await collectAllMicroflows(model);
   const usedMicroflows = await findUsedMicroflows(model);
   const microflowsCC = calculateComplexityForMicroflows(usedMicroflows);

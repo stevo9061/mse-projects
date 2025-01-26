@@ -44,7 +44,7 @@ var mendixplatformsdk_1 = require("mendixplatformsdk");
 var fs = require("fs");
 function logToFile(message) {
     var timestamp = new Date().toISOString();
-    fs.appendFileSync("usecase1-log.txt", "[".concat(timestamp, "] ").concat(message, "\n"));
+    fs.appendFileSync("usecase2-log.txt", "[".concat(timestamp, "] ").concat(message, "\n"));
 }
 console.log = function (message) {
     var optionalParams = [];
@@ -60,9 +60,8 @@ function main() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log("Starte Main-Funktion...");
                     client = new mendixplatformsdk_1.MendixPlatformClient();
-                    return [4 /*yield*/, client.getApp("7c43ad0e-fa7d-4495-b9e5-61737578894f")];
+                    return [4 /*yield*/, client.getApp("463b8de2-64ad-4c57-a149-4f758388b0f8")];
                 case 1:
                     app = _a.sent();
                     return [4 /*yield*/, app.createTemporaryWorkingCopy("main")];
