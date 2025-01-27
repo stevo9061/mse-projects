@@ -2,6 +2,7 @@
 // https://medium.com/@himanshuagarwal1395/setting-up-environment-variables-in-macos-sierra-f5978369b255
 // https://www.mendix.com/evaluation-guide/enterprise-capabilities/openness-extensibility/openness-api-sdk/
 
+
 import { IModel, microflows, pages, IStructure } from "mendixmodelsdk";
 import { MendixPlatformClient } from "mendixplatformsdk";
 import * as fs from "fs";
@@ -16,19 +17,20 @@ console.log = (message?: any, ...optionalParams: any[]) => {
     logToFile(formattedMessage);
 };
 
-async function main() {
+async function main() { 
+
+    console.log("Starte Main-Funktion...");
     const client = new MendixPlatformClient();
     const app = await client.getApp("33653cf8-d242-4d6d-8548-c09dde9c0ead");
     const workingCopy = await app.createTemporaryWorkingCopy("main");
     const model = await workingCopy.openModel();
 
-  
   // await collectAllMicroflows(model);
   const usedMicroflows = await findUsedMicroflows(model);
   const microflowsCC = calculateComplexityForMicroflows(usedMicroflows);
 
-  const usedNanoflows = await findUsedNanoflows(model);
-  const nanoflowCC = await calculateComplexityForNanoflows(usedNanoflows);
+ // const usedNanoflows = await findUsedNanoflows(model);
+ // const nanoflowCC = await calculateComplexityForNanoflows(usedNanoflows);
 
 //  const essentialFlows = await findEssentialFlows(model);
 
@@ -48,23 +50,70 @@ async function collectAllMicroflows(model: IModel) {
     }) */;
 }
 
+//TODO: Wie kann ich find references hier entfernen
 async function findUsedMicroflows(model: IModel): Promise<microflows.IMicroflow[]> {
     const allMicroflows = model.allMicroflows();
+    console.log(`Anzahl aller Microflows im Modell: ${allMicroflows.length}`);
     const usedMicroflows: microflows.IMicroflow[] = [];
+    
     for (const mf of allMicroflows) {
+        console.log(`Verarbeite Microflow: ${mf.name}`);
+        
         const loadedMicroflow = await mf.load();
+        if (!loadedMicroflow) {
+            console.log(`Fehler beim Laden von Microflow: ${mf.name}`);
+            continue;
+        }
+        
         const references = await findReferences(model, loadedMicroflow);
+        console.log(`Referenzen für ${mf.name}: ${references.length}`);
+        
         if (references.length > 0) {
             usedMicroflows.push(mf);
         }
     }
+    
     console.log(`Anzahl der verwendeten Microflows: ${usedMicroflows.length}`);
     usedMicroflows.forEach(mf => {
         console.log(`Verwendeter Microflow: ${mf.name}`);
     });
 
-    return usedMicroflows.length > 0 ? usedMicroflows : [];
+    return usedMicroflows;
 }
+/*    async function findUsedMicroflows(model: IModel): Promise<microflows.IMicroflow[]> {
+        const allMicroflows = model.allMicroflows();
+        console.log(`Anzahl aller Microflows im Modell: ${allMicroflows.length}`);
+        const usedMicroflows: microflows.IMicroflow[] = [];
+        
+        for (const mf of allMicroflows) {
+            console.log(`Verarbeite Microflow: ${mf.name}`);
+            
+            const loadedMicroflow = await mf.load();
+            if (!loadedMicroflow) {
+                console.log(`Fehler beim Laden von Microflow: ${mf.name}`);
+                continue;
+            }
+            
+            // Anstelle von findReferences gib ein Dummy-Array zurück
+            // const references = await findReferences(model, loadedMicroflow);
+            const references = []; // Dummy-Array
+            
+            console.log(`Referenzen für ${mf.name}: ${references.length}`);
+            
+            if (references.length > 0) {
+                usedMicroflows.push(mf);
+            }
+        }
+        
+        console.log(`Anzahl der verwendeten Microflows: ${usedMicroflows.length}`);
+        usedMicroflows.forEach(mf => {
+            console.log(`Verwendeter Microflow: ${mf.name}`);
+        });
+    
+        return usedMicroflows;
+    }
+*/
+
 
 // Verwendete Nanoflows finden
 async function findUsedNanoflows(model: IModel): Promise<microflows.INanoflow[]> {
@@ -392,30 +441,64 @@ async function findPageReferences(model: IModel, page: pages.Page): Promise<any[
 async function findReferences(model: IModel, microflow: microflows.Microflow): Promise<any[]> {
     const references: any[] = [];
     const allPages = model.allPages();
+
+    console.log(`Starte Suche nach Referenzen für Microflow: ${microflow.name} (${microflow.id})`);
+    console.log(`Anzahl aller Seiten im Modell: ${allPages.length}`);
+
+    // Suche in Seiten
     for (const page of allPages) {
+        console.log(`Prüfe Seite: ${page.name}`);
         if (page.isLoaded) {
             const layout = await page.layoutCall?.layout?.load();
+            console.log(`Layout der Seite ${page.name}:`, layout?.name);
+
             const widgets = layout?.widgets || [];
             for (const widget of widgets) {
-                if (widget instanceof pages.ActionButton && widget.action instanceof pages.MicroflowClientAction && widget.action.microflowSettings.microflow?.id === microflow.id) {
-                    references.push(widget);
-                }
-            }
+                            if (
+                                widget instanceof pages.ActionButton &&
+                                widget.action instanceof pages.MicroflowClientAction &&
+                                widget.action.microflowSettings.microflow?.id === microflow.id
+                            ) {
+                                console.log(`Gefundene Referenz im Widget: ${widget.structureTypeName} auf Seite ${page.name}`);
+                                references.push(widget);
+                            }
+                        }
+        } else {
+            console.log(`Seite ${page.name} ist nicht geladen.`);
         }
     }
 
+    console.log(`Suche in Seiten abgeschlossen. Gefundene Referenzen: ${references.length}`);
+
+    // Suche in Microflows
     const allMicroflows = model.allMicroflows();
+    console.log(`Anzahl aller Microflows im Modell: ${allMicroflows.length}`);
+
     for (const mf of allMicroflows) {
+        console.log(`Prüfe Microflow: ${mf.name}`);
         const loadedMf = await mf.load();
+
         if (loadedMf.objectCollection) {
+            console.log(`Microflow ${mf.name} hat eine ObjectCollection.`);
             const microflowObjects = loadedMf.objectCollection.objects || [];
+
             for (const obj of microflowObjects) {
-                if (obj instanceof microflows.ActionActivity && obj.action instanceof microflows.MicroflowCallAction && obj.action.microflowCall?.microflow?.id === microflow.id) {
+                if (
+                    obj instanceof microflows.ActionActivity &&
+                    obj.action instanceof microflows.MicroflowCallAction &&
+                    obj.action.microflowCall?.microflow?.id === microflow.id
+                ) {
+                    console.log(`Gefundene Referenz in Microflow-Aktion: ${obj.structureTypeName} in ${mf.name}`);
                     references.push(obj);
                 }
             }
+        } else {
+            console.log(`Microflow ${mf.name} hat keine ObjectCollection.`);
         }
     }
+
+    console.log(`Suche in Microflows abgeschlossen. Gefundene Referenzen: ${references.length}`);
+    console.log(`Gesamtanzahl der Referenzen für ${microflow.name}: ${references.length}`);
 
     return references;
 }

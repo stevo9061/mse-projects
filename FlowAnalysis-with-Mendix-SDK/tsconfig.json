@@ -111,6 +111,6 @@
   },
   "files": [
     "script.ts",
-    "usecase1.ts"
+    "usecase1-old.ts"
   ]
 }

@@ -56,10 +56,11 @@ console.log = function (message) {
 };
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var client, app, workingCopy, model, usedMicroflows, microflowsCC, usedNanoflows, nanoflowCC;
+        var client, app, workingCopy, model, usedMicroflows, microflowsCC;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    console.log("Starte Main-Funktion...");
                     client = new mendixplatformsdk_1.MendixPlatformClient();
                     return [4 /*yield*/, client.getApp("33653cf8-d242-4d6d-8548-c09dde9c0ead")];
                 case 1:
@@ -74,12 +75,6 @@ function main() {
                 case 4:
                     usedMicroflows = _a.sent();
                     microflowsCC = calculateComplexityForMicroflows(usedMicroflows);
-                    return [4 /*yield*/, findUsedNanoflows(model)];
-                case 5:
-                    usedNanoflows = _a.sent();
-                    return [4 /*yield*/, calculateComplexityForNanoflows(usedNanoflows)];
-                case 6:
-                    nanoflowCC = _a.sent();
                     return [2 /*return*/];
             }
         });
@@ -98,6 +93,7 @@ function collectAllMicroflows(model) {
         });
     });
 }
+//TODO: Wie kann ich find references hier entfernen
 function findUsedMicroflows(model) {
     return __awaiter(this, void 0, void 0, function () {
         var allMicroflows, usedMicroflows, _i, allMicroflows_1, mf, loadedMicroflow, references;
@@ -105,18 +101,25 @@ function findUsedMicroflows(model) {
             switch (_a.label) {
                 case 0:
                     allMicroflows = model.allMicroflows();
+                    console.log("Anzahl aller Microflows im Modell: ".concat(allMicroflows.length));
                     usedMicroflows = [];
                     _i = 0, allMicroflows_1 = allMicroflows;
                     _a.label = 1;
                 case 1:
                     if (!(_i < allMicroflows_1.length)) return [3 /*break*/, 5];
                     mf = allMicroflows_1[_i];
+                    console.log("Verarbeite Microflow: ".concat(mf.name));
                     return [4 /*yield*/, mf.load()];
                 case 2:
                     loadedMicroflow = _a.sent();
+                    if (!loadedMicroflow) {
+                        console.log("Fehler beim Laden von Microflow: ".concat(mf.name));
+                        return [3 /*break*/, 4];
+                    }
                     return [4 /*yield*/, findReferences(model, loadedMicroflow)];
                 case 3:
                     references = _a.sent();
+                    console.log("Referenzen f\u00FCr ".concat(mf.name, ": ").concat(references.length));
                     if (references.length > 0) {
                         usedMicroflows.push(mf);
                     }
@@ -129,11 +132,44 @@ function findUsedMicroflows(model) {
                     usedMicroflows.forEach(function (mf) {
                         console.log("Verwendeter Microflow: ".concat(mf.name));
                     });
-                    return [2 /*return*/, usedMicroflows.length > 0 ? usedMicroflows : []];
+                    return [2 /*return*/, usedMicroflows];
             }
         });
     });
 }
+/*    async function findUsedMicroflows(model: IModel): Promise<microflows.IMicroflow[]> {
+        const allMicroflows = model.allMicroflows();
+        console.log(`Anzahl aller Microflows im Modell: ${allMicroflows.length}`);
+        const usedMicroflows: microflows.IMicroflow[] = [];
+        
+        for (const mf of allMicroflows) {
+            console.log(`Verarbeite Microflow: ${mf.name}`);
+            
+            const loadedMicroflow = await mf.load();
+            if (!loadedMicroflow) {
+                console.log(`Fehler beim Laden von Microflow: ${mf.name}`);
+                continue;
+            }
+            
+            // Anstelle von findReferences gib ein Dummy-Array zurück
+            // const references = await findReferences(model, loadedMicroflow);
+            const references = []; // Dummy-Array
+            
+            console.log(`Referenzen für ${mf.name}: ${references.length}`);
+            
+            if (references.length > 0) {
+                usedMicroflows.push(mf);
+            }
+        }
+        
+        console.log(`Anzahl der verwendeten Microflows: ${usedMicroflows.length}`);
+        usedMicroflows.forEach(mf => {
+            console.log(`Verwendeter Microflow: ${mf.name}`);
+        });
+    
+        return usedMicroflows;
+    }
+*/
 // Verwendete Nanoflows finden
 function findUsedNanoflows(model) {
     return __awaiter(this, void 0, void 0, function () {
@@ -596,50 +632,73 @@ function findReferences(model, microflow) {
                 case 0:
                     references = [];
                     allPages = model.allPages();
+                    console.log("Starte Suche nach Referenzen f\u00FCr Microflow: ".concat(microflow.name, " (").concat(microflow.id, ")"));
+                    console.log("Anzahl aller Seiten im Modell: ".concat(allPages.length));
                     _i = 0, allPages_4 = allPages;
                     _j.label = 1;
                 case 1:
-                    if (!(_i < allPages_4.length)) return [3 /*break*/, 4];
+                    if (!(_i < allPages_4.length)) return [3 /*break*/, 5];
                     page = allPages_4[_i];
+                    console.log("Pr\u00FCfe Seite: ".concat(page.name));
                     if (!page.isLoaded) return [3 /*break*/, 3];
                     return [4 /*yield*/, ((_e = (_d = page.layoutCall) === null || _d === void 0 ? void 0 : _d.layout) === null || _e === void 0 ? void 0 : _e.load())];
                 case 2:
                     layout = _j.sent();
+                    console.log("Layout der Seite ".concat(page.name, ":"), layout === null || layout === void 0 ? void 0 : layout.name);
                     widgets = (layout === null || layout === void 0 ? void 0 : layout.widgets) || [];
                     for (_a = 0, widgets_1 = widgets; _a < widgets_1.length; _a++) {
                         widget = widgets_1[_a];
-                        if (widget instanceof mendixmodelsdk_1.pages.ActionButton && widget.action instanceof mendixmodelsdk_1.pages.MicroflowClientAction && ((_f = widget.action.microflowSettings.microflow) === null || _f === void 0 ? void 0 : _f.id) === microflow.id) {
+                        if (widget instanceof mendixmodelsdk_1.pages.ActionButton &&
+                            widget.action instanceof mendixmodelsdk_1.pages.MicroflowClientAction &&
+                            ((_f = widget.action.microflowSettings.microflow) === null || _f === void 0 ? void 0 : _f.id) === microflow.id) {
+                            console.log("Gefundene Referenz im Widget: ".concat(widget.structureTypeName, " auf Seite ").concat(page.name));
                             references.push(widget);
                         }
                     }
-                    _j.label = 3;
+                    return [3 /*break*/, 4];
                 case 3:
+                    console.log("Seite ".concat(page.name, " ist nicht geladen."));
+                    _j.label = 4;
+                case 4:
                     _i++;
                     return [3 /*break*/, 1];
-                case 4:
-                    allMicroflows = model.allMicroflows();
-                    _b = 0, allMicroflows_2 = allMicroflows;
-                    _j.label = 5;
                 case 5:
-                    if (!(_b < allMicroflows_2.length)) return [3 /*break*/, 8];
-                    mf = allMicroflows_2[_b];
-                    return [4 /*yield*/, mf.load()];
+                    console.log("Suche in Seiten abgeschlossen. Gefundene Referenzen: ".concat(references.length));
+                    allMicroflows = model.allMicroflows();
+                    console.log("Anzahl aller Microflows im Modell: ".concat(allMicroflows.length));
+                    _b = 0, allMicroflows_2 = allMicroflows;
+                    _j.label = 6;
                 case 6:
+                    if (!(_b < allMicroflows_2.length)) return [3 /*break*/, 9];
+                    mf = allMicroflows_2[_b];
+                    console.log("Pr\u00FCfe Microflow: ".concat(mf.name));
+                    return [4 /*yield*/, mf.load()];
+                case 7:
                     loadedMf = _j.sent();
                     if (loadedMf.objectCollection) {
+                        console.log("Microflow ".concat(mf.name, " hat eine ObjectCollection."));
                         microflowObjects = loadedMf.objectCollection.objects || [];
                         for (_c = 0, microflowObjects_1 = microflowObjects; _c < microflowObjects_1.length; _c++) {
                             obj = microflowObjects_1[_c];
-                            if (obj instanceof mendixmodelsdk_1.microflows.ActionActivity && obj.action instanceof mendixmodelsdk_1.microflows.MicroflowCallAction && ((_h = (_g = obj.action.microflowCall) === null || _g === void 0 ? void 0 : _g.microflow) === null || _h === void 0 ? void 0 : _h.id) === microflow.id) {
+                            if (obj instanceof mendixmodelsdk_1.microflows.ActionActivity &&
+                                obj.action instanceof mendixmodelsdk_1.microflows.MicroflowCallAction &&
+                                ((_h = (_g = obj.action.microflowCall) === null || _g === void 0 ? void 0 : _g.microflow) === null || _h === void 0 ? void 0 : _h.id) === microflow.id) {
+                                console.log("Gefundene Referenz in Microflow-Aktion: ".concat(obj.structureTypeName, " in ").concat(mf.name));
                                 references.push(obj);
                             }
                         }
                     }
-                    _j.label = 7;
-                case 7:
+                    else {
+                        console.log("Microflow ".concat(mf.name, " hat keine ObjectCollection."));
+                    }
+                    _j.label = 8;
+                case 8:
                     _b++;
-                    return [3 /*break*/, 5];
-                case 8: return [2 /*return*/, references];
+                    return [3 /*break*/, 6];
+                case 9:
+                    console.log("Suche in Microflows abgeschlossen. Gefundene Referenzen: ".concat(references.length));
+                    console.log("Gesamtanzahl der Referenzen f\u00FCr ".concat(microflow.name, ": ").concat(references.length));
+                    return [2 /*return*/, references];
             }
         });
     });

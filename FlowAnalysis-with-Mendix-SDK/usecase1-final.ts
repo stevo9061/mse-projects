@@ -1,4 +1,4 @@
-import { IModel, microflows, pages, javaactions, IStructure } from "mendixmodelsdk";
+import { IModel, microflows, pages, javaactions, nanoflows, customwidgets, IStructure } from "mendixmodelsdk";
 import { MendixPlatformClient } from "mendixplatformsdk";
 import * as fs from "fs";
 
@@ -21,18 +21,17 @@ async function main() {
 
     const usedMicroflows = await findConnectedMicroflows(model, 'Nav_GuestHomePage');
 
-    console.log(`Gefundene Microflows insgesamt: ${usedMicroflows.length}`);
-//    usedMicroflows.forEach((mf) => console.log(`Microflow: ${mf.name}`));
+    console.log(`Insgesamt gefundene Microflows insgesamt: ${usedMicroflows.length}`);
+  //  usedMicroflows.forEach((mf) => console.log(`Microflow: ${mf.name}`));
 
     const microflowsInUseCC = await calculateComplexityForMicroflows(usedMicroflows);
 
 
-    const usedNanoflows = await findConnectedNanoflows(model, 'Nav_GuestHomePage');
+//    const usedNanoflows = await findNanoflowsInSnippet(model, 'Snip_Login_Button');
+//    console.log(`Insgesamt gefundene Nanoflows insgesamt: ${usedNanoflows.length}`);
 
-    console.log(`Gefundene Nanoflows insgesamt: ${usedNanoflows.length}`);
 
-
-    const usedJavaActions = await findConnectedJavaActions(model, 'Nav_GuestHomePage');
+//    const usedJavaActions = await findConnectedJavaActions(model, 'Nav_GuestHomePage');
 }
 
 async function findConnectedMicroflows(
@@ -183,54 +182,45 @@ function calculateCyclomaticComplexityMicroflows(microflow: microflows.Microflow
     return Math.max(1, complexity);
 }
 
-async function findConnectedNanoflows(
+async function findNanoflowsInSnippet(
     model: IModel,
-    startNanoflowName: string
+    snippetName: string
 ): Promise<microflows.INanoflow[]> {
-    const allNanoflows = model.allNanoflows();
-    const processedNanoflows: Set<string> = new Set();
-    const processedPages: Set<string> = new Set();
     const processedSnippets: Set<string> = new Set();
-    const resultNanoflows: microflows.INanoflow[] = [];
+    const processedPages: Set<string> = new Set();
+    const foundNanoflows: microflows.INanoflow[] = [];
 
-    console.log(`Starte Suche nach verbundenen Nanoflows für "${startNanoflowName}"`);
+    console.log(`Starte Suche nach Nanoflows im Snippet "${snippetName}"`);
 
-    const startNanoflow = allNanoflows.find((nf) => nf.name === startNanoflowName);
-    if (!startNanoflow) {
-        console.error(`Nanoflow "${startNanoflowName}" wurde nicht gefunden.`);
+    // Suche das Snippet
+    const targetSnippet = model.allSnippets().find((snippet) => snippet.name === snippetName);
+    if (!targetSnippet) {
+        console.error(`Snippet "${snippetName}" wurde nicht gefunden.`);
         return [];
     }
 
-    // Verarbeite den Start-Nanoflow
-    await processNanoflow(startNanoflow);
+    // Lade das Snippet
+    const loadedSnippet = await targetSnippet.load();
+    console.log(`Betrete Snippet: ${loadedSnippet.name}`);
 
-    async function processNanoflow(nf: microflows.INanoflow) {
-        if (!nf || processedNanoflows.has(nf.id)) return;
-        processedNanoflows.add(nf.id);
+    // Durchsuche die Widgets des Snippets
+    await processSnippet(loadedSnippet);
 
-        console.log(`Verarbeite Nanoflow: ${nf.name}`);
-        const loadedNanoflow = await nf.load();
-        resultNanoflows.push(loadedNanoflow);
+    async function processSnippet(snippet: pages.Snippet) {
+        if (!snippet || processedSnippets.has(snippet.id)) return;
+        processedSnippets.add(snippet.id);
 
-        if (!loadedNanoflow.objectCollection?.objects) return;
-
-        // Durchlaufe alle Aktivitäten im Nanoflow
-        for (const obj of loadedNanoflow.objectCollection.objects || []) {
-            if (obj instanceof pages.CallNanoflowClientAction) {
-                const calledNanoflow = obj.nanoflow;
-                if (calledNanoflow) {
-                    console.log(`Nanoflow "${nf.name}" ruft Nanoflow "${calledNanoflow.name}" auf.`);
-                    await processNanoflow(calledNanoflow);
-                }
+        const widgets: pages.Widget[] = [];
+        snippet.traverse((structure) => {
+            if (structure instanceof pages.Widget) {
+                widgets.push(structure);
             }
-            if (obj instanceof microflows.ShowPageAction) {
-                const calledPage = obj.pageSettings?.page;
-                if (calledPage) {
-                    console.log(`Nanoflow "${nf.name}" ruft Seite "${calledPage.name}" auf.`);
-                    await processPage(calledPage);
-                }
-            }
-        }
+        });
+
+        console.log(`Widgets im Snippet "${snippet.name}": ${widgets.length}`);
+
+        // Suche nach Nanoflows in den Widgets
+        await processWidgets(widgets, `Snippet: ${snippet.name}`);
     }
 
     async function processPage(page: pages.IPage) {
@@ -247,30 +237,15 @@ async function findConnectedNanoflows(
             }
         });
 
-        console.log(`Widgets auf Seite "${loadedPage.name}":`, widgets.length);
-        await processWidgets(widgets, `Seite: ${loadedPage.name}`);
-    }
-
-    async function processSnippet(snippet: pages.Snippet) {
-        if (!snippet || processedSnippets.has(snippet.id)) return;
-        processedSnippets.add(snippet.id);
-
-        console.log(`Betrete Snippet: ${snippet.name}`);
-        const widgets: pages.Widget[] = [];
-        snippet.traverse((structure) => {
-            if (structure instanceof pages.Widget) {
-                widgets.push(structure);
-            }
-        });
-
-        console.log(`Widgets im Snippet "${snippet.name}":`, widgets.length);
-        await processWidgets(widgets, `Snippet: ${snippet.name}`);
+        console.log(`Widgets auf Seite "${loadedPage.name}": ${widgets.length}`);
+        await processWidgets(widgets, `Seite: ${page.name}`);
     }
 
     async function processWidgets(widgets: pages.Widget[], context: string) {
         for (const widget of widgets) {
             console.log(`Widget: ${widget.structureTypeName}, Name: ${(widget as any).name || "N/A"}`);
-
+    
+            // Verarbeite Nanoflow in ActionButtons
             if (
                 widget instanceof pages.ActionButton &&
                 widget.action instanceof pages.CallNanoflowClientAction &&
@@ -280,7 +255,30 @@ async function findConnectedNanoflows(
                 console.log(`Gefundener Nanoflow "${widgetNanoflow.name}" in ${context}.`);
                 await processNanoflow(widgetNanoflow);
             }
-
+    
+            // Verarbeite Nanoflow in Timer-Events (Custom Widgets)
+            if (widget instanceof customwidgets.CustomWidget && widget.structureTypeName === "CustomWidgets$CustomWidget") {
+                const nanoflow = (widget as any).nanoflow;
+                if (nanoflow) {
+                    console.log(`Gefundener Nanoflow "${nanoflow.name}" im Custom Widget "${(widget as any).name || "N/A"}" in ${context}.`);
+                    await processNanoflow(nanoflow);
+                } else {
+                    console.log(`Widget "${widget.structureTypeName}" in ${context} enthält keinen Nanoflow.`);
+                }
+            }
+    
+            // Verarbeite Buttons mit Page-Referenzen
+            if (
+                widget instanceof pages.ActionButton &&
+                widget.action instanceof pages.PageClientAction &&
+                widget.action.pageSettings?.page
+            ) {
+                const widgetPage = widget.action.pageSettings.page;
+                console.log(`Gefundene Seite "${widgetPage.name}" in ${context} (aufgerufen durch Button).`);
+                await processPage(widgetPage);
+            }
+    
+            // Verarbeite Snippets
             if (widget instanceof pages.SnippetCallWidget && widget.snippetCall?.snippet) {
                 const snippet = await widget.snippetCall.snippet.load();
                 console.log(`Gefundenes Snippet "${snippet.name}" in ${context}.`);
@@ -289,8 +287,15 @@ async function findConnectedNanoflows(
         }
     }
 
-    console.log(`Gesamtanzahl gefundener Nanoflows: ${resultNanoflows.length}`);
-    return resultNanoflows;
+    async function processNanoflow(nf: microflows.INanoflow) {
+        if (!nf || foundNanoflows.some((existing) => existing.id === nf.id)) return;
+
+        console.log(`Verarbeite Nanoflow: ${nf.name}`);
+        foundNanoflows.push(await nf.load());
+    }
+
+    console.log(`Gesamtanzahl gefundener Nanoflows: ${foundNanoflows.length}`);
+    return foundNanoflows;
 }
 
 async function findConnectedJavaActions(
@@ -303,15 +308,18 @@ async function findConnectedJavaActions(
 
     console.log(`Starte Suche nach Java-Actions für Microflow "${startMicroflowName}"`);
 
+    // Finde den Start-Microflow
     const startMicroflow = allMicroflows.find((mf) => mf.name === startMicroflowName);
     if (!startMicroflow) {
         console.error(`Microflow "${startMicroflowName}" wurde nicht gefunden.`);
         return [];
     }
 
+    // Beginne mit der Verarbeitung des Start-Microflows
     await processMicroflow(startMicroflow);
 
     async function processMicroflow(mf: microflows.IMicroflow) {
+        // Vermeide doppelte Verarbeitung
         if (!mf || processedMicroflows.has(mf.id)) return;
         processedMicroflows.add(mf.id);
 
@@ -320,14 +328,24 @@ async function findConnectedJavaActions(
 
         if (!loadedMf.objectCollection) return;
 
+        // Durchlaufe alle Aktivitäten im Microflow
         for (const obj of loadedMf.objectCollection.objects || []) {
+            console.log(`Prüfe Objekt: ${obj.structureTypeName}`);
+
+            // Suche nach Java-Actions
             if (obj instanceof microflows.JavaActionCallAction) {
                 const javaAction = obj.javaAction;
                 if (javaAction) {
                     console.log(`Gefundene Java-Action "${javaAction.name}" in Microflow "${mf.name}".`);
-                    resultJavaActions.push(javaAction);
+                    if (!resultJavaActions.some((ja) => ja.id === javaAction.id)) {
+                        resultJavaActions.push(javaAction);
+                    }
+                } else {
+                    console.warn(`JavaActionCallAction gefunden, aber keine Java-Aktion verknüpft im Microflow "${mf.name}".`);
                 }
             }
+
+            // Rekursive Verarbeitung für aufgerufene Microflows
             if (obj instanceof microflows.ActionActivity && obj.action instanceof microflows.MicroflowCallAction) {
                 const calledMicroflow = obj.action.microflowCall?.microflow;
                 if (calledMicroflow) {
@@ -335,7 +353,79 @@ async function findConnectedJavaActions(
                     await processMicroflow(calledMicroflow);
                 }
             }
+
+            // Prüfe auf Seitenaufrufe
+            if (obj instanceof microflows.ActionActivity && obj.action instanceof microflows.ShowPageAction) {
+                const calledPage = obj.action.pageSettings.page;
+                if (calledPage) {
+                    console.log(`Microflow "${mf.name}" ruft Seite "${calledPage.name}" auf.`);
+                    await processPage(calledPage);
+                }
+            }
         }
+    }
+
+    async function processPage(page: pages.IPage) {
+        console.log(`Betrete Seite: ${page.name}`);
+        const loadedPage = await page.load();
+
+        const widgets: pages.Widget[] = [];
+        loadedPage.traverse((structure) => {
+            if (structure instanceof pages.Widget) {
+                widgets.push(structure);
+            }
+        });
+
+        console.log(`Widgets auf Seite "${loadedPage.name}": ${widgets.length}`);
+        await processWidgets(widgets, `Seite: ${loadedPage.name}`);
+    }
+
+    async function processWidgets(widgets: pages.Widget[], context: string) {
+        for (const widget of widgets) {
+            console.log(`Widget: ${widget.structureTypeName}, Name: ${(widget as any).name || "N/A"}`);
+
+            // Verarbeite Buttons mit Microflow-Referenzen
+            if (
+                widget instanceof pages.ActionButton &&
+                widget.action instanceof pages.MicroflowClientAction &&
+                widget.action.microflowSettings.microflow
+            ) {
+                const widgetMicroflow = widget.action.microflowSettings.microflow;
+                console.log(`Gefundener Microflow "${widgetMicroflow.name}" in ${context}.`);
+                await processMicroflow(widgetMicroflow);
+            }
+
+            // Verarbeite Buttons mit Page-Referenzen
+            if (
+                widget instanceof pages.ActionButton &&
+                widget.action instanceof pages.PageClientAction &&
+                widget.action.pageSettings?.page
+            ) {
+                const widgetPage = widget.action.pageSettings.page;
+                console.log(`Gefundene Seite "${widgetPage.name}" in ${context} (aufgerufen durch Button).`);
+                await processPage(widgetPage);
+            }
+
+            // Verarbeite Snippets
+            if (widget instanceof pages.SnippetCallWidget && widget.snippetCall?.snippet) {
+                const snippet = await widget.snippetCall.snippet.load();
+                console.log(`Gefundenes Snippet "${snippet.name}" in ${context}.`);
+                await processSnippet(snippet);
+            }
+        }
+    }
+
+    async function processSnippet(snippet: pages.Snippet) {
+        console.log(`Betrete Snippet: ${snippet.name}`);
+        const widgets: pages.Widget[] = [];
+        snippet.traverse((structure) => {
+            if (structure instanceof pages.Widget) {
+                widgets.push(structure);
+            }
+        });
+
+        console.log(`Widgets im Snippet "${snippet.name}": ${widgets.length}`);
+        await processWidgets(widgets, `Snippet: ${snippet.name}`);
     }
 
     console.log(`Gesamtanzahl gefundener Java-Actions: ${resultJavaActions.length}`);
