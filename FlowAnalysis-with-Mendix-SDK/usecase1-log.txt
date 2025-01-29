@@ -121,8 +121,17 @@
 [2025-01-27T21:41:03.398Z] Microflow "GenerateUIDAndURL" hat eine Cyclomatic Complexity von 1 
 [2025-01-27T21:41:03.398Z] Gesamte Cyclomatic Complexity aller Microflows: 38 
 
-* Nanoflows: Es sind zwei Nanoflows in dieser App, Skript kann es nicht 
-  auslesen: OIDC.DS_StartWebLogin, OIDC.ACT_StartWebSignIn
+* Nanoflows: Es sind zwei Nanoflows in dieser App mit einer gesamten Cyclomatic Complexity von 5: 
+  - OIDC.DS_StartWebLogin, CC: 2 
+  - OIDC.ACT_StartWebSignIn, CC: 2
+  - DS_GetReturnURL, CC: 1
 
-* JavaActions: Es gibt 7 Java Actions in dieser App: * CopyAttachmentContent, GenerateUUID, GetAppRootURL, GenerateURL, EncryptString, DecryptString, ReplaceEmailTemplateTokens  
+* JavaActions: Es gibt 7 Java Actions in in dieser App mit einer gesamten Cyclomatic Complexity von 38:
+  - CopyAttachmentContent, CC: 1
+  - GenerateUUID, CC: 1
+  - GetAppRootURL, CC: 2
+  - GenerateURL, CC: 2
+  - EncryptString, CC: 8
+  - DecryptString, CC: 21
+  - ReplaceEmailTemplateTokens, CC: 3
 
