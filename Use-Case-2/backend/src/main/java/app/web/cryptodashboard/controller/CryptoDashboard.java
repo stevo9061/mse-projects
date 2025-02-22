@@ -44,6 +44,4 @@ public class CryptoCurrencyController {
         return ResponseEntity.ok(cryptoCurrencyById);
     }
 
-
-
 }

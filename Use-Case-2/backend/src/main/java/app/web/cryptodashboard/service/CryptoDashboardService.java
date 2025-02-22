@@ -4,7 +4,6 @@ import app.web.cryptodashboard.model.CryptoApiResponse;
 import app.web.cryptodashboard.model.CryptoCurrency;
 import app.web.cryptodashboard.model.CryptoCurrencyDTO;
 import app.web.cryptodashboard.repository.CryptoCurrencyRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
