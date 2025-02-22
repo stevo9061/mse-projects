@@ -1,0 +1,137 @@
+[2025-01-27T21:40:40.892Z] Starte Main-Funktion... 
+[2025-01-27T21:40:55.414Z] Starte Suche nach verbundenen Microflows für "Nav_GuestHomePage" 
+[2025-01-27T21:40:55.414Z] Verarbeite Microflow: Nav_GuestHomePage 
+[2025-01-27T21:40:56.031Z] Microflow "Nav_GuestHomePage" ruft Seite "LoginPage" auf. 
+[2025-01-27T21:40:56.031Z] Betrete Seite: LoginPage 
+[2025-01-27T21:40:56.685Z] Widgets auf Seite "LoginPage": 2 
+[2025-01-27T21:40:56.685Z] Widget: Pages$LayoutGrid, Name: layoutGrid1 
+[2025-01-27T21:40:56.685Z] Widget: Pages$SnippetCallWidget, Name: snippetCall1 
+[2025-01-27T21:40:56.912Z] Gefundenes Snippet "LoginSnippet" in Seite: LoginPage. 
+[2025-01-27T21:40:56.913Z] Betrete Snippet: LoginSnippet 
+[2025-01-27T21:40:56.913Z] Widgets im Snippet "LoginSnippet": 9 
+[2025-01-27T21:40:56.913Z] Widget: Pages$DivContainer, Name: container1 
+[2025-01-27T21:40:56.913Z] Widget: Pages$DivContainer, Name: container2 
+[2025-01-27T21:40:56.914Z] Widget: Pages$ValidationMessage, Name: validationMessage1 
+[2025-01-27T21:40:56.914Z] Widget: Pages$LoginIdTextBox, Name: loginIdTextBox1 
+[2025-01-27T21:40:56.914Z] Widget: Pages$PasswordTextBox, Name: passwordTextBox1 
+[2025-01-27T21:40:56.914Z] Widget: Pages$LoginButton, Name: signInButton1 
+[2025-01-27T21:40:56.914Z] Widget: Pages$ActionButton, Name: actionButton1 
+[2025-01-27T21:40:56.914Z] Gefundener Microflow "Step1_ShowForgotPasswordPage" in Snippet: LoginSnippet. 
+[2025-01-27T21:40:56.914Z] Verarbeite Microflow: Step1_ShowForgotPasswordPage 
+[2025-01-27T21:40:57.127Z] Microflow "Step1_ShowForgotPasswordPage" ruft Seite "Step1_ForgotPassword" auf. 
+[2025-01-27T21:40:57.127Z] Betrete Seite: Step1_ForgotPassword 
+[2025-01-27T21:40:57.326Z] Widgets auf Seite "Step1_ForgotPassword": 8 
+[2025-01-27T21:40:57.327Z] Widget: Pages$LayoutGrid, Name: layoutGrid1 
+[2025-01-27T21:40:57.327Z] Widget: Pages$DataView, Name: dataView 
+[2025-01-27T21:40:57.327Z] Widget: Pages$DynamicText, Name: label2 
+[2025-01-27T21:40:57.327Z] Widget: Pages$DivContainer, Name: container1 
+[2025-01-27T21:40:57.327Z] Widget: Pages$Label, Name: label 
+[2025-01-27T21:40:57.327Z] Widget: Pages$DivContainer, Name: container2 
+[2025-01-27T21:40:57.327Z] Widget: Pages$TextBox, Name: textBox2 
+[2025-01-27T21:40:57.327Z] Widget: Pages$ActionButton, Name: microflowButton 
+[2025-01-27T21:40:57.327Z] Gefundener Microflow "Step2_SendEmailRecoverPassword" in Seite: Step1_ForgotPassword. 
+[2025-01-27T21:40:57.327Z] Verarbeite Microflow: Step2_SendEmailRecoverPassword 
+[2025-01-27T21:40:57.545Z] Microflow "Step2_SendEmailRecoverPassword" ruft Microflow "SF_SendEmailRecoverPassword" auf. 
+[2025-01-27T21:40:57.545Z] Verarbeite Microflow: SF_SendEmailRecoverPassword 
+[2025-01-27T21:40:57.787Z] Microflow "SF_SendEmailRecoverPassword" ruft Seite "Step2_ConfirmationMessageReset" auf. 
+[2025-01-27T21:40:57.787Z] Betrete Seite: Step2_ConfirmationMessageReset 
+[2025-01-27T21:40:58.231Z] Widgets auf Seite "Step2_ConfirmationMessageReset": 1 
+[2025-01-27T21:40:58.231Z] Widget: Pages$Label, Name: label 
+[2025-01-27T21:40:58.232Z] Microflow "SF_SendEmailRecoverPassword" ruft Seite "Step2_FailedMessage" auf. 
+[2025-01-27T21:40:58.232Z] Betrete Seite: Step2_FailedMessage 
+[2025-01-27T21:40:58.441Z] Widgets auf Seite "Step2_FailedMessage": 2 
+[2025-01-27T21:40:58.441Z] Widget: Pages$Label, Name: label 
+[2025-01-27T21:40:58.441Z] Widget: Pages$Label, Name: label1 
+[2025-01-27T21:40:58.442Z] Microflow "SF_SendEmailRecoverPassword" ruft Microflow "SF_CreateAndSendEmailForReset" auf. 
+[2025-01-27T21:40:58.442Z] Verarbeite Microflow: SF_CreateAndSendEmailForReset 
+[2025-01-27T21:40:58.654Z] Microflow "SF_CreateAndSendEmailForReset" ruft Microflow "SUB_CreateLogItem" auf. 
+[2025-01-27T21:40:58.654Z] Verarbeite Microflow: SUB_CreateLogItem 
+[2025-01-27T21:40:59.450Z] Microflow "SF_CreateAndSendEmailForReset" ruft Microflow "SF_CreateAndSendEmail" auf. 
+[2025-01-27T21:40:59.451Z] Verarbeite Microflow: SF_CreateAndSendEmail 
+[2025-01-27T21:40:59.713Z] Microflow "SF_CreateAndSendEmail" ruft Microflow "SUB_EmailMessage_SetAttachments" auf. 
+[2025-01-27T21:40:59.713Z] Verarbeite Microflow: SUB_EmailMessage_SetAttachments 
+[2025-01-27T21:40:59.922Z] Microflow "SF_CreateAndSendEmail" ruft Microflow "Decrypt" auf. 
+[2025-01-27T21:40:59.923Z] Verarbeite Microflow: Decrypt 
+[2025-01-27T21:41:00.151Z] Microflow "SF_CreateAndSendEmail" ruft Microflow "DecryptForgotPasswordURL" auf. 
+[2025-01-27T21:41:00.152Z] Verarbeite Microflow: DecryptForgotPasswordURL 
+[2025-01-27T21:41:00.780Z] Microflow "DecryptForgotPasswordURL" ruft Microflow "Decrypt" auf. 
+[2025-01-27T21:41:00.781Z] Microflow "SF_CreateAndSendEmail" ruft Microflow "SUB_CreateLogItem" auf. 
+[2025-01-27T21:41:00.781Z] Microflow "SF_CreateAndSendEmail" ruft Microflow "SUB_CreateLogItem" auf. 
+[2025-01-27T21:41:00.781Z] Microflow "SF_CreateAndSendEmail" ruft Microflow "SUB_CreateLogItem" auf. 
+[2025-01-27T21:41:00.781Z] Microflow "SF_CreateAndSendEmailForReset" ruft Microflow "SF_CreateAndSendEmail" auf. 
+[2025-01-27T21:41:00.781Z] Microflow "SF_SendEmailRecoverPassword" ruft Microflow "SF_CreateForgotPasswordRequest" auf. 
+[2025-01-27T21:41:00.781Z] Verarbeite Microflow: SF_CreateForgotPasswordRequest 
+[2025-01-27T21:41:01.000Z] Microflow "SF_CreateForgotPasswordRequest" ruft Microflow "GetValidUntilDateTime" auf. 
+[2025-01-27T21:41:01.001Z] Verarbeite Microflow: GetValidUntilDateTime 
+[2025-01-27T21:41:01.220Z] Microflow "SF_SendEmailRecoverPassword" ruft Seite "Step2_ConfirmationMessageReset" auf. 
+[2025-01-27T21:41:01.220Z] Widget: Pages$ActionButton, Name: actionButton2 
+[2025-01-27T21:41:01.220Z] Gefundener Microflow "Step1_ShowSignupPage" in Snippet: LoginSnippet. 
+[2025-01-27T21:41:01.221Z] Verarbeite Microflow: Step1_ShowSignupPage 
+[2025-01-27T21:41:01.425Z] Microflow "Step1_ShowSignupPage" ruft Seite "Step1_SignupEnterInfo" auf. 
+[2025-01-27T21:41:01.425Z] Betrete Seite: Step1_SignupEnterInfo 
+[2025-01-27T21:41:01.638Z] Widgets auf Seite "Step1_SignupEnterInfo": 8 
+[2025-01-27T21:41:01.639Z] Widget: Pages$LayoutGrid, Name: layoutGrid1 
+[2025-01-27T21:41:01.639Z] Widget: Pages$DataView, Name: dataView 
+[2025-01-27T21:41:01.639Z] Widget: Pages$DivContainer, Name: container1 
+[2025-01-27T21:41:01.639Z] Widget: Pages$Label, Name: label 
+[2025-01-27T21:41:01.639Z] Widget: Pages$DivContainer, Name: container2 
+[2025-01-27T21:41:01.639Z] Widget: Pages$TextBox, Name: textBox3 
+[2025-01-27T21:41:01.640Z] Widget: Pages$TextBox, Name: textBox2 
+[2025-01-27T21:41:01.640Z] Widget: Pages$ActionButton, Name: actionButton1 
+[2025-01-27T21:41:01.640Z] Gefundener Microflow "MB_Step2_SendConfirmationEmail" in Seite: Step1_SignupEnterInfo. 
+[2025-01-27T21:41:01.640Z] Verarbeite Microflow: MB_Step2_SendConfirmationEmail 
+[2025-01-27T21:41:01.876Z] Microflow "MB_Step2_SendConfirmationEmail" ruft Microflow "SF_CheckForDuplicateAccount" auf. 
+[2025-01-27T21:41:01.876Z] Verarbeite Microflow: SF_CheckForDuplicateAccount 
+[2025-01-27T21:41:02.418Z] Microflow "MB_Step2_SendConfirmationEmail" ruft Microflow "SF_CreateAndSendEmailForSignup" auf. 
+[2025-01-27T21:41:02.419Z] Verarbeite Microflow: SF_CreateAndSendEmailForSignup 
+[2025-01-27T21:41:02.623Z] Microflow "SF_CreateAndSendEmailForSignup" ruft Microflow "SUB_CreateLogItem" auf. 
+[2025-01-27T21:41:02.623Z] Microflow "SF_CreateAndSendEmailForSignup" ruft Microflow "SF_CreateAndSendEmail" auf. 
+[2025-01-27T21:41:02.623Z] Microflow "MB_Step2_SendConfirmationEmail" ruft Microflow "UserAccountValidation" auf. 
+[2025-01-27T21:41:02.623Z] Verarbeite Microflow: UserAccountValidation 
+[2025-01-27T21:41:02.943Z] Microflow "MB_Step2_SendConfirmationEmail" ruft Microflow "GenerateUIDAndURL" auf. 
+[2025-01-27T21:41:02.944Z] Verarbeite Microflow: GenerateUIDAndURL 
+[2025-01-27T21:41:03.174Z] Microflow "MB_Step2_SendConfirmationEmail" ruft Seite "Step2_FailedMessage" auf. 
+[2025-01-27T21:41:03.174Z] Microflow "MB_Step2_SendConfirmationEmail" ruft Seite "Step2_ConfirmationMessageReset" auf. 
+[2025-01-27T21:41:03.174Z] Microflow "MB_Step2_SendConfirmationEmail" ruft Seite "Step2_ConfirmationMessageSignup" auf. 
+[2025-01-27T21:41:03.175Z] Betrete Seite: Step2_ConfirmationMessageSignup 
+[2025-01-27T21:41:03.372Z] Widgets auf Seite "Step2_ConfirmationMessageSignup": 1 
+[2025-01-27T21:41:03.373Z] Widget: Pages$Label, Name: label 
+[2025-01-27T21:41:03.373Z] Microflow "MB_Step2_SendConfirmationEmail" ruft Microflow "SF_SendEmailRecoverPassword" auf. 
+[2025-01-27T21:41:03.373Z] Microflow "MB_Step2_SendConfirmationEmail" ruft Microflow "GetValidUntilDateTime" auf. 
+[2025-01-27T21:41:03.374Z] Widget: Pages$ActionButton, Name: actionButton4 
+[2025-01-27T21:41:03.374Z] Insgesamt gefundene Microflows insgesamt: 18 
+[2025-01-27T21:41:03.374Z] Beginne mit der Berechnung der Cyclomatic Complexity... 
+[2025-01-27T21:41:03.376Z] Microflow "Nav_GuestHomePage" hat eine Cyclomatic Complexity von 1 
+[2025-01-27T21:41:03.377Z] Microflow "Step1_ShowForgotPasswordPage" hat eine Cyclomatic Complexity von 1 
+[2025-01-27T21:41:03.378Z] Microflow "Step2_SendEmailRecoverPassword" hat eine Cyclomatic Complexity von 1 
+[2025-01-27T21:41:03.379Z] Microflow "SF_SendEmailRecoverPassword" hat eine Cyclomatic Complexity von 2 
+[2025-01-27T21:41:03.381Z] Microflow "SF_CreateAndSendEmailForReset" hat eine Cyclomatic Complexity von 3 
+[2025-01-27T21:41:03.382Z] Microflow "SUB_CreateLogItem" hat eine Cyclomatic Complexity von 1 
+[2025-01-27T21:41:03.383Z] Microflow "SF_CreateAndSendEmail" hat eine Cyclomatic Complexity von 5 
+[2025-01-27T21:41:03.385Z] Microflow "SUB_EmailMessage_SetAttachments" hat eine Cyclomatic Complexity von 3 
+[2025-01-27T21:41:03.386Z] Microflow "Decrypt" hat eine Cyclomatic Complexity von 3 
+[2025-01-27T21:41:03.387Z] Microflow "DecryptForgotPasswordURL" hat eine Cyclomatic Complexity von 1 
+[2025-01-27T21:41:03.389Z] Microflow "SF_CreateForgotPasswordRequest" hat eine Cyclomatic Complexity von 2 
+[2025-01-27T21:41:03.390Z] Microflow "GetValidUntilDateTime" hat eine Cyclomatic Complexity von 1 
+[2025-01-27T21:41:03.392Z] Microflow "Step1_ShowSignupPage" hat eine Cyclomatic Complexity von 1 
+[2025-01-27T21:41:03.393Z] Microflow "MB_Step2_SendConfirmationEmail" hat eine Cyclomatic Complexity von 5 
+[2025-01-27T21:41:03.394Z] Microflow "SF_CheckForDuplicateAccount" hat eine Cyclomatic Complexity von 2 
+[2025-01-27T21:41:03.395Z] Microflow "SF_CreateAndSendEmailForSignup" hat eine Cyclomatic Complexity von 2 
+[2025-01-27T21:41:03.397Z] Microflow "UserAccountValidation" hat eine Cyclomatic Complexity von 3 
+[2025-01-27T21:41:03.398Z] Microflow "GenerateUIDAndURL" hat eine Cyclomatic Complexity von 1 
+[2025-01-27T21:41:03.398Z] Gesamte Cyclomatic Complexity aller Microflows: 38 
+
+* Nanoflows: Es sind zwei Nanoflows in dieser App mit einer gesamten Cyclomatic Complexity von 5: 
+  - OIDC.DS_StartWebLogin, CC: 2 
+  - OIDC.ACT_StartWebSignIn, CC: 2
+  - DS_GetReturnURL, CC: 1
+
+* JavaActions: Es gibt 7 Java Actions in in dieser App mit einer gesamten Cyclomatic Complexity von 38:
+  - CopyAttachmentContent, CC: 1
+  - GenerateUUID, CC: 1
+  - GetAppRootURL, CC: 2
+  - GenerateURL, CC: 2
+  - EncryptString, CC: 8
+  - DecryptString, CC: 21
+  - ReplaceEmailTemplateTokens, CC: 3
+

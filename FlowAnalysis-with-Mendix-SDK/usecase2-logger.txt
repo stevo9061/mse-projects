@@ -1,0 +1,58 @@
+[2025-01-27T11:52:27.469Z] Starte Main-Funktion... 
+[2025-01-27T11:52:36.233Z] Working Copy ID: eea1033c-3077-4a20-b5f0-5e8ade1fb7f2 
+[2025-01-27T11:52:38.909Z] Starte Suche nach Microflows im Modul: CryptoDashboardApp 
+[2025-01-27T11:52:38.909Z] Gefundene Microflows im Modul "CryptoDashboardApp": 8 
+[2025-01-27T11:52:39.231Z] Microflow "IVK_FetchCryptoData" ruft Microflow "SUB_ConvertStringToLong" auf. 
+[2025-01-27T11:52:39.786Z] Microflow "DS_CalculateExchangeRate" ruft Microflow "GET_CurrencyExchangeSingle" auf. 
+[2025-01-27T11:52:39.786Z] Gefundene eindeutige Microflows im Modul "CryptoDashboardApp": 8 
+[2025-01-27T11:52:39.787Z] Microflow: SUB_FetchSingleExchangeObject 
+[2025-01-27T11:52:39.787Z] Microflow: SUB_ConvertCurrencyAndChange 
+[2025-01-27T11:52:39.787Z] Microflow: DS_FetchCurrencyExchangeRates 
+[2025-01-27T11:52:39.787Z] Microflow: IVK_FetchCryptoData 
+[2025-01-27T11:52:39.787Z] Microflow: SUB_ConvertStringToLong 
+[2025-01-27T11:52:39.787Z] Microflow: ACT_ConvertCurrency 
+[2025-01-27T11:52:39.787Z] Microflow: GET_CurrencyExchangeSingle 
+[2025-01-27T11:52:39.787Z] Microflow: DS_CalculateExchangeRate 
+[2025-01-27T11:52:39.787Z] Insgesamt verwendete Microflows im Modul "CryptoDashboardApp": 8
+[2025-01-27T23:09:53.955Z] Starte Main-Funktion... 
+[2025-01-27T23:10:03.849Z] Working Copy ID: c16ab178-6c4e-41f1-b3c1-1c60686e292e 
+[2025-01-27T23:10:04.960Z] Starte Suche nach Microflows im Modul: CryptoDashboardApp 
+[2025-01-27T23:10:04.960Z] Gefundene Microflows im Modul "CryptoDashboardApp": 8 
+[2025-01-27T23:10:05.789Z] Microflow "IVK_FetchCryptoData" ruft Microflow "SUB_ConvertStringToLong" auf. 
+[2025-01-27T23:10:08.182Z] Microflow "DS_CalculateExchangeRate" ruft Microflow "GET_CurrencyExchangeSingle" auf. 
+[2025-01-27T23:10:08.183Z] Gefundene eindeutige Microflows im Modul "CryptoDashboardApp": 8 
+[2025-01-27T23:10:08.183Z] Microflow: SUB_FetchSingleExchangeObject 
+[2025-01-27T23:10:08.183Z] Microflow: SUB_ConvertCurrencyAndChange 
+[2025-01-27T23:10:08.184Z] Microflow: DS_FetchCurrencyExchangeRates 
+[2025-01-27T23:10:08.184Z] Microflow: IVK_FetchCryptoData 
+[2025-01-27T23:10:08.184Z] Microflow: SUB_ConvertStringToLong 
+[2025-01-27T23:10:08.184Z] Microflow: ACT_ConvertCurrency 
+[2025-01-27T23:10:08.184Z] Microflow: GET_CurrencyExchangeSingle 
+[2025-01-27T23:10:08.184Z] Microflow: DS_CalculateExchangeRate 
+[2025-01-27T23:10:08.184Z] Insgesamt verwendete Microflows im Modul "CryptoDashboardApp": 8
+[2025-01-27T23:11:06.643Z] Starte Main-Funktion... 
+[2025-01-27T23:11:16.521Z] Working Copy ID: 5c77b41a-2e1c-4d51-8693-772b415d7d95 
+[2025-01-27T23:11:20.622Z] Starte Suche nach Microflows im Modul: CryptoDashboardApp 
+[2025-01-27T23:11:20.622Z] Gefundene Microflows im Modul "CryptoDashboardApp": 8 
+[2025-01-27T23:11:21.490Z] Microflow "IVK_FetchCryptoData" ruft Microflow "SUB_ConvertStringToLong" auf. 
+[2025-01-27T23:11:22.367Z] Microflow "DS_CalculateExchangeRate" ruft Microflow "GET_CurrencyExchangeSingle" auf. 
+[2025-01-27T23:11:22.367Z] Gefundene eindeutige Microflows im Modul "CryptoDashboardApp": 8 
+[2025-01-27T23:11:22.367Z] Microflow: SUB_FetchSingleExchangeObject 
+[2025-01-27T23:11:22.367Z] Microflow: SUB_ConvertCurrencyAndChange 
+[2025-01-27T23:11:22.368Z] Microflow: DS_FetchCurrencyExchangeRates 
+[2025-01-27T23:11:22.368Z] Microflow: IVK_FetchCryptoData 
+[2025-01-27T23:11:22.368Z] Microflow: SUB_ConvertStringToLong 
+[2025-01-27T23:11:22.368Z] Microflow: ACT_ConvertCurrency 
+[2025-01-27T23:11:22.368Z] Microflow: GET_CurrencyExchangeSingle 
+[2025-01-27T23:11:22.368Z] Microflow: DS_CalculateExchangeRate 
+[2025-01-27T23:11:22.368Z] Insgesamt verwendete Microflows im Modul "CryptoDashboardApp": 8
+[2025-01-27T23:11:22.368Z] Beginne mit der Berechnung der Cyclomatic Complexity... 
+[2025-01-27T23:11:22.370Z] Microflow "SUB_FetchSingleExchangeObject" hat eine Cyclomatic Complexity von 1 
+[2025-01-27T23:11:22.371Z] Microflow "SUB_ConvertCurrencyAndChange" hat eine Cyclomatic Complexity von 2 
+[2025-01-27T23:11:22.372Z] Microflow "DS_FetchCurrencyExchangeRates" hat eine Cyclomatic Complexity von 1 
+[2025-01-27T23:11:22.374Z] Microflow "IVK_FetchCryptoData" hat eine Cyclomatic Complexity von 1 
+[2025-01-27T23:11:22.375Z] Microflow "SUB_ConvertStringToLong" hat eine Cyclomatic Complexity von 2 
+[2025-01-27T23:11:22.376Z] Microflow "ACT_ConvertCurrency" hat eine Cyclomatic Complexity von 1 
+[2025-01-27T23:11:22.378Z] Microflow "GET_CurrencyExchangeSingle" hat eine Cyclomatic Complexity von 1 
+[2025-01-27T23:11:22.379Z] Microflow "DS_CalculateExchangeRate" hat eine Cyclomatic Complexity von 3 
+[2025-01-27T23:11:22.379Z] Gesamte Cyclomatic Complexity aller Microflows: 12 
