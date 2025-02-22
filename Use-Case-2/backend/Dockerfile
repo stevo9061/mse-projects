@@ -1,17 +1,18 @@
-# use official AmazonCorretto-Image to build the application
+# --- Stage 1: Build ---
 FROM maven:3.9.9-amazoncorretto-21 AS build
-
-# set the working directory in container
 WORKDIR /app
 
-# copy the built jar file into the working directory of the container
-COPY target/demo-0.0.1-SNAPSHOT.jar /app/demo-0.0.1-SNAPSHOT.jar
+# Copy only pom.xml, drag dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# expose the port on which the spring boot app is running
+# Copy and compile source code
+COPY src/ ./src/
+RUN mvn package -DskipTests
+
+# --- Stage 2: Run ---
+FROM amazoncorretto:21
+WORKDIR /app
+COPY --from=build /app/target/demo-0.0.1-SNAPSHOT.jar /app/demo-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
-
-# run the application
-ENTRYPOINT ["java", "-jar", "demo-0.0.1-SNAPSHOT.jar"]
-
-
-
+ENTRYPOINT ["java","-jar","demo-0.0.1-SNAPSHOT.jar"]

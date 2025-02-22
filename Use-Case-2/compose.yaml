@@ -36,15 +36,6 @@ services:
     ports:
       - "4200:4200"
     restart: unless-stopped
-    develop:
-      watch:
-        - action: sync
-          path: ./frontend
-          target: /usr/src/app
-          ignore:
-            - node_modules/
-        - action: rebuild
-          path: ./frontend/package.json
        
 volumes:
   db-data:
