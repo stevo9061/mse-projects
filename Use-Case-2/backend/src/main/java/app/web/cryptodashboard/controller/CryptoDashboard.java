@@ -1,37 +1,34 @@
 package app.web.cryptodashboard.controller;
 
 import app.web.cryptodashboard.model.CryptoCurrencyDTO;
-import app.web.cryptodashboard.service.CryptoCurrencyService;
+import app.web.cryptodashboard.service.CryptoDashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@org.springframework.web.bind.annotation.RestController
+@RestController
 @RequestMapping("/api/crypto")
 @CrossOrigin
-public class CryptoCurrencyController {
+public class CryptoDashboard {
 
     @Autowired
-    private CryptoCurrencyService cryptoCurrencyService;
+    private CryptoDashboardService cryptoDashboardService;
 
     @GetMapping("/fetch-and-save")
     public ResponseEntity<List<CryptoCurrencyDTO>> fetchAndSaveCryptoData() {
 
-        cryptoCurrencyService.fetchAndSaveCryptoData();
+        cryptoDashboardService.fetchAndSaveCryptoData();
 
-        List<CryptoCurrencyDTO> cryptoList = cryptoCurrencyService.getAllCryptoCurrencies();
+        List<CryptoCurrencyDTO> cryptoList = cryptoDashboardService.getAllCryptoCurrencies();
 
         return ResponseEntity.ok(cryptoList);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<CryptoCurrencyDTO>> getAllCryptoCurrencies() {
-        List<CryptoCurrencyDTO> cryptoList = cryptoCurrencyService.getAllCryptoCurrencies();
+        List<CryptoCurrencyDTO> cryptoList = cryptoDashboardService.getAllCryptoCurrencies();
 
         return ResponseEntity.ok(cryptoList);
     }
@@ -39,7 +36,7 @@ public class CryptoCurrencyController {
     @GetMapping("/{id}")
     public ResponseEntity<CryptoCurrencyDTO> getCryptoCurrencyById(@PathVariable("id") Long Id) {
 
-        CryptoCurrencyDTO cryptoCurrencyById = cryptoCurrencyService.getCryptoCurrencyByID(Id);
+        CryptoCurrencyDTO cryptoCurrencyById = cryptoDashboardService.getCryptoCurrencyByID(Id);
 
         return ResponseEntity.ok(cryptoCurrencyById);
     }

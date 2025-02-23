@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class CryptoCurrencyService {
+public class CryptoDashboardService {
 
 
     @Autowired
@@ -26,7 +26,7 @@ public class CryptoCurrencyService {
     private RestTemplate restTemplate;
 
 
-    public CryptoCurrencyService(CryptoCurrencyRepository cryptoCurrencyRepository) {
+    public CryptoDashboardService(CryptoCurrencyRepository cryptoCurrencyRepository) {
         this.cryptoCurrencyRepository = cryptoCurrencyRepository;
     }
 

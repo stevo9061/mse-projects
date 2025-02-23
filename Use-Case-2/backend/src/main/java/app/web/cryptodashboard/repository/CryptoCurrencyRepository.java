@@ -11,7 +11,6 @@ import java.util.Optional;
 public interface CryptoCurrencyRepository extends JpaRepository<CryptoCurrency, Long> {
 
     CryptoCurrency findBySymbol(String symbol);
-    Optional<CryptoCurrency> findById(Long id);
 
 }
 

@@ -8,10 +8,9 @@ describe('CryptoTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CryptoTableComponent]
-    })
-    .compileComponents();
-    
+      imports: [CryptoTableComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(CryptoTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

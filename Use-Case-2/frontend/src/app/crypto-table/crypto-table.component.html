@@ -1,0 +1,106 @@
+<h1>Cryptocurrency Market Overview</h1>
+<h2>Real-time data on the top cryptocurrencies</h2>
+
+<div class="mb-3">
+  <p-button
+    type="button"
+    icon="pi pi-chevron-left"
+    (onClick)="prev()"
+    [disabled]="isFirstPage()"
+    styleClass="p-button-text"
+  />
+  <p-button
+    type="button"
+    icon="pi pi-refresh"
+    (onClick)="reset()"
+    styleClass="p-button-text"
+  />
+  <p-button
+    type="button"
+    icon="pi pi-chevron-right"
+    (onClick)="next()"
+    [disabled]="isLastPage()"
+    styleClass="p-button-text"
+  />
+</div>
+<p-table
+  [value]="cryptocurrencies"
+  [paginator]="true"
+  [rows]="20"
+  [first]="first"
+  [showCurrentPageReport]="true"
+  styleClass="p-datatable-striped"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  (onPage)="pageChange($event)"
+  [rowsPerPageOptions]="[10, 25, 50]"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="id" style="width: 8%">
+        Id <p-sortIcon field="id" />
+      </th>
+      <th pSortableColumn="symbol" style="width: 8%">
+        COIN <p-sortIcon field="symbol" />
+      </th>
+      <th pSortableColumn="name" style="width: 8%">
+        NAME <p-sortIcon field="name" />
+      </th>
+      <th pSortableColumn="supply" style="width: 8%">
+        SUPPLY <p-sortIcon field="supply" />
+      </th>
+      <th pSortableColumn="maxSupply" style="width: 8%">
+        MAX SUPPLY <p-sortIcon field="maxSupply" />
+      </th>
+      <th pSortableColumn="marketCapUsd" style="width: 8%">
+        MARKET CAP <p-sortIcon field="marketCapUsd" />
+      </th>
+      <th pSortableColumn="volumeUsd24Hr" style="width: 8%">
+        VOLUME USD 24HR <p-sortIcon field="volumeUsd24Hr" />
+      </th>
+      <th pSortableColumn="priceUsd" style="width: 8%">
+        PRICE USD <p-sortIcon field="priceUsd" />
+      </th>
+      <th pSortableColumn="changePercent24Hr" style="width: 8%">
+        CHANGE PERCENT 24HR <p-sortIcon field="changePercent24Hr" />
+      </th>
+      <th pSortableColumn="vwap24Hr" style="width: 8%">
+        VWAP 24HR <p-sortIcon field="vwap24Hr" />
+      </th>
+      <th pSortableColumn="explorer" style="width: 8%">
+        Explorer <p-sortIcon field="explorer" />
+      </th>
+      <th style="width: 8%">CURRENCY EXCHANGE</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-cryptocurrencies>
+    <tr>
+      <td>{{ cryptocurrencies.id }}</td>
+      <td>{{ cryptocurrencies.symbol }}</td>
+      <td>{{ cryptocurrencies.name }}</td>
+      <td>{{ cryptocurrencies.supply | number: "1.2-2" }}</td>
+      <td>{{ cryptocurrencies.maxSupply | number: "1.0-0" }}</td>
+      <td>{{ cryptocurrencies.marketCapUsd | number: "1.2-2" }}</td>
+      <td>{{ cryptocurrencies.volumeUsd24Hr | number: "1.2-2" }}</td>
+      <td>{{ cryptocurrencies.priceUsd | number: "1.2-2" }}</td>
+      <td>{{ cryptocurrencies.changePercent24Hr | number: "1.2-2" }}</td>
+      <td>{{ cryptocurrencies.vwap24Hr | number: "1.2-2" }}</td>
+      <td>{{ cryptocurrencies.explorer }}</td>
+      <td>
+        <button
+          pButton
+          type="button"
+          label="Details"
+          title="View Details"
+          (click)="goToDetails(cryptocurrencies.id)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" />
+  </ng-template>
+  <ng-template pTemplate="paginatorright">
+    <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text" />
+  </ng-template>
+</p-table>

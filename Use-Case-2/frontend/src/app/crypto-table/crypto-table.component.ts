@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
-import { CommonModule } from '@angular/common'
+import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { HttpClient } from '@angular/common/http';
 import { Cryptocurrency } from '../models/cryptocurrency.model';
@@ -12,25 +12,29 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [TableModule, PaginatorModule, ButtonModule, CommonModule],
   templateUrl: './crypto-table.component.html',
-  styleUrl: './crypto-table.component.css'
+  styleUrl: './crypto-table.component.css',
 })
 export class CryptoTableComponent {
   cryptocurrencies: any[] = [];
   first = 0;
   rows = 20;
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+  ) {}
 
   ngOnInit() {
-    this.loadCryptocurrencies()
+    this.loadCryptocurrencies();
   }
 
   loadCryptocurrencies() {
     // fetch data from the API
-    this.http.get<Cryptocurrency[]>('http://localhost:8080/api/crypto/fetch-and-save')
+    this.http
+      .get<Cryptocurrency[]>('http://localhost:8080/api/crypto/fetch-and-save')
       .subscribe({
         next: (data: Cryptocurrency[]) => {
-          this.cryptocurrencies = data.map(crypto => ({
+          this.cryptocurrencies = data.map((crypto) => ({
             ...crypto,
             supply: Number(crypto.supply) || 0,
             maxSupply: Number(crypto.maxSupply) || 0,
@@ -43,12 +47,12 @@ export class CryptoTableComponent {
         },
         error: (error: any) => {
           console.error('Error fetching cryptocurrencies', error);
-        }
+        },
       });
   }
 
   goToDetails(cryptoId: string) {
-    this.router.navigate(['/crypto-details', cryptoId])
+    this.router.navigate(['/crypto-details', cryptoId]);
   }
 
   next() {
@@ -68,8 +72,10 @@ export class CryptoTableComponent {
     this.rows = event.rows;
   }
 
- isLastPage(): boolean {
-    return this.cryptocurrencies ? this.first >= (this.cryptocurrencies.length - this.rows) : true;
+  isLastPage(): boolean {
+    return this.cryptocurrencies
+      ? this.first >= this.cryptocurrencies.length - this.rows
+      : true;
   }
 
   isFirstPage(): boolean {
