@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/currencies")
+@RequestMapping("/api/currencies")
 @CrossOrigin
 public class CurrencyController {
 
