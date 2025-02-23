@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/crypto")
 @CrossOrigin
-public class CryptoDashboard {
+public class CryptoDashboardController {
 
     @Autowired
     private CryptoDashboardService cryptoDashboardService;
