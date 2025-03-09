@@ -13,14 +13,29 @@
   </mat-form-field>
 
   <mat-form-field>
-      <mat-select placeholder="Select color"
-          formControlName="color">
-          <mat-option value="#feff9c">
-              YELLOW</mat-option>
-          <mat-option value="#7afcff">
-              BLUE</mat-option>
-          <mat-option value="#ff7eb9">
-              PINK</mat-option>
+    <mat-label>Due Date</mat-label>
+      <input matInput [matDatepicker]="picker" placeholder="Choose a date"
+          formControlName="dueDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>    
+  </mat-form-field>
+
+  <mat-form-field>
+      <mat-select placeholder="Priority"
+          formControlName="priority">
+          <mat-option value="LOW">Low</mat-option>
+          <mat-option value="MEDIUM">Medium</mat-option>
+          <mat-option value="HIGH">High</mat-option>
+      </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+        <mat-select placeholder="Status"
+        formControlName="status">
+        <mat-option value="TODO">To Do</mat-option>
+        <mat-option value="INPROGRESS">In Progress</mat-option>
+        <mat-option value="TOREVIEW">To Review</mat-option>
+        <mat-option value="DONE">Done</mat-option>
       </mat-select>
   </mat-form-field>
 

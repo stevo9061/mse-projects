@@ -4,6 +4,7 @@ import com.wkrzywiec.medium.kanban.model.Kanban;
 import com.wkrzywiec.medium.kanban.model.KanbanDTO;
 import com.wkrzywiec.medium.kanban.model.Task;
 import com.wkrzywiec.medium.kanban.model.TaskDTO;
+import com.wkrzywiec.medium.kanban.model.PriorityStatus;
 import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class KanbanServiceImpl implements KanbanService {
 
     private final KanbanRepository kanbanRepository;
 
-    @Override
+     @Override
     @Transactional
     public List<Kanban> getAllKanbanBoards() {
         List<Kanban> kanbanList = new ArrayList<>();
@@ -33,11 +34,11 @@ public class KanbanServiceImpl implements KanbanService {
         return kanbanRepository.findById(id);
     }
 
-    @Override
+/*     @Override
     @Transactional
     public Optional<Kanban> getKanbanByTitle(String title) {
         return kanbanRepository.findByTitle(title);
-    }
+    } */
 
     @Override
     @Transactional
@@ -45,12 +46,12 @@ public class KanbanServiceImpl implements KanbanService {
         return kanbanRepository.save(convertDTOToKanban(kanbanDTO));
     }
 
-    @Override
+/*     @Override
     @Transactional
     public Kanban updateKanban(Kanban oldKanban, KanbanDTO newKanbanDTO) {
         oldKanban.setTitle(newKanbanDTO.getTitle());
         return kanbanRepository.save(oldKanban);
-    }
+    } */
 
     @Override
     @Transactional
@@ -78,6 +79,8 @@ public class KanbanServiceImpl implements KanbanService {
         task.setDescription(taskDTO.getDescription());
         task.setColor(taskDTO.getColor());
         task.setStatus(taskDTO.getStatus());
+        task.setDueDate(taskDTO.getDueDate());
+        task.setPrioritystatus(taskDTO.getPrioritystatus());
         return task;
     }
 }

@@ -33,7 +33,9 @@ export class TaskDialogComponent implements OnInit {
     this.form = fb.group({
       title: [this.task.title, Validators.required],
       description: [this.task.description, Validators.required],
-      color: [this.task.color,Validators.required]
+      dueDate: [this.task.dueDate, Validators.required],
+      priority: [this.task.prioritystatus, Validators.required],
+      status: [this.task.status, Validators.required]
   });
    }
 
@@ -41,11 +43,14 @@ export class TaskDialogComponent implements OnInit {
   }
 
   save() {
+
     this.mapFormToTaskModel();
     if (!this.task.id) {
       this.kanbanService.saveNewTaskInKanban(this.kanbanId, this.task).subscribe();
+      console.log("Task created:", this.task);
     } else {
       this.taskService.updateTask(this.task).subscribe();
+      console.log("Task updated:", this.task);
     }
     this.dialogRef.close();
     window.location.reload();
@@ -58,8 +63,23 @@ export class TaskDialogComponent implements OnInit {
   private mapFormToTaskModel(): void {
     this.task.title = this.form.get('title').value;
     this.task.description = this.form.get('description').value;
-    this.task.color = this.form.get('color').value;
-    this.task.status = 'TODO';
+    this.task.status = this.form.get('status').value;
+    const dateVal = this.form.get('dueDate').value;
+    this.task.dueDate = new Date(dateVal).toISOString().split('T')[0];
+    this.task.prioritystatus = this.form.get('priority').value;
+
+    switch (this.task.prioritystatus) {
+      case 'LOW':
+        this.task.color = '#7afcff';
+        break;
+      case 'MEDIUM':
+        this.task.color = '#feff9c';
+        break;
+      case 'HIGH':
+        this.task.color = '#ff0000';
+        break;
+    }
+    
   }
 
 }

@@ -21,7 +21,7 @@ public class KanbanController {
 
     private final KanbanService kanbanService;
 
-    @GetMapping("/")
+     @GetMapping("/")
     @ApiOperation(value="View a list of all Kanban boards", response = Kanban.class, responseContainer = "List")
     public ResponseEntity<?> getAllKanbans(){
         try {
@@ -33,7 +33,7 @@ public class KanbanController {
         }
     }
 
-    @GetMapping("/{id}")
+     @GetMapping("/{id}")
     @ApiOperation(value="Find a Kanban board info by its id", response = Kanban.class)
     public ResponseEntity<?> getKanban(@PathVariable Long id){
         try {
@@ -50,7 +50,7 @@ public class KanbanController {
         }
     }
 
-    @GetMapping("")
+/*     @GetMapping("")
     @ApiOperation(value="Find a Kanban board info by its title", response = Kanban.class)
     public ResponseEntity<?> getKanbanByTitle(@RequestParam String title){
         try {
@@ -65,7 +65,7 @@ public class KanbanController {
         } catch (Exception e) {
             return errorResponse();
         }
-    }
+    } */
 
     @PostMapping("/")
     @ApiOperation(value="Save new Kanban board", response = Kanban.class)
@@ -79,7 +79,7 @@ public class KanbanController {
         }
     }
 
-    @PutMapping("/{id}")
+/*     @PutMapping("/{id}")
     @ApiOperation(value="Update a Kanban board with specific id", response = Kanban.class)
     public ResponseEntity<?> updateKanban(@PathVariable Long id, @RequestBody KanbanDTO kanbanDTO){
         try {
@@ -95,7 +95,7 @@ public class KanbanController {
             return errorResponse();
         }
     }
-
+ */
     @DeleteMapping("/{id}")
     @ApiOperation(value="Delete Kanban board with specific id", response = String.class)
     public ResponseEntity<?> deleteKanban(@PathVariable Long id){
