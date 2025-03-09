@@ -111,4 +111,14 @@ export class KanbanComponent implements OnInit {
     };
     this.dialog.open(TaskDialogComponent, dialogConfig)
   }
+
+  get donePercentage(): number {
+    const total = this.todos.length + this.inprogress.length + this.toreview.length + this.dones.length;
+
+    if (total === 0) {
+      return 0;
+    }
+
+    return (this.dones.length / total) * 100;
+  }
 }

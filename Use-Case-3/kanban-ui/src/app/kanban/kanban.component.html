@@ -5,6 +5,14 @@
   <div>
     <button mat-raised-button (click)="openDialogForNewTask()">+ Create Task</button>
   </div>
+  <div class="progress-container">
+    <mat-progress-bar
+      class="progress-bar"
+      mode="determinate"
+      [value]="donePercentage">
+    </mat-progress-bar>
+    <p>{{ donePercentage | number:'1.0-0' }}%</p>
+  </div>
   <div class="kanban-board">
     <div class="list-container">
         <h2>To do</h2>
