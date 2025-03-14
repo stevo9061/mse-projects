@@ -36,4 +36,7 @@ public class TaskDTO {
     @ApiModelProperty(position = 6)
     private PriorityStatus prioritystatus;
 
+    @ApiModelProperty(position = 7)
+    private String uploadedFileName;
+
 }

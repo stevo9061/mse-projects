@@ -33,12 +33,19 @@
         <comment>Add kanban_id column to task table</comment>
     </changeSet>
 
-    <changeSet id="5" author="Stefan Bittgen">
-    <sqlFile path="05_add_due_date_and_priority.sql"
+    <changeSet id="4" author="Stefan Bittgen">
+    <sqlFile path="04_add_due_date_and_priority.sql"
              relativeToChangelogFile="true"
              splitStatements="true"
              stripComments="true"/>
     <comment>Add due_date and prioritystatus columns to task table</comment>
+</changeSet>
+
+<changeSet id="5" author="Stefan Bittgen">
+    <comment>Add file_name column to task table</comment>
+    <addColumn tableName="task">
+        <column name="file_name" type="VARCHAR(255)"/>
+    </addColumn>
 </changeSet>
 
 </databaseChangeLog>

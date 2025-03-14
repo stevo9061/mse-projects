@@ -44,7 +44,16 @@
         formControlName="description" class="description-area">
     </textarea>
   </mat-form-field>
-</mat-dialog-content>
+
+
+<button mat-raised-button (click)="fileInput.click()">Datei auswählen</button>
+<input #fileInput type="file" style="display: none" (change)="onFileSelected($event)" />
+
+<div *ngIf="task.uploadedFileName">
+  Bereits hochgeladen: {{ task.uploadedFileName }}
+  <button (click)="getFile(task.id, task.uploadedFileName)">Download</button>
+</div>
+
 
 <mat-dialog-actions>
   <button class="mat-raised-button"(click)="close()">Close</button>

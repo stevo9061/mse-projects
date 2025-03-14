@@ -7,5 +7,5 @@ export class Task {
     status: string;
     dueDate: string;
     prioritystatus: 'LOW' | 'MEDIUM' | 'HIGH';
-    
+    uploadedFileName: string;
 }

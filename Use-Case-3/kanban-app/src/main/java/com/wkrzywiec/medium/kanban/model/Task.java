@@ -44,4 +44,8 @@ public class Task {
     @Enumerated(EnumType.STRING)
     @ApiModelProperty(position = 7)
     private PriorityStatus prioritystatus;
+
+    @Column(name = "file_name")
+    @ApiModelProperty(position = 8)
+    private String uploadedFileName;
 }
