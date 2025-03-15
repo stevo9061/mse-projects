@@ -45,13 +45,20 @@
     </textarea>
   </mat-form-field>
 
+<!-- Button für Dateiauswahl -->
+<button mat-raised-button (click)="fileInput.click()">Dateien auswählen</button>
+<!-- Mehrere Dateien wählen -->
+<input #fileInput type="file" style="display: none" (change)="onFilesSelected($event)" multiple>
 
-<button mat-raised-button (click)="fileInput.click()">Datei auswählen</button>
-<input #fileInput type="file" style="display: none" (change)="onFileSelected($event)" />
-
-<div *ngIf="task.uploadedFileName">
-  Bereits hochgeladen: {{ task.uploadedFileName }}
-  <button (click)="getFile(task.id, task.uploadedFileName)">Download</button>
+<!-- Anzeige der bereits hochgeladenen Dateien -->
+<div *ngIf="task.uploadedFileNames?.length">
+  <p>Bereits hochgeladen:</p>
+  <ul>
+    <li *ngFor="let fileName of task.uploadedFileNames">
+      {{ fileName }}
+      <button (click)="getFile(task.id, fileName)">Download</button>
+    </li>
+  </ul>
 </div>
 
 

@@ -16,7 +16,7 @@ export class TaskDialogComponent implements OnInit {
   kanbanId: String;
   task: Task;
   form: FormGroup;
-  selectedFile: File;
+  selectedFiles: File[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -69,10 +69,10 @@ export class TaskDialogComponent implements OnInit {
         this.task = newTask;
 
       // Datei Upload?
-      console.log('[save()] selectedFile:', this.selectedFile, 'task.id:', this.task.id);
-      if (this.selectedFile && this.task.id) {
-        this.handleUpload(this.task.id, this.selectedFile);
-
+      console.log('[save()] selectedFile:', this.selectedFiles, 'task.id:', this.task.id);
+      if (this.selectedFiles.length && this.task.id) {
+  //      this.handleUpload(this.task.id, this.selectedFile);
+          this.handleUpload(this.task.id, this.selectedFiles);
       } else {
         console.log('[save()] Keine Datei ausgewählt oder keine Task-ID');
         // Falls keine Datei ausgewählt wurde
@@ -91,9 +91,10 @@ export class TaskDialogComponent implements OnInit {
         console.log('[save()] Task aktualisiert:', updatedTask);
         this.task = updatedTask;
 
-        if (this.selectedFile && this.task.id) {
-        this.handleUpload(this.task.id, this.selectedFile);
-        } else {
+        if (this.selectedFiles.length && this.task.id) {
+    //    this.handleUpload(this.task.id, this.selectedFile);
+          this.handleUpload(this.task.id, this.selectedFiles);
+  } else {
           console.log('[save()] Keine Datei ausgewählt oder keine Task-ID');
           this.closeDialog();
         }
@@ -140,15 +141,28 @@ export class TaskDialogComponent implements OnInit {
     
   }
 
-  onFileSelected(event: any): void {
+
+  onFilesSelected(event: any): void {
+
     // Datei auswählen
-    this.selectedFile = event.target.files[0];
-    console.log('[onFileSelected()] selectedFile:', this.selectedFile);
+ const files: FileList = event.target.files;
+
+// Jede neu ausgewählte Datei hinzufügen
+ for (let i = 0; i < files.length; i++) {
+  this.selectedFiles.push(files.item(i));
+ }
+ console.log('[onFilesSelected()] selectedFiles:', this.selectedFiles);
+
     // Im Frontend-Task-Objekt nur als Vorschau
     // (persistiert erst nach Upload + DB-Speicherung)
-    if (this.selectedFile) {
-    this.task.uploadedFileName = this.selectedFile.name;
+      if (!this.task.uploadedFileNames) {
+        this.task.uploadedFileNames = [];
+      }
+   
+    for (let i = 0; i < files.length; i++) {
+      this.task.uploadedFileNames.push(files.item(i).name);
     }
+    
   }
 
   getFile(taskId: number, filename: string) {
@@ -170,20 +184,35 @@ export class TaskDialogComponent implements OnInit {
     });
   }
 
-  private handleUpload(taskId: number, selectedFile: File): void {
-    console.log('[handleUpload()] Start -> taskId=', taskId, 'File:', selectedFile);
 
+
+  private handleUpload(taskId: number, files: File[]) {
+
+    console.log('[uploadAllFiles()] -> Starte Upload-Schleife, Files:', files);
+    let uploadsPending = files.length;
+
+    files.forEach(file => {
+      console.log('[uploadAllFiles()] -> Starte Upload-Schleife, Files:', files);
     // Upload-Aufruf
-    this.taskService.uploadFileForTask(taskId, selectedFile).subscribe({
+    this.taskService.uploadFileForTask(taskId, file).subscribe({
       
       next: (returnedFilename) => {
         console.log('[handleUpload()] Datei hochgeladen, returnedFilename:', returnedFilename);
      
+        if (!this.task.uploadedFileNames) {
+          this.task.uploadedFileNames = [];
+        }
         // Frontend-Task-Objekt updaten (temporär)
-        this.task.uploadedFileName = returnedFilename;
+        this.task.uploadedFileNames.push(returnedFilename);
 
-        // Task erneut vom Backend holen, damit wir den
-        // in der DB gespeicherten Dateinamen sehen
+        uploadsPending--;
+
+        if (uploadsPending === 0) {
+          // Wenn alle Uploads fertig, Task nochmal neu laden
+          this.refreshTask(taskId);
+        }
+
+        // Optional: Hole den Task neu, um die DB-Änderung zu bestätigen
         this.taskService.getTaskById(taskId.toString()).subscribe({
           next: (updatedTask) => {
           console.log('[handleUpload()] Aktualisierter Task:', updatedTask);
@@ -193,7 +222,11 @@ export class TaskDialogComponent implements OnInit {
           this.closeDialog();
           },
           error: (err) => {
-            console.error('[handleUpload()] Fehler beim Holen des aktualisierten Tasks:', err);
+            console.error('[uploadAllFiles()] Fehler:', err);
+          uploadsPending--;
+          if (uploadsPending === 0) {
+            this.refreshTask(taskId);
+          }
           }        
 });
       },
@@ -202,5 +235,22 @@ export class TaskDialogComponent implements OnInit {
           this.closeDialog();
       }
     });
+    })
+
+
   }
+
+  private refreshTask(taskId: number) {
+    this.taskService.getTaskById(taskId.toString()).subscribe({
+      next: (updatedTask) => {
+        console.log('[refreshTask()] Aktualisierter Task:', updatedTask);
+        this.task = updatedTask;
+        this.closeDialog();
+      },
+      error: (err) => {
+        console.error('[refreshTask()] Fehler beim Reload des Tasks:', err);
+        this.closeDialog();
+      }
+    });
+}
 }

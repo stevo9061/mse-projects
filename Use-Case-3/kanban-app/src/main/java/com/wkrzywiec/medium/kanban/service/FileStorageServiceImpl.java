@@ -52,7 +52,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             // Task laden und Dateiname speichern
             Task task = taskRepository.findById(taskId)
                     .orElseThrow(() -> new RuntimeException("Task nicht gefunden: " + taskId));
-            task.setUploadedFileName(uploadedFileName);
+            task.getUploadedFileNames().add(uploadedFileName);
             taskRepository.save(task);
 
             return uploadedFileName;

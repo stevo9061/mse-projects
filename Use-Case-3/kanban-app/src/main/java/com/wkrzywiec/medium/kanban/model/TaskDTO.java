@@ -1,6 +1,8 @@
 package com.wkrzywiec.medium.kanban.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -37,6 +39,6 @@ public class TaskDTO {
     private PriorityStatus prioritystatus;
 
     @ApiModelProperty(position = 7)
-    private String uploadedFileName;
+    private List<String> uploadedFileNames;
 
 }

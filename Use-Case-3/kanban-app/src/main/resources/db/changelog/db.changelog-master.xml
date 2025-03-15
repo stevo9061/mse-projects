@@ -42,10 +42,25 @@
 </changeSet>
 
 <changeSet id="5" author="Stefan Bittgen">
-    <comment>Add file_name column to task table</comment>
-    <addColumn tableName="task">
-        <column name="file_name" type="VARCHAR(255)"/>
-    </addColumn>
+    <comment>Create table for @ElementCollection: task_uploaded_files</comment>
+    <createTable tableName="task_uploaded_files">
+        <column name="task_id" type="BIGINT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="file_name" type="VARCHAR(255)">
+            <constraints nullable="false"/>
+        </column>
+    </createTable>
+
+    <addPrimaryKey tableName="task_uploaded_files" 
+                   columnNames="task_id,file_name" 
+                   constraintName="pk_task_uploaded_files"/>
+
+    <addForeignKeyConstraint baseTableName="task_uploaded_files"
+                             baseColumnNames="task_id"
+                             constraintName="fk_task_uploaded_files_task"
+                             referencedTableName="task"
+                             referencedColumnNames="id"/>
 </changeSet>
 
 </databaseChangeLog>
