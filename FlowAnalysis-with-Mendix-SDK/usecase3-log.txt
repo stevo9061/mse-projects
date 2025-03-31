@@ -57,4 +57,8 @@ Gesamte Cyclomatic Complexity aller Nanoflows: 0
 [2025-03-31T12:54:34.898Z] Microflow "RetrieveFiles" hat eine Cyclomatic Complexity von 1 
 [2025-03-31T12:54:34.899Z] 
 Gesamte Cyclomatic Complexity aller Microflows: 25
+
+Der Microflow "POST_Create_New_Task" wurde nur für den Performancetest erstellt.
+
+25 - POST_Create_New_Task = 23. 
  
