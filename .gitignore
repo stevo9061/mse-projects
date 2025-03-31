@@ -1,0 +1,31 @@
+# Node Modules
+node_modules/
+
+# Build-Ordner (je nach Projektkonfiguration)
+dist/
+build/
+lib/
+
+# Temporäre Dateien
+*.tmp
+*.temp
+
+# Betriebssystem-spezifische Dateien
+.DS_Store
+Thumbs.db
+
+# Environment-Variablen
+.env
+.env.*
+
+# IDE- und Editor-Konfigurationsdateien
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# TypeScript Build-Info
+*.tsbuildinfo
+
+# Archivdateien
+*.tgz
