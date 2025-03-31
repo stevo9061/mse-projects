@@ -13,7 +13,6 @@ services:
       - POSTGRES_PASSWORD=kanban
 
   kanban-app:
-    image: maven:3.8.6-openjdk-8-slim
     build: ./kanban-app
     container_name: kanban-app
     environment:

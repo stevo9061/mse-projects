@@ -13,11 +13,11 @@ public interface KanbanService {
 
     Optional<Kanban> getKanbanById(Long id);
 
-    Optional<Kanban> getKanbanByTitle(String title);
+//    Optional<Kanban> getKanbanByTitle(String title);
 
     Kanban saveNewKanban(KanbanDTO kanbanDTO);
 
-    Kanban updateKanban(Kanban oldKanban, KanbanDTO newKanbanDTO);
+ //   Kanban updateKanban(Kanban oldKanban, KanbanDTO newKanbanDTO);
 
     void deleteKanban(Kanban kanban);
 

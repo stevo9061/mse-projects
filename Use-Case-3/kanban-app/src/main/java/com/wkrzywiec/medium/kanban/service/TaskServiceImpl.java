@@ -2,6 +2,7 @@ package com.wkrzywiec.medium.kanban.service;
 
 import com.wkrzywiec.medium.kanban.model.Task;
 import com.wkrzywiec.medium.kanban.model.TaskDTO;
+import com.wkrzywiec.medium.kanban.model.PriorityStatus;
 import com.wkrzywiec.medium.kanban.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,8 @@ public class TaskServiceImpl implements TaskService {
         task.setDescription(taskDTO.getDescription());
         task.setColor(taskDTO.getColor());
         task.setStatus(taskDTO.getStatus());
+        task.setDueDate(taskDTO.getDueDate());
+        task.setPrioritystatus(taskDTO.getPrioritystatus());
         return task;
     }
 
@@ -81,6 +84,13 @@ public class TaskServiceImpl implements TaskService {
         if (Optional.ofNullable((taskDTO.getStatus())).isPresent()) {
             task.setStatus(taskDTO.getStatus());
         }
+        if (Optional.ofNullable((taskDTO.getDueDate())).isPresent()) {
+            task.setDueDate(taskDTO.getDueDate());
+        }        
+        if (Optional.ofNullable((taskDTO.getPrioritystatus())).isPresent()) {
+            task.setPrioritystatus(taskDTO.getPrioritystatus());
+        }
+
         return task;
     }
 }

@@ -27,4 +27,18 @@ export class TaskService {
   getTaskById(id: string): Observable<Task> {
     return this.http.get<Task>(this.kanbanAppUrl + '/tasks/' + id);
   }
+
+  uploadFileForTask(taskId: number, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    console.log("file:", file);
+    console.log("formData:", formData);
+    return this.http.post(`${this.kanbanAppUrl}/task-upload/${taskId}`, formData, { responseType: 'text' });
+  }
+
+  getFile(taskId: number, filename: string): Observable<Blob> {
+    return this.http.get(`${this.kanbanAppUrl}/task-upload/${taskId}/files/${filename}`, { responseType: 'blob' });
+  }
+
+
 }

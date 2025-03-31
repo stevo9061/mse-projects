@@ -33,14 +33,35 @@
         <comment>Add kanban_id column to task table</comment>
     </changeSet>
 
-    <changeSet id="4" author="Wojtek">
-        <sqlFile path="04_task_status.sql"
-                 relativeToChangelogFile="true"
-                 splitStatements="true"
-                 stripComments="true"/>
+    <changeSet id="4" author="Stefan Bittgen">
+    <sqlFile path="04_add_due_date_and_priority.sql"
+             relativeToChangelogFile="true"
+             splitStatements="true"
+             stripComments="true"/>
+    <comment>Add due_date and prioritystatus columns to task table</comment>
+</changeSet>
 
-        <comment>Add status column to task table</comment>
-    </changeSet>
+<changeSet id="5" author="Stefan Bittgen">
+    <comment>Create table for @ElementCollection: task_uploaded_files</comment>
+    <createTable tableName="task_uploaded_files">
+        <column name="task_id" type="BIGINT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="file_name" type="VARCHAR(255)">
+            <constraints nullable="false"/>
+        </column>
+    </createTable>
+
+    <addPrimaryKey tableName="task_uploaded_files" 
+                   columnNames="task_id,file_name" 
+                   constraintName="pk_task_uploaded_files"/>
+
+    <addForeignKeyConstraint baseTableName="task_uploaded_files"
+                             baseColumnNames="task_id"
+                             constraintName="fk_task_uploaded_files_task"
+                             referencedTableName="task"
+                             referencedColumnNames="id"/>
+</changeSet>
 
 </databaseChangeLog>
 

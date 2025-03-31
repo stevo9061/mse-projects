@@ -15,6 +15,23 @@ import { KanbanComponent } from './kanban/kanban.component';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KanbanDialogComponent } from './kanban-dialog/kanban-dialog.component';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
+
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'dd.MM.yyyy',
+  },
+  display: {
+    dateInput: 'dd.MM.yyyy',
+    monthYearLabel: 'MMM yyyy',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM yyyy',
+  }
+};
 
 @NgModule({
   declarations: [
@@ -36,9 +53,14 @@ import { KanbanDialogComponent } from './kanban-dialog/kanban-dialog.component';
     MatButtonModule,
     MatDialogModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatProgressBarModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },],
   bootstrap: [AppComponent],
   entryComponents: [TaskDialogComponent, KanbanDialogComponent]
 })

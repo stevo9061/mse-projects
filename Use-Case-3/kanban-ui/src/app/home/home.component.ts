@@ -23,6 +23,11 @@ export class HomeComponent implements OnInit {
   }
 
   openDialogForNewKanban(): void {
+    if (this.kanbanList && this.kanbanList.length > 0) {
+      console.warn('It exists a kanban board already');
+      return;
+    }
+
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
@@ -35,7 +40,11 @@ export class HomeComponent implements OnInit {
     this.kanbanService.retrieveAllKanbanBoards().subscribe(
 
       response => {
+        console.log('Boards aus dem Backend:', response);
         this.kanbanList = response;
+      },
+      error => {
+        console.error('Error occurred while retrieving kanban boards:', error);
       }
     )
   }

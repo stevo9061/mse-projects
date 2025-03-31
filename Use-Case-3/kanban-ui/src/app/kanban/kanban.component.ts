@@ -18,6 +18,7 @@ export class KanbanComponent implements OnInit {
   kanban: Kanban;
   todos: Task[] = [];
   inprogress: Task[] = [];
+  toreview: Task[] = [];
   dones: Task[] = [];
 
   constructor(
@@ -71,6 +72,7 @@ export class KanbanComponent implements OnInit {
   private splitTasksByStatus(kanban: Kanban): void {
     this.todos = kanban.tasks.filter(t=>t.status==='TODO');
     this.inprogress = kanban.tasks.filter(t=>t.status==='INPROGRESS');
+    this.toreview = kanban.tasks.filter(t=>t.status==='TOREVIEW');
     this.dones = kanban.tasks.filter(t=>t.status==='DONE');
   }
   
@@ -90,7 +92,10 @@ export class KanbanComponent implements OnInit {
       task.status = 'TODO'
     } else if (containerId === 'inpro'){
       task.status = 'INPROGRESS'
-    } else {
+    } else if (containerId === 'toreview'){
+      task.status = 'TOREVIEW'
+    }
+     else {
       task.status = 'DONE'
     }
     this.taskService.updateTask(task).subscribe();
@@ -105,5 +110,15 @@ export class KanbanComponent implements OnInit {
       kanbanId: this.kanban.id
     };
     this.dialog.open(TaskDialogComponent, dialogConfig)
+  }
+
+  get donePercentage(): number {
+    const total = this.todos.length + this.inprogress.length + this.toreview.length + this.dones.length;
+
+    if (total === 0) {
+      return 0;
+    }
+
+    return (this.dones.length / total) * 100;
   }
 }
