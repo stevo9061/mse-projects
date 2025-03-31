@@ -1,65 +1,64 @@
-[2025-03-31T13:48:14.717Z] Starte Suche nach Microflows im Modul: TaskTracker 
-[2025-03-31T13:48:14.718Z] Gefundene Microflows im Modul "TaskTracker": 19 
-[2025-03-31T13:48:15.532Z] Microflow "SaveTask" ruft Microflow "SUB_ValidationTask" auf. 
-[2025-03-31T13:48:21.281Z] Microflow "CreateNewTask" ruft Seite "TaskEdit" auf. 
-[2025-03-31T13:48:21.282Z] Betrete Seite: TaskEdit 
-[2025-03-31T13:48:22.486Z] Widgets auf Seite "TaskEdit": 73 
-[2025-03-31T13:48:22.486Z] Gefundener Microflow "PostComment" auf Seite "TaskEdit". 
-[2025-03-31T13:48:22.487Z] Gefundener Microflow "DownloadFile" auf Seite "TaskEdit". 
-[2025-03-31T13:48:22.679Z] Gefundener Microflow "UploadFile" auf Seite "TaskEdit". 
-[2025-03-31T13:48:22.680Z] Gefundener Microflow "SaveTask" auf Seite "TaskEdit". 
-[2025-03-31T13:48:23.337Z] Microflow "POST_Create_New_Task" ruft Microflow "SUB_ValidationTask" auf. 
-[2025-03-31T13:48:23.731Z] Gefundene eindeutige Microflows im Modul "TaskTracker": 19 
-[2025-03-31T13:48:23.732Z] Microflow: CreateNewComment 
-[2025-03-31T13:48:23.732Z] Microflow: SelectToDoStatus 
-[2025-03-31T13:48:23.732Z] Microflow: SelectDoneStatus 
-[2025-03-31T13:48:23.732Z] Microflow: SaveTask 
-[2025-03-31T13:48:23.732Z] Microflow: SUB_ValidationTask 
-[2025-03-31T13:48:23.732Z] Microflow: RetrieveComments 
-[2025-03-31T13:48:23.733Z] Microflow: SelectMediumPriority 
-[2025-03-31T13:48:23.733Z] Microflow: SelectLowPriority 
-[2025-03-31T13:48:23.733Z] Microflow: SelectReviewStatus 
-[2025-03-31T13:48:23.733Z] Microflow: UpdateTeamProgress 
-[2025-03-31T13:48:23.733Z] Microflow: PostComment 
-[2025-03-31T13:48:23.733Z] Microflow: UploadFile 
-[2025-03-31T13:48:23.733Z] Microflow: CreateNewTask 
-[2025-03-31T13:48:23.733Z] Microflow: DownloadFile 
-[2025-03-31T13:48:23.733Z] Microflow: SelectHighPriority 
-[2025-03-31T13:48:23.733Z] Microflow: SelectInProgressStatus 
-[2025-03-31T13:48:23.733Z] Microflow: POST_Create_New_Task 
-[2025-03-31T13:48:23.733Z] Microflow: CreateNewFile 
-[2025-03-31T13:48:23.733Z] Microflow: RetrieveFiles 
-[2025-03-31T13:48:23.734Z] Beginne mit der Berechnung der Cyclomatic Complexity... 
-[2025-03-31T13:48:23.734Z] Starte Suche nach Nanoflows im Modul: TaskTracker 
-[2025-03-31T13:48:23.734Z] Gefundene Nanoflows im Modul "TaskTracker": 0 
-[2025-03-31T13:48:23.734Z] Gefundene eindeutige Nanoflows im Modul "TaskTracker": 0 
-[2025-03-31T13:48:23.734Z] 
+[2025-03-31T14:50:42.375Z] Starte Suche nach Microflows im Modul: TaskTracker 
+[2025-03-31T14:50:42.375Z] Gefundene Microflows im Modul "TaskTracker": 19 
+[2025-03-31T14:50:44.378Z] Microflow "SaveTask" ruft Microflow "SUB_ValidationTask" auf. 
+[2025-03-31T14:50:47.506Z] Microflow "CreateNewTask" ruft Seite "TaskEdit" auf. 
+[2025-03-31T14:50:47.507Z] Betrete Seite: TaskEdit 
+[2025-03-31T14:50:47.825Z] Widgets auf Seite "TaskEdit": 73 
+[2025-03-31T14:50:47.826Z] Gefundener Microflow "PostComment" auf Seite "TaskEdit". 
+[2025-03-31T14:50:47.826Z] Gefundener Microflow "DownloadFile" auf Seite "TaskEdit". 
+[2025-03-31T14:50:48.072Z] Gefundener Microflow "UploadFile" auf Seite "TaskEdit". 
+[2025-03-31T14:50:48.073Z] Gefundener Microflow "SaveTask" auf Seite "TaskEdit". 
+[2025-03-31T14:50:48.782Z] Microflow "POST_Create_New_Task" ruft Microflow "SUB_ValidationTask" auf. 
+[2025-03-31T14:50:49.249Z] Gefundene eindeutige Microflows im Modul "TaskTracker": 19 
+[2025-03-31T14:50:49.250Z] Microflow: CreateNewComment 
+[2025-03-31T14:50:49.250Z] Microflow: SelectToDoStatus 
+[2025-03-31T14:50:49.250Z] Microflow: SelectDoneStatus 
+[2025-03-31T14:50:49.250Z] Microflow: SaveTask 
+[2025-03-31T14:50:49.250Z] Microflow: SUB_ValidationTask 
+[2025-03-31T14:50:49.250Z] Microflow: RetrieveComments 
+[2025-03-31T14:50:49.250Z] Microflow: SelectMediumPriority 
+[2025-03-31T14:50:49.250Z] Microflow: SelectLowPriority 
+[2025-03-31T14:50:49.250Z] Microflow: SelectReviewStatus 
+[2025-03-31T14:50:49.250Z] Microflow: UpdateTeamProgress 
+[2025-03-31T14:50:49.250Z] Microflow: PostComment 
+[2025-03-31T14:50:49.250Z] Microflow: UploadFile 
+[2025-03-31T14:50:49.250Z] Microflow: CreateNewTask 
+[2025-03-31T14:50:49.250Z] Microflow: DownloadFile 
+[2025-03-31T14:50:49.250Z] Microflow: SelectHighPriority 
+[2025-03-31T14:50:49.250Z] Microflow: SelectInProgressStatus 
+[2025-03-31T14:50:49.250Z] Microflow: POST_Create_New_Task 
+[2025-03-31T14:50:49.250Z] Microflow: CreateNewFile 
+[2025-03-31T14:50:49.250Z] Microflow: RetrieveFiles 
+[2025-03-31T14:50:49.251Z] Beginne mit der Berechnung der Cyclomatic Complexity... 
+[2025-03-31T14:50:49.251Z] Starte Suche nach Nanoflows im Modul: TaskTracker 
+[2025-03-31T14:50:49.251Z] Gefundene Nanoflows im Modul "TaskTracker": 0 
+[2025-03-31T14:50:49.251Z] Gefundene eindeutige Nanoflows im Modul "TaskTracker": 0 
+[2025-03-31T14:50:49.251Z] 
 Gesamte Cyclomatic Complexity aller Nanoflows: 0
  
-[2025-03-31T13:48:23.736Z] Microflow "CreateNewComment" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.737Z] Microflow "SelectToDoStatus" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.738Z] Microflow "SelectDoneStatus" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.740Z] Microflow "SaveTask" hat eine Cyclomatic Complexity von 2 
-[2025-03-31T13:48:23.741Z] Microflow "SUB_ValidationTask" hat eine Cyclomatic Complexity von 4 
-[2025-03-31T13:48:23.742Z] Microflow "RetrieveComments" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.744Z] Microflow "SelectMediumPriority" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.745Z] Microflow "SelectLowPriority" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.746Z] Microflow "SelectReviewStatus" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.748Z] Microflow "UpdateTeamProgress" hat eine Cyclomatic Complexity von 2 
-[2025-03-31T13:48:23.749Z] Microflow "PostComment" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.750Z] Microflow "UploadFile" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.751Z] Microflow "CreateNewTask" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.752Z] Microflow "DownloadFile" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.753Z] Microflow "SelectHighPriority" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.754Z] Microflow "SelectInProgressStatus" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.755Z] Microflow "POST_Create_New_Task" hat eine Cyclomatic Complexity von 2 
-[2025-03-31T13:48:23.756Z] Microflow "CreateNewFile" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.757Z] Microflow "RetrieveFiles" hat eine Cyclomatic Complexity von 1 
-[2025-03-31T13:48:23.757Z] 
+[2025-03-31T14:50:49.251Z] Microflow "CreateNewComment" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.252Z] Microflow "SelectToDoStatus" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.254Z] Microflow "SelectDoneStatus" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.255Z] Microflow "SaveTask" hat eine Cyclomatic Complexity von 2 
+[2025-03-31T14:50:49.256Z] Microflow "SUB_ValidationTask" hat eine Cyclomatic Complexity von 4 
+[2025-03-31T14:50:49.257Z] Microflow "RetrieveComments" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.258Z] Microflow "SelectMediumPriority" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.260Z] Microflow "SelectLowPriority" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.261Z] Microflow "SelectReviewStatus" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.262Z] Microflow "UpdateTeamProgress" hat eine Cyclomatic Complexity von 2 
+[2025-03-31T14:50:49.263Z] Microflow "PostComment" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.265Z] Microflow "UploadFile" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.266Z] Microflow "CreateNewTask" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.267Z] Microflow "DownloadFile" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.268Z] Microflow "SelectHighPriority" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.270Z] Microflow "SelectInProgressStatus" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.271Z] Microflow "POST_Create_New_Task" hat eine Cyclomatic Complexity von 2 
+[2025-03-31T14:50:49.272Z] Microflow "CreateNewFile" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.273Z] Microflow "RetrieveFiles" hat eine Cyclomatic Complexity von 1 
+[2025-03-31T14:50:49.274Z] 
 Gesamte Cyclomatic Complexity aller Microflows: 25
- 
+
 Der Microflow "POST_Create_New_Task" wurde nur für den Performancetest erstellt, daher wird dieser
 für die CC Berechnung ausgenommen.
 
 25 - POST_Create_New_Task = 23. 
- 
