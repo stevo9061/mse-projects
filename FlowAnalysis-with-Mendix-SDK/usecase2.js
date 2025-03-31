@@ -1,7 +1,4 @@
 "use strict";
-// https://docs.mendix.com/apidocs-mxsdk/mxsdk/?_gl=1*1f4kxe4*_gcl_au*MTEzNzQxNDQyMC4xNzM1NTU2NDMw#2-2-mendix-model-sdk
-// https://medium.com/@himanshuagarwal1395/setting-up-environment-variables-in-macos-sierra-f5978369b255
-// https://www.mendix.com/evaluation-guide/enterprise-capabilities/openness-extensibility/openness-api-sdk/
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -56,7 +53,7 @@ console.log = function (message) {
 };
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var client, app, workingCopy, model, usedMicroflows, microflowsCC;
+        var client, app, workingCopy, model, modulename, usedMicroflows, microflowsCC;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -68,138 +65,144 @@ function main() {
                     return [4 /*yield*/, app.createTemporaryWorkingCopy("main")];
                 case 2:
                     workingCopy = _a.sent();
+                    console.log("Working Copy ID: ".concat(workingCopy.workingCopyId));
                     return [4 /*yield*/, workingCopy.openModel()];
                 case 3:
                     model = _a.sent();
-                    return [4 /*yield*/, findUsedMicroflows(model)];
+                    modulename = "CryptoDashboardApp";
+                    return [4 /*yield*/, findModuleMicroflows(model, modulename)];
                 case 4:
                     usedMicroflows = _a.sent();
+                    console.log("Insgesamt verwendete Microflows im Modul \"".concat(modulename, "\":"), usedMicroflows.length);
                     microflowsCC = calculateComplexityForMicroflows(usedMicroflows);
                     return [2 /*return*/];
             }
         });
     });
 }
-function collectAllMicroflows(model) {
+function findModuleMicroflows(model, modulename) {
     return __awaiter(this, void 0, void 0, function () {
-        var allMicroflows;
-        return __generator(this, function (_a) {
-            allMicroflows = model.allMicroflows();
-            console.log("Anzahl der Microflows in der App: ".concat(allMicroflows.length));
-            /*     allMicroflows.forEach(mf => {
-                    console.log(`Microflow-Name: ${mf.name}`);
-                }) */ ;
-            return [2 /*return*/];
-        });
-    });
-}
-//TODO: Wie kann ich find references hier entfernen
-function findUsedMicroflows(model) {
-    return __awaiter(this, void 0, void 0, function () {
-        var allMicroflows, usedMicroflows, _i, allMicroflows_1, mf, loadedMicroflow, references;
+        // 2. Rekursive Funktion zum Verarbeiten von Microflows
+        function processMicroflow(mf) {
+            return __awaiter(this, void 0, void 0, function () {
+                var loadedMf, microflowObjects, _i, microflowObjects_1, obj, calledMicroflow, calledPage;
+                var _a;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            if (!mf || processedMicroflows.has(mf.id))
+                                return [2 /*return*/]; // Überspringe bereits verarbeitete Microflows
+                            processedMicroflows.add(mf.id);
+                            return [4 /*yield*/, mf.load()];
+                        case 1:
+                            loadedMf = _b.sent();
+                            if (!loadedMf.objectCollection)
+                                return [2 /*return*/];
+                            microflowObjects = loadedMf.objectCollection.objects || [];
+                            _i = 0, microflowObjects_1 = microflowObjects;
+                            _b.label = 2;
+                        case 2:
+                            if (!(_i < microflowObjects_1.length)) return [3 /*break*/, 7];
+                            obj = microflowObjects_1[_i];
+                            if (!(obj instanceof mendixmodelsdk_1.microflows.ActionActivity && obj.action instanceof mendixmodelsdk_1.microflows.MicroflowCallAction)) return [3 /*break*/, 4];
+                            calledMicroflow = (_a = obj.action.microflowCall) === null || _a === void 0 ? void 0 : _a.microflow;
+                            if (!calledMicroflow) return [3 /*break*/, 4];
+                            console.log("Microflow \"".concat(mf.name, "\" ruft Microflow \"").concat(calledMicroflow.name, "\" auf."));
+                            resultMicroflows.push(calledMicroflow);
+                            return [4 /*yield*/, processMicroflow(calledMicroflow)];
+                        case 3:
+                            _b.sent(); // Rekursiver Aufruf
+                            _b.label = 4;
+                        case 4:
+                            if (!(obj instanceof mendixmodelsdk_1.microflows.ActionActivity && obj.action instanceof mendixmodelsdk_1.microflows.ShowPageAction)) return [3 /*break*/, 6];
+                            calledPage = obj.action.pageSettings.page;
+                            if (!calledPage) return [3 /*break*/, 6];
+                            console.log("Microflow \"".concat(mf.name, "\" ruft Seite \"").concat(calledPage.name, "\" auf."));
+                            return [4 /*yield*/, processPage(calledPage)];
+                        case 5:
+                            _b.sent(); // Prozessiere die aufgerufene Seite
+                            _b.label = 6;
+                        case 6:
+                            _i++;
+                            return [3 /*break*/, 2];
+                        case 7: return [2 /*return*/];
+                    }
+                });
+            });
+        }
+        // 3. Funktion zum Verarbeiten von Seiten
+        function processPage(page) {
+            return __awaiter(this, void 0, void 0, function () {
+                var loadedPage, layout, widgets, _i, widgets_1, widget, pageMicroflow;
+                var _a, _b;
+                return __generator(this, function (_c) {
+                    switch (_c.label) {
+                        case 0:
+                            if (!page || processedPages.has(page.id))
+                                return [2 /*return*/]; // Überspringe bereits verarbeitete Seiten
+                            processedPages.add(page.id);
+                            return [4 /*yield*/, page.load()];
+                        case 1:
+                            loadedPage = _c.sent();
+                            return [4 /*yield*/, ((_b = (_a = loadedPage.layoutCall) === null || _a === void 0 ? void 0 : _a.layout) === null || _b === void 0 ? void 0 : _b.load())];
+                        case 2:
+                            layout = _c.sent();
+                            widgets = (layout === null || layout === void 0 ? void 0 : layout.widgets) || [];
+                            _i = 0, widgets_1 = widgets;
+                            _c.label = 3;
+                        case 3:
+                            if (!(_i < widgets_1.length)) return [3 /*break*/, 6];
+                            widget = widgets_1[_i];
+                            if (!(widget instanceof mendixmodelsdk_1.pages.ActionButton &&
+                                widget.action instanceof mendixmodelsdk_1.pages.MicroflowClientAction &&
+                                widget.action.microflowSettings.microflow)) return [3 /*break*/, 5];
+                            pageMicroflow = widget.action.microflowSettings.microflow;
+                            console.log("Gefundener Microflow \"".concat(pageMicroflow.name, "\" auf Seite \"").concat(loadedPage.name, "\"."));
+                            resultMicroflows.push(pageMicroflow);
+                            return [4 /*yield*/, processMicroflow(pageMicroflow)];
+                        case 4:
+                            _c.sent(); // Rekursiver Aufruf für Microflows auf der Seite
+                            _c.label = 5;
+                        case 5:
+                            _i++;
+                            return [3 /*break*/, 3];
+                        case 6: return [2 /*return*/];
+                    }
+                });
+            });
+        }
+        var allMicroflows, allPages, processedMicroflows, processedPages, resultMicroflows, moduleMicroflows, _i, moduleMicroflows_1, mf, uniqueMicroflows;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     allMicroflows = model.allMicroflows();
-                    console.log("Anzahl aller Microflows im Modell: ".concat(allMicroflows.length));
-                    usedMicroflows = [];
-                    _i = 0, allMicroflows_1 = allMicroflows;
+                    allPages = model.allPages();
+                    processedMicroflows = new Set();
+                    processedPages = new Set();
+                    resultMicroflows = [];
+                    console.log("Starte Suche nach Microflows im Modul: ".concat(modulename));
+                    moduleMicroflows = allMicroflows.filter(function (mf) { var _a; return (_a = mf.qualifiedName) === null || _a === void 0 ? void 0 : _a.startsWith(modulename); });
+                    console.log("Gefundene Microflows im Modul \"".concat(modulename, "\": ").concat(moduleMicroflows.length));
+                    _i = 0, moduleMicroflows_1 = moduleMicroflows;
                     _a.label = 1;
                 case 1:
-                    if (!(_i < allMicroflows_1.length)) return [3 /*break*/, 5];
-                    mf = allMicroflows_1[_i];
-                    console.log("Verarbeite Microflow: ".concat(mf.name));
-                    return [4 /*yield*/, mf.load()];
+                    if (!(_i < moduleMicroflows_1.length)) return [3 /*break*/, 4];
+                    mf = moduleMicroflows_1[_i];
+                    resultMicroflows.push(mf);
+                    return [4 /*yield*/, processMicroflow(mf)];
                 case 2:
-                    loadedMicroflow = _a.sent();
-                    if (!loadedMicroflow) {
-                        console.log("Fehler beim Laden von Microflow: ".concat(mf.name));
-                        return [3 /*break*/, 4];
-                    }
-                    return [4 /*yield*/, findReferences(model, loadedMicroflow)];
+                    _a.sent();
+                    _a.label = 3;
                 case 3:
-                    references = _a.sent();
-                    console.log("Referenzen f\u00FCr ".concat(mf.name, ": ").concat(references.length));
-                    if (references.length > 0) {
-                        usedMicroflows.push(mf);
-                    }
-                    _a.label = 4;
-                case 4:
                     _i++;
                     return [3 /*break*/, 1];
-                case 5:
-                    console.log("Anzahl der verwendeten Microflows: ".concat(usedMicroflows.length));
-                    usedMicroflows.forEach(function (mf) {
-                        console.log("Verwendeter Microflow: ".concat(mf.name));
-                    });
-                    return [2 /*return*/, usedMicroflows];
-            }
-        });
-    });
-}
-/*    async function findUsedMicroflows(model: IModel): Promise<microflows.IMicroflow[]> {
-        const allMicroflows = model.allMicroflows();
-        console.log(`Anzahl aller Microflows im Modell: ${allMicroflows.length}`);
-        const usedMicroflows: microflows.IMicroflow[] = [];
-        
-        for (const mf of allMicroflows) {
-            console.log(`Verarbeite Microflow: ${mf.name}`);
-            
-            const loadedMicroflow = await mf.load();
-            if (!loadedMicroflow) {
-                console.log(`Fehler beim Laden von Microflow: ${mf.name}`);
-                continue;
-            }
-            
-            // Anstelle von findReferences gib ein Dummy-Array zurück
-            // const references = await findReferences(model, loadedMicroflow);
-            const references = []; // Dummy-Array
-            
-            console.log(`Referenzen für ${mf.name}: ${references.length}`);
-            
-            if (references.length > 0) {
-                usedMicroflows.push(mf);
-            }
-        }
-        
-        console.log(`Anzahl der verwendeten Microflows: ${usedMicroflows.length}`);
-        usedMicroflows.forEach(mf => {
-            console.log(`Verwendeter Microflow: ${mf.name}`);
-        });
-    
-        return usedMicroflows;
-    }
-*/
-// Verwendete Nanoflows finden
-function findUsedNanoflows(model) {
-    return __awaiter(this, void 0, void 0, function () {
-        var allNanoflows, usedNanoflows, _i, allNanoflows_1, nf, loadedNanoflow, references;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    allNanoflows = model.allNanoflows();
-                    usedNanoflows = [];
-                    _i = 0, allNanoflows_1 = allNanoflows;
-                    _a.label = 1;
-                case 1:
-                    if (!(_i < allNanoflows_1.length)) return [3 /*break*/, 5];
-                    nf = allNanoflows_1[_i];
-                    return [4 /*yield*/, nf.load()];
-                case 2:
-                    loadedNanoflow = _a.sent();
-                    return [4 /*yield*/, findReferencesForNanoflow(model, loadedNanoflow)];
-                case 3:
-                    references = _a.sent();
-                    if (references.length > 0) {
-                        usedNanoflows.push(nf);
-                    }
-                    _a.label = 4;
                 case 4:
-                    _i++;
-                    return [3 /*break*/, 1];
-                case 5:
-                    console.log("Anzahl der verwendeten Nanoflows: ".concat(usedNanoflows.length));
-                    return [2 /*return*/, usedNanoflows];
+                    uniqueMicroflows = Array.from(new Set(resultMicroflows.map(function (mf) { return mf.id; })))
+                        .map(function (id) { return resultMicroflows.find(function (mf) { return mf.id === id; }); })
+                        .filter(function (mf) { return mf !== undefined; });
+                    console.log("Gefundene eindeutige Microflows im Modul \"".concat(modulename, "\": ").concat(uniqueMicroflows.length));
+                    uniqueMicroflows.forEach(function (mf) { return console.log("Microflow: ".concat(mf === null || mf === void 0 ? void 0 : mf.name)); });
+                    return [2 /*return*/, uniqueMicroflows];
             }
         });
     });
@@ -254,832 +257,5 @@ function calculateCyclomaticComplexityMicroflows(microflow) {
     var complexity = 1 + conditions + loops;
     // Sicherstellen, dass die CC mindestens 1 ist
     return Math.max(1, complexity);
-}
-// Cyclomatic Complexity für Nanoflows berechnen
-function calculateComplexityForNanoflows(usedNanoflows) {
-    return __awaiter(this, void 0, void 0, function () {
-        var totalComplexity, _i, usedNanoflows_1, nf, loadedNanoflow, complexity;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    totalComplexity = 0;
-                    _i = 0, usedNanoflows_1 = usedNanoflows;
-                    _a.label = 1;
-                case 1:
-                    if (!(_i < usedNanoflows_1.length)) return [3 /*break*/, 4];
-                    nf = usedNanoflows_1[_i];
-                    return [4 /*yield*/, nf.load()];
-                case 2:
-                    loadedNanoflow = _a.sent();
-                    complexity = calculateCyclomaticComplexityNanoflows(loadedNanoflow);
-                    totalComplexity += complexity;
-                    console.log("Nanoflow \"".concat(loadedNanoflow.name, "\" hat eine Cyclomatic Complexity von ").concat(complexity));
-                    _a.label = 3;
-                case 3:
-                    _i++;
-                    return [3 /*break*/, 1];
-                case 4:
-                    console.log("Gesamte Cyclomatic Complexity aller Nanoflows: ".concat(totalComplexity));
-                    return [2 /*return*/, totalComplexity];
-            }
-        });
-    });
-}
-// Cyclomatic Complexity für einen Flow berechnen
-function calculateCyclomaticComplexityNanoflows(flow) {
-    var _a;
-    var conditions = 0;
-    var loops = 0;
-    (_a = flow.objectCollection) === null || _a === void 0 ? void 0 : _a.objects.forEach(function (obj) {
-        if (obj instanceof mendixmodelsdk_1.microflows.ExclusiveSplit) {
-            conditions++;
-        }
-        if (obj instanceof mendixmodelsdk_1.microflows.LoopedActivity) {
-            loops++;
-        }
-    });
-    // CC = 1 + Anzahl der Bedingungen + Anzahl der Schleifen
-    return 1 + conditions + loops;
-}
-function countAllWidgets(model) {
-    return __awaiter(this, void 0, void 0, function () {
-        var allPages, allUsedPages, totalWidgets, _loop_1, _i, allPages_1, page;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    allPages = model.allPages();
-                    allUsedPages = [];
-                    totalWidgets = 0;
-                    _loop_1 = function (page) {
-                        var loadedPage, widgetCount;
-                        return __generator(this, function (_b) {
-                            switch (_b.label) {
-                                case 0: return [4 /*yield*/, page.load()];
-                                case 1:
-                                    loadedPage = _b.sent();
-                                    widgetCount = 0;
-                                    loadedPage.traverse(function (structure) {
-                                        if (structure instanceof mendixmodelsdk_1.pages.Widget) {
-                                            widgetCount++;
-                                        }
-                                    });
-                                    //    console.log(`Seite "${loadedPage.name}" enthält ${widgetCount} Widgets.`);
-                                    totalWidgets += widgetCount;
-                                    return [2 /*return*/];
-                            }
-                        });
-                    };
-                    _i = 0, allPages_1 = allPages;
-                    _a.label = 1;
-                case 1:
-                    if (!(_i < allPages_1.length)) return [3 /*break*/, 4];
-                    page = allPages_1[_i];
-                    return [5 /*yield**/, _loop_1(page)];
-                case 2:
-                    _a.sent();
-                    _a.label = 3;
-                case 3:
-                    _i++;
-                    return [3 /*break*/, 1];
-                case 4:
-                    console.log("Gesamtanzahl aller Widgets in allen Seiten die gefunden werden konnten: ".concat(totalWidgets));
-                    return [2 /*return*/];
-            }
-        });
-    });
-}
-/* async function countUsedWidgets(model: IModel) {
-    const allPages = model.allPages();
-    console.log(`Gesamtanzahl der Seiten: ${allPages.length}`);
-    let totalWidgets = 0;
-
-    for (const page of allPages) {
-        try {
-            const loadedPage = await page.load();
-            if (!loadedPage) {
-                console.error(`Seite konnte nicht geladen werden: ${page.id}`);
-                continue;
-            }
-            console.log(`Geladene Seite: ${loadedPage.name}`);
-
-            let widgetCount = 0;
-            loadedPage.traverse((structure) => {
-                if (structure instanceof pages.Widget) {
-//                    console.log(`Widget gefunden: ${structure.structureTypeName}`);
-                    widgetCount++;
-                }
-            });
-
-            console.log(`Seite "${loadedPage.name}" enthält ${widgetCount} Widgets.`);
-            totalWidgets += widgetCount;
-        } catch (err) {
-            console.error(`Fehler beim Laden der Seite ${page.id}:`, err);
-        }
-    }
-
-    console.log(`Gesamtanzahl der verwendeten Widgets: ${totalWidgets}`);
-} */
-function countWidgetsIncludingSnippets(model, pageName) {
-    return __awaiter(this, void 0, void 0, function () {
-        var allPages, totalWidgetCount, _i, allPages_2, page, loadedPage;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    allPages = model.allPages();
-                    totalWidgetCount = 0;
-                    _i = 0, allPages_2 = allPages;
-                    _a.label = 1;
-                case 1:
-                    if (!(_i < allPages_2.length)) return [3 /*break*/, 5];
-                    page = allPages_2[_i];
-                    return [4 /*yield*/, page.load()];
-                case 2:
-                    loadedPage = _a.sent();
-                    if (!(loadedPage.name === pageName)) return [3 /*break*/, 4];
-                    console.log("Untersuche Seite: ".concat(loadedPage.name));
-                    return [4 /*yield*/, traverseAndCountWidgetsIncludingSnippets(loadedPage, model)];
-                case 3:
-                    // Starte die vollständige Zählung der Widgets
-                    totalWidgetCount = _a.sent();
-                    // Ausgabe der Gesamtanzahl nach Abschluss der Zählung
-                    console.log("Seite \"".concat(pageName, "\" enth\u00E4lt insgesamt ").concat(totalWidgetCount, " Widgets (inklusive Snippets)."));
-                    return [2 /*return*/]; // Beenden, wenn die Seite gefunden wurde
-                case 4:
-                    _i++;
-                    return [3 /*break*/, 1];
-                case 5:
-                    console.log("Seite \"".concat(pageName, "\" nicht gefunden."));
-                    return [2 /*return*/];
-            }
-        });
-    });
-}
-function traverseAndCountWidgetsIncludingSnippets(structure, model) {
-    return __awaiter(this, void 0, void 0, function () {
-        var widgetCount, promises;
-        var _this = this;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    widgetCount = 0;
-                    promises = [];
-                    // Traverse die Struktur asynchron
-                    return [4 /*yield*/, structure.traverse(function (subStructure) {
-                            var _a;
-                            // Direkt Widget zählen
-                            if (subStructure instanceof mendixmodelsdk_1.pages.Widget) {
-                                console.log("Widget erkannt: ".concat(subStructure.structureTypeName));
-                                widgetCount++;
-                            }
-                            // Falls ein SnippetCallWidget gefunden wird, lade und zähle die Widgets darin
-                            if (subStructure instanceof mendixmodelsdk_1.pages.SnippetCallWidget) {
-                                console.log("SnippetCallWidget gefunden, lade zugeh\u00F6riges Snippet.");
-                                var snippetRef = (_a = subStructure.snippetCall) === null || _a === void 0 ? void 0 : _a.snippet;
-                                if (snippetRef) {
-                                    var snippetPromise = snippetRef.load().then(function (snippet) { return __awaiter(_this, void 0, void 0, function () {
-                                        var snippetWidgetCount;
-                                        return __generator(this, function (_a) {
-                                            switch (_a.label) {
-                                                case 0:
-                                                    if (!snippet) return [3 /*break*/, 2];
-                                                    console.log("Snippet \"".concat(snippet.name, "\" wird traversiert."));
-                                                    return [4 /*yield*/, traverseAndCountWidgetsIncludingSnippets(snippet, model)];
-                                                case 1:
-                                                    snippetWidgetCount = _a.sent();
-                                                    widgetCount += snippetWidgetCount; // Addiere Widgets aus dem Snippet
-                                                    _a.label = 2;
-                                                case 2: return [2 /*return*/];
-                                            }
-                                        });
-                                    }); });
-                                    promises.push(snippetPromise); // Füge die Operation der Liste hinzu
-                                }
-                            }
-                        })];
-                case 1:
-                    // Traverse die Struktur asynchron
-                    _a.sent();
-                    // Warte auf alle asynchronen Traversierungen (z. B. das Laden von Snippets)
-                    return [4 /*yield*/, Promise.all(promises)];
-                case 2:
-                    // Warte auf alle asynchronen Traversierungen (z. B. das Laden von Snippets)
-                    _a.sent();
-                    return [2 /*return*/, widgetCount]; // Gib die Gesamtanzahl zurück
-            }
-        });
-    });
-}
-function checkMenuItems(menuItems, pageId) {
-    var _a, _b;
-    console.log("Pr\u00FCfe Men\u00FCeintr\u00E4ge: ".concat(menuItems.length));
-    for (var _i = 0, menuItems_1 = menuItems; _i < menuItems_1.length; _i++) {
-        var item = menuItems_1[_i];
-        console.log("\u00DCberpr\u00FCfe Men\u00FCelement: ".concat(JSON.stringify(item, null, 2)));
-        if (((_b = (_a = item.action) === null || _a === void 0 ? void 0 : _a.pageSettings) === null || _b === void 0 ? void 0 : _b.page) === pageId) {
-            console.log("Seite \"".concat(pageId, "\" in Men\u00FC gefunden."));
-            return true;
-        }
-        if (item.items && checkMenuItems(item.items, pageId)) {
-            console.log("Seite \"".concat(pageId, "\" in Untermen\u00FC gefunden."));
-            return true;
-        }
-    }
-    return false; // Keine Referenz gefunden
-}
-function isPageUsedInNavigation(model, page) {
-    return __awaiter(this, void 0, void 0, function () {
-        var navigationDocs, _i, navigationDocs_1, navDoc, loadedNavDoc, _a, _b, profile, homePageProfile, roleBasedProfile, _c, _d, roleBasedHomePage, menuProfile, isReferenced;
-        var _e;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
-                case 0:
-                    navigationDocs = model.allNavigationDocuments();
-                    console.log("Anzahl der Navigationsdokumente: ".concat(navigationDocs.length));
-                    _i = 0, navigationDocs_1 = navigationDocs;
-                    _f.label = 1;
-                case 1:
-                    if (!(_i < navigationDocs_1.length)) return [3 /*break*/, 4];
-                    navDoc = navigationDocs_1[_i];
-                    return [4 /*yield*/, navDoc.load()];
-                case 2:
-                    loadedNavDoc = _f.sent();
-                    console.log("Navigationsdokument geladen: ".concat(JSON.stringify(loadedNavDoc, null, 2)));
-                    for (_a = 0, _b = loadedNavDoc.profiles; _a < _b.length; _a++) {
-                        profile = _b[_a];
-                        console.log("Navigationsprofil: ".concat(JSON.stringify(profile, null, 2))); // Debugging-Profil
-                        console.log("\u00DCberpr\u00FCfe Profil: ".concat(profile.name));
-                        // Prüfen, ob die Seite die Startseite ist
-                        if ("homePage" in profile) {
-                            homePageProfile = profile;
-                            console.log("Homepage f\u00FCr Profil: ".concat(JSON.stringify(homePageProfile.homePage, null, 2))); // Debugging-Homepage
-                            if (((_e = homePageProfile.homePage) === null || _e === void 0 ? void 0 : _e.page) === page.name) {
-                                console.log("Seite \"".concat(page.name, "\" ist die Startseite."));
-                                return [2 /*return*/, true];
-                            }
-                        }
-                        // Prüfen, ob die Seite in rollenbasierten Homepages ist
-                        if ("roleBasedHomePages" in profile) {
-                            roleBasedProfile = profile;
-                            for (_c = 0, _d = roleBasedProfile.roleBasedHomePages || []; _c < _d.length; _c++) {
-                                roleBasedHomePage = _d[_c];
-                                console.log("\u00DCberpr\u00FCfe rollenbasierte Homepage: ".concat(JSON.stringify(roleBasedHomePage, null, 2))); // Debugging rollenbasierte Homepage
-                                if (roleBasedHomePage.page === page.name) {
-                                    console.log("Seite \"".concat(page.name, "\" ist eine rollenbasierte Startseite."));
-                                    return [2 /*return*/, true];
-                                }
-                            }
-                        }
-                        // Prüfen, ob die Seite in der Menüstruktur referenziert ist
-                        if ("menuItemCollection" in profile) {
-                            menuProfile = profile;
-                            console.log("Men\u00FCeintr\u00E4ge: ".concat(JSON.stringify(menuProfile.menuItemCollection.items, null, 2))); // Debugging-Menü
-                            isReferenced = checkMenuItems(menuProfile.menuItemCollection.items || [], page.name);
-                            if (isReferenced) {
-                                console.log("Seite \"".concat(page.name, "\" wird in der Men\u00FCstruktur verwendet."));
-                                return [2 /*return*/, true];
-                            }
-                        }
-                    }
-                    _f.label = 3;
-                case 3:
-                    _i++;
-                    return [3 /*break*/, 1];
-                case 4: return [2 /*return*/, false]; // Seite wird nicht verwendet
-            }
-        });
-    });
-}
-function isPageReferencedInNavigation(items, pageId) {
-    var _a, _b;
-    for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
-        var item = items_1[_i];
-        // Prüfen, ob das Element eine Aktion enthält, die auf die Seite verweist
-        if (((_b = (_a = item.action) === null || _a === void 0 ? void 0 : _a.page) === null || _b === void 0 ? void 0 : _b.id) === pageId) {
-            return true; // Seite gefunden
-        }
-        // Prüfen, ob das Element Unterelemente hat und rekursiv suchen
-        if (item.items && isPageReferencedInNavigation(item.items, pageId)) {
-            return true;
-        }
-    }
-    return false;
-}
-// Referenzen einer Seite in Layouts und anderen Seiten finden
-function findPageReferences(model, page) {
-    return __awaiter(this, void 0, void 0, function () {
-        var references, allLayouts, _i, allLayouts_1, layout, loadedLayout, allPages, _a, allPages_3, otherPage, loadedOtherPage;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    references = [];
-                    allLayouts = model.allLayouts();
-                    console.log("Anzahl der Layouts: ".concat(allLayouts.length));
-                    _i = 0, allLayouts_1 = allLayouts;
-                    _b.label = 1;
-                case 1:
-                    if (!(_i < allLayouts_1.length)) return [3 /*break*/, 4];
-                    layout = allLayouts_1[_i];
-                    return [4 /*yield*/, layout.load()];
-                case 2:
-                    loadedLayout = _b.sent();
-                    console.log("Lade Layout: ".concat(loadedLayout.name));
-                    loadedLayout.traverse(function (structure) {
-                        var _a;
-                        if (structure instanceof mendixmodelsdk_1.microflows.ShowPageAction &&
-                            ((_a = structure.pageSettings.page) === null || _a === void 0 ? void 0 : _a.id) === page.id) {
-                            console.log("Seite \"".concat(page.name, "\" in Layout referenziert."));
-                            references.push(structure);
-                        }
-                    });
-                    _b.label = 3;
-                case 3:
-                    _i++;
-                    return [3 /*break*/, 1];
-                case 4:
-                    allPages = model.allPages();
-                    _a = 0, allPages_3 = allPages;
-                    _b.label = 5;
-                case 5:
-                    if (!(_a < allPages_3.length)) return [3 /*break*/, 8];
-                    otherPage = allPages_3[_a];
-                    return [4 /*yield*/, otherPage.load()];
-                case 6:
-                    loadedOtherPage = _b.sent();
-                    console.log("Lade andere Seite: ".concat(loadedOtherPage.name));
-                    loadedOtherPage.traverse(function (structure) {
-                        var _a;
-                        if (structure instanceof mendixmodelsdk_1.microflows.ShowPageAction &&
-                            ((_a = structure.pageSettings.page) === null || _a === void 0 ? void 0 : _a.id) === page.id) {
-                            console.log("Seite \"".concat(page.name, "\" durch andere Seite referenziert."));
-                            references.push(structure);
-                        }
-                    });
-                    _b.label = 7;
-                case 7:
-                    _a++;
-                    return [3 /*break*/, 5];
-                case 8: return [2 /*return*/, references];
-            }
-        });
-    });
-}
-function findReferences(model, microflow) {
-    return __awaiter(this, void 0, void 0, function () {
-        var references, allPages, _i, allPages_4, page, layout, widgets, _a, widgets_1, widget, allMicroflows, _b, allMicroflows_2, mf, loadedMf, microflowObjects, _c, microflowObjects_1, obj;
-        var _d, _e, _f, _g, _h;
-        return __generator(this, function (_j) {
-            switch (_j.label) {
-                case 0:
-                    references = [];
-                    allPages = model.allPages();
-                    console.log("Starte Suche nach Referenzen f\u00FCr Microflow: ".concat(microflow.name, " (").concat(microflow.id, ")"));
-                    console.log("Anzahl aller Seiten im Modell: ".concat(allPages.length));
-                    _i = 0, allPages_4 = allPages;
-                    _j.label = 1;
-                case 1:
-                    if (!(_i < allPages_4.length)) return [3 /*break*/, 5];
-                    page = allPages_4[_i];
-                    console.log("Pr\u00FCfe Seite: ".concat(page.name));
-                    if (!page.isLoaded) return [3 /*break*/, 3];
-                    return [4 /*yield*/, ((_e = (_d = page.layoutCall) === null || _d === void 0 ? void 0 : _d.layout) === null || _e === void 0 ? void 0 : _e.load())];
-                case 2:
-                    layout = _j.sent();
-                    console.log("Layout der Seite ".concat(page.name, ":"), layout === null || layout === void 0 ? void 0 : layout.name);
-                    widgets = (layout === null || layout === void 0 ? void 0 : layout.widgets) || [];
-                    for (_a = 0, widgets_1 = widgets; _a < widgets_1.length; _a++) {
-                        widget = widgets_1[_a];
-                        if (widget instanceof mendixmodelsdk_1.pages.ActionButton &&
-                            widget.action instanceof mendixmodelsdk_1.pages.MicroflowClientAction &&
-                            ((_f = widget.action.microflowSettings.microflow) === null || _f === void 0 ? void 0 : _f.id) === microflow.id) {
-                            console.log("Gefundene Referenz im Widget: ".concat(widget.structureTypeName, " auf Seite ").concat(page.name));
-                            references.push(widget);
-                        }
-                    }
-                    return [3 /*break*/, 4];
-                case 3:
-                    console.log("Seite ".concat(page.name, " ist nicht geladen."));
-                    _j.label = 4;
-                case 4:
-                    _i++;
-                    return [3 /*break*/, 1];
-                case 5:
-                    console.log("Suche in Seiten abgeschlossen. Gefundene Referenzen: ".concat(references.length));
-                    allMicroflows = model.allMicroflows();
-                    console.log("Anzahl aller Microflows im Modell: ".concat(allMicroflows.length));
-                    _b = 0, allMicroflows_2 = allMicroflows;
-                    _j.label = 6;
-                case 6:
-                    if (!(_b < allMicroflows_2.length)) return [3 /*break*/, 9];
-                    mf = allMicroflows_2[_b];
-                    console.log("Pr\u00FCfe Microflow: ".concat(mf.name));
-                    return [4 /*yield*/, mf.load()];
-                case 7:
-                    loadedMf = _j.sent();
-                    if (loadedMf.objectCollection) {
-                        console.log("Microflow ".concat(mf.name, " hat eine ObjectCollection."));
-                        microflowObjects = loadedMf.objectCollection.objects || [];
-                        for (_c = 0, microflowObjects_1 = microflowObjects; _c < microflowObjects_1.length; _c++) {
-                            obj = microflowObjects_1[_c];
-                            if (obj instanceof mendixmodelsdk_1.microflows.ActionActivity &&
-                                obj.action instanceof mendixmodelsdk_1.microflows.MicroflowCallAction &&
-                                ((_h = (_g = obj.action.microflowCall) === null || _g === void 0 ? void 0 : _g.microflow) === null || _h === void 0 ? void 0 : _h.id) === microflow.id) {
-                                console.log("Gefundene Referenz in Microflow-Aktion: ".concat(obj.structureTypeName, " in ").concat(mf.name));
-                                references.push(obj);
-                            }
-                        }
-                    }
-                    else {
-                        console.log("Microflow ".concat(mf.name, " hat keine ObjectCollection."));
-                    }
-                    _j.label = 8;
-                case 8:
-                    _b++;
-                    return [3 /*break*/, 6];
-                case 9:
-                    console.log("Suche in Microflows abgeschlossen. Gefundene Referenzen: ".concat(references.length));
-                    console.log("Gesamtanzahl der Referenzen f\u00FCr ".concat(microflow.name, ": ").concat(references.length));
-                    return [2 /*return*/, references];
-            }
-        });
-    });
-}
-// Referenzen eines Nanoflows finden
-function findReferencesForNanoflow(model, nanoflow) {
-    return __awaiter(this, void 0, void 0, function () {
-        var references, allPages, _i, allPages_5, page, loadedPage;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    references = [];
-                    allPages = model.allPages();
-                    _i = 0, allPages_5 = allPages;
-                    _a.label = 1;
-                case 1:
-                    if (!(_i < allPages_5.length)) return [3 /*break*/, 4];
-                    page = allPages_5[_i];
-                    return [4 /*yield*/, page.load()];
-                case 2:
-                    loadedPage = _a.sent();
-                    loadedPage.traverse(function (structure) {
-                        var _a;
-                        if (structure instanceof mendixmodelsdk_1.pages.ActionButton &&
-                            structure.action instanceof mendixmodelsdk_1.pages.CallNanoflowClientAction &&
-                            ((_a = structure.action.nanoflow) === null || _a === void 0 ? void 0 : _a.id) === nanoflow.id) {
-                            references.push(structure);
-                        }
-                    });
-                    _a.label = 3;
-                case 3:
-                    _i++;
-                    return [3 /*break*/, 1];
-                case 4: return [2 /*return*/, references];
-            }
-        });
-    });
-}
-function findEssentialFlows(model) {
-    return __awaiter(this, void 0, void 0, function () {
-        var essentialMicroflows, essentialNanoflows, allNavigationDocs, _i, allNavigationDocs_1, navDoc, loadedNavDoc, _a, _b, profile, homePage, references, roleBasedHomePages, _c, roleBasedHomePages_1, rbHomePage, loadedMicroflow, loadedPage, references, menuItems, _d, menuItems_2, item, references, uniqueMicroflows, uniqueNanoflows;
-        var _e, _f;
-        return __generator(this, function (_g) {
-            switch (_g.label) {
-                case 0:
-                    essentialMicroflows = [];
-                    essentialNanoflows = [];
-                    allNavigationDocs = model.allNavigationDocuments();
-                    console.log("Anzahl der Navigationsdokumente: ".concat(allNavigationDocs.length));
-                    _i = 0, allNavigationDocs_1 = allNavigationDocs;
-                    _g.label = 1;
-                case 1:
-                    if (!(_i < allNavigationDocs_1.length)) return [3 /*break*/, 18];
-                    navDoc = allNavigationDocs_1[_i];
-                    return [4 /*yield*/, navDoc.load()];
-                case 2:
-                    loadedNavDoc = _g.sent();
-                    console.log("Navigation geladen: ".concat(JSON.stringify(loadedNavDoc, null, 2)));
-                    _a = 0, _b = loadedNavDoc.profiles;
-                    _g.label = 3;
-                case 3:
-                    if (!(_a < _b.length)) return [3 /*break*/, 17];
-                    profile = _b[_a];
-                    // Durchlaufe die Navigationseinträge
-                    console.log("Navigationsprofil: ".concat(JSON.stringify(profile, null, 2)));
-                    if (!("homePage" in profile)) return [3 /*break*/, 5];
-                    homePage = (_e = profile.homePage) === null || _e === void 0 ? void 0 : _e.page;
-                    if (!homePage) return [3 /*break*/, 5];
-                    return [4 /*yield*/, findMicroflowAndNanoflowReferencesInPage(model, homePage)];
-                case 4:
-                    references = _g.sent();
-                    essentialMicroflows.push.apply(essentialMicroflows, references.microflows);
-                    essentialNanoflows.push.apply(essentialNanoflows, references.nanoflows);
-                    _g.label = 5;
-                case 5:
-                    if (!("roleBasedHomePages" in profile)) return [3 /*break*/, 12];
-                    roleBasedHomePages = profile.roleBasedHomePages || [];
-                    console.log("Processing roleBasedHomePages: ".concat(JSON.stringify(roleBasedHomePages, null, 2)));
-                    _c = 0, roleBasedHomePages_1 = roleBasedHomePages;
-                    _g.label = 6;
-                case 6:
-                    if (!(_c < roleBasedHomePages_1.length)) return [3 /*break*/, 12];
-                    rbHomePage = roleBasedHomePages_1[_c];
-                    if (!rbHomePage.microflow) return [3 /*break*/, 8];
-                    // Logge, was du hast:
-                    console.log("Checking Microflow: ".concat(rbHomePage.microflow.qualifiedName || rbHomePage.microflow));
-                    return [4 /*yield*/, rbHomePage.microflow.load()];
-                case 7:
-                    loadedMicroflow = _g.sent();
-                    if (loadedMicroflow) {
-                        console.log("Found and loaded Microflow: ".concat(loadedMicroflow.name));
-                        essentialMicroflows.push(loadedMicroflow);
-                    }
-                    else {
-                        console.log("Warnung: Microflow konnte nicht vollst\u00E4ndig geladen werden.");
-                    }
-                    _g.label = 8;
-                case 8:
-                    if (!rbHomePage.page) return [3 /*break*/, 11];
-                    console.log("Checking Page: ".concat(rbHomePage.page.qualifiedName || rbHomePage.page));
-                    return [4 /*yield*/, rbHomePage.page.load()];
-                case 9:
-                    loadedPage = _g.sent();
-                    if (!loadedPage) {
-                        console.warn("Warnung: Rolle: ".concat(rbHomePage.userRole, ", Page konnte nicht geladen werden."));
-                        return [3 /*break*/, 11];
-                    }
-                    return [4 /*yield*/, collectReferencesFromLoadedPage(loadedPage)];
-                case 10:
-                    references = _g.sent();
-                    essentialMicroflows.push.apply(essentialMicroflows, references.microflows);
-                    essentialNanoflows.push.apply(essentialNanoflows, references.nanoflows);
-                    _g.label = 11;
-                case 11:
-                    _c++;
-                    return [3 /*break*/, 6];
-                case 12:
-                    if (!("menuItemCollection" in profile)) return [3 /*break*/, 16];
-                    menuItems = ((_f = profile.menuItemCollection) === null || _f === void 0 ? void 0 : _f.items) || [];
-                    _d = 0, menuItems_2 = menuItems;
-                    _g.label = 13;
-                case 13:
-                    if (!(_d < menuItems_2.length)) return [3 /*break*/, 16];
-                    item = menuItems_2[_d];
-                    return [4 /*yield*/, findMicroflowAndNanoflowReferencesInMenuItem(model, item)];
-                case 14:
-                    references = _g.sent();
-                    essentialMicroflows.push.apply(essentialMicroflows, references.microflows);
-                    essentialNanoflows.push.apply(essentialNanoflows, references.nanoflows);
-                    _g.label = 15;
-                case 15:
-                    _d++;
-                    return [3 /*break*/, 13];
-                case 16:
-                    _a++;
-                    return [3 /*break*/, 3];
-                case 17:
-                    _i++;
-                    return [3 /*break*/, 1];
-                case 18:
-                    uniqueMicroflows = Array.from(new Set(essentialMicroflows));
-                    uniqueNanoflows = Array.from(new Set(essentialNanoflows));
-                    // **Hier Debugging für alle Microflows und Nanoflows einfügen**
-                    console.log("Alle verfügbaren Microflows:");
-                    model.allMicroflows().forEach(function (mf) { return console.log("- ".concat(mf.qualifiedName)); });
-                    console.log("Alle verfügbaren Nanoflows:");
-                    model.allNanoflows().forEach(function (nf) { return console.log("- ".concat(nf.qualifiedName)); });
-                    // Logge die gefundenen Microflows und Nanoflows
-                    console.log("Gefundene Microflows (".concat(uniqueMicroflows.length, "):"));
-                    uniqueMicroflows.forEach(function (mf) { return console.log("- ".concat(mf.name)); });
-                    console.log("Gefundene Nanoflows (".concat(uniqueNanoflows.length, "):"));
-                    uniqueNanoflows.forEach(function (nf) { return console.log("- ".concat(nf.name)); });
-                    return [2 /*return*/, {
-                            microflows: uniqueMicroflows,
-                            nanoflows: uniqueNanoflows,
-                        }];
-            }
-        });
-    });
-}
-function findMicroflowAndNanoflowReferencesInPage(model, pageRef) {
-    return __awaiter(this, void 0, void 0, function () {
-        var microflowsUsed, nanoflowsUsed, loadPromises, loadedPage;
-        var _this = this;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    microflowsUsed = [];
-                    nanoflowsUsed = [];
-                    loadPromises = [];
-                    return [4 /*yield*/, pageRef.load()];
-                case 1:
-                    loadedPage = _a.sent();
-                    if (!loadedPage) {
-                        console.warn("Seite konnte nicht geladen werden.");
-                        return [2 /*return*/, { microflows: [], nanoflows: [] }];
-                    }
-                    console.log("Untersuche geladene Seite: ".concat(loadedPage.name));
-                    // Wie gehabt: traverse + Microflow/Nanoflow laden
-                    loadedPage.traverse(function (structure) {
-                        if (structure instanceof mendixmodelsdk_1.pages.ActionButton &&
-                            structure.action instanceof mendixmodelsdk_1.pages.MicroflowClientAction &&
-                            structure.action.microflowSettings.microflow) {
-                            var mfRef_1 = structure.action.microflowSettings.microflow;
-                            loadPromises.push((function () { return __awaiter(_this, void 0, void 0, function () {
-                                var loadedMf;
-                                return __generator(this, function (_a) {
-                                    switch (_a.label) {
-                                        case 0: return [4 /*yield*/, mfRef_1.load()];
-                                        case 1:
-                                            loadedMf = _a.sent();
-                                            console.log("Geladener Microflow: ".concat(loadedMf.name));
-                                            microflowsUsed.push(loadedMf);
-                                            return [2 /*return*/];
-                                    }
-                                });
-                            }); })());
-                        }
-                        if (structure instanceof mendixmodelsdk_1.pages.ActionButton &&
-                            structure.action instanceof mendixmodelsdk_1.pages.CallNanoflowClientAction &&
-                            structure.action.nanoflow) {
-                            var nfRef_1 = structure.action.nanoflow;
-                            loadPromises.push((function () { return __awaiter(_this, void 0, void 0, function () {
-                                var loadedNf;
-                                return __generator(this, function (_a) {
-                                    switch (_a.label) {
-                                        case 0: return [4 /*yield*/, nfRef_1.load()];
-                                        case 1:
-                                            loadedNf = _a.sent();
-                                            console.log("Geladener Nanoflow: ".concat(loadedNf.name));
-                                            nanoflowsUsed.push(loadedNf);
-                                            return [2 /*return*/];
-                                    }
-                                });
-                            }); })());
-                        }
-                    });
-                    // Auf alle Loads warten
-                    return [4 /*yield*/, Promise.all(loadPromises)];
-                case 2:
-                    // Auf alle Loads warten
-                    _a.sent();
-                    return [2 /*return*/, { microflows: microflowsUsed, nanoflows: nanoflowsUsed }];
-            }
-        });
-    });
-}
-function findMicroflowAndNanoflowReferencesInMenuItem(model, menuItem) {
-    return __awaiter(this, void 0, void 0, function () {
-        var microflowsUsed, nanoflowsUsed, microflowRef, loadedMicroflow, pageReferences, _i, _a, subItem, subReferences;
-        var _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0:
-                    microflowsUsed = [];
-                    nanoflowsUsed = [];
-                    console.log("Untersuche Men\u00FCeintrag: ".concat(JSON.stringify(menuItem, null, 2)));
-                    if (!menuItem.action) return [3 /*break*/, 5];
-                    if (!menuItem.action.microflow) return [3 /*break*/, 3];
-                    console.log("Pr\u00FCfe Microflow: ".concat(menuItem.action.microflow));
-                    microflowRef = model.allMicroflows().find(function (mf) { return mf.qualifiedName === menuItem.action.microflow; });
-                    if (!microflowRef) return [3 /*break*/, 2];
-                    console.log("Microflow gefunden: ".concat(microflowRef.name));
-                    return [4 /*yield*/, safeLoad(microflowRef)];
-                case 1:
-                    loadedMicroflow = _c.sent();
-                    if (loadedMicroflow) {
-                        console.log("Microflow erfolgreich geladen: ".concat(loadedMicroflow.name));
-                        // Jetzt ist exportLevel verfügbar
-                        console.log("Export-Level: ".concat(safeAccessMicroflowExportLevel(loadedMicroflow)));
-                        microflowsUsed.push(loadedMicroflow);
-                    }
-                    else {
-                        console.log("Fehler: Microflow \"".concat(microflowRef.qualifiedName, "\" konnte nicht vollst\u00E4ndig geladen werden."));
-                    }
-                    return [3 /*break*/, 3];
-                case 2:
-                    console.log("Warnung: Microflow \"".concat(menuItem.action.microflow, "\" konnte nicht aufgel\u00F6st werden."));
-                    _c.label = 3;
-                case 3:
-                    if (!((_b = menuItem.action.pageSettings) === null || _b === void 0 ? void 0 : _b.page)) return [3 /*break*/, 5];
-                    return [4 /*yield*/, findMicroflowAndNanoflowReferencesInPage(model, menuItem.action.pageSettings.page)];
-                case 4:
-                    pageReferences = _c.sent();
-                    microflowsUsed.push.apply(microflowsUsed, pageReferences.microflows);
-                    nanoflowsUsed.push.apply(nanoflowsUsed, pageReferences.nanoflows);
-                    _c.label = 5;
-                case 5:
-                    _i = 0, _a = menuItem.items || [];
-                    _c.label = 6;
-                case 6:
-                    if (!(_i < _a.length)) return [3 /*break*/, 9];
-                    subItem = _a[_i];
-                    return [4 /*yield*/, findMicroflowAndNanoflowReferencesInMenuItem(model, subItem)];
-                case 7:
-                    subReferences = _c.sent();
-                    microflowsUsed.push.apply(microflowsUsed, subReferences.microflows);
-                    nanoflowsUsed.push.apply(nanoflowsUsed, subReferences.nanoflows);
-                    _c.label = 8;
-                case 8:
-                    _i++;
-                    return [3 /*break*/, 6];
-                case 9: return [2 /*return*/, { microflows: microflowsUsed, nanoflows: nanoflowsUsed }];
-            }
-        });
-    });
-}
-function safeLoad(loadable) {
-    return __awaiter(this, void 0, void 0, function () {
-        var loadedObject, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, loadable.load()];
-                case 1:
-                    loadedObject = _a.sent();
-                    return [2 /*return*/, loadedObject];
-                case 2:
-                    error_1 = _a.sent();
-                    console.error("Fehler beim Laden eines Objekts:", error_1);
-                    return [2 /*return*/, null];
-                case 3: return [2 /*return*/];
-            }
-        });
-    });
-}
-function safeAccessMicroflowExportLevel(microflow) {
-    if (!microflow) {
-        console.error("Microflow-Objekt ist null oder undefined.");
-        return null;
-    }
-    try {
-        console.log("Zugriff auf 'exportLevel' f\u00FCr Microflow: ".concat(microflow.name));
-        var level = microflow.exportLevel.toString();
-        return level;
-    }
-    catch (error) {
-        console.error("Fehler beim Zugriff auf 'exportLevel':", error);
-        return null;
-    }
-}
-function collectReferencesFromLoadedPage(loadedPage) {
-    return __awaiter(this, void 0, void 0, function () {
-        var microflowsUsed, nanoflowsUsed, loadPromises;
-        var _this = this;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    microflowsUsed = [];
-                    nanoflowsUsed = [];
-                    loadPromises = [];
-                    // Alle Strukturen auf der Page durchlaufen
-                    loadedPage.traverse(function (structure) {
-                        // Beispiel: ActionButton mit Microflow-Aktion
-                        if (structure instanceof mendixmodelsdk_1.pages.ActionButton &&
-                            structure.action instanceof mendixmodelsdk_1.pages.MicroflowClientAction &&
-                            structure.action.microflowSettings.microflow) {
-                            var mfRef_2 = structure.action.microflowSettings.microflow;
-                            loadPromises.push((function () { return __awaiter(_this, void 0, void 0, function () {
-                                var loadedMf;
-                                return __generator(this, function (_a) {
-                                    switch (_a.label) {
-                                        case 0: return [4 /*yield*/, mfRef_2.load()];
-                                        case 1:
-                                            loadedMf = _a.sent();
-                                            microflowsUsed.push(loadedMf);
-                                            return [2 /*return*/];
-                                    }
-                                });
-                            }); })());
-                        }
-                        // Beispiel: ActionButton mit Nanoflow-Aktion
-                        if (structure instanceof mendixmodelsdk_1.pages.ActionButton &&
-                            structure.action instanceof mendixmodelsdk_1.pages.CallNanoflowClientAction &&
-                            structure.action.nanoflow) {
-                            var nfRef_2 = structure.action.nanoflow;
-                            loadPromises.push((function () { return __awaiter(_this, void 0, void 0, function () {
-                                var loadedNf;
-                                return __generator(this, function (_a) {
-                                    switch (_a.label) {
-                                        case 0: return [4 /*yield*/, nfRef_2.load()];
-                                        case 1:
-                                            loadedNf = _a.sent();
-                                            nanoflowsUsed.push(loadedNf);
-                                            return [2 /*return*/];
-                                    }
-                                });
-                            }); })());
-                        }
-                        // Ggf. weitere Strukturen, bei denen Microflows/Nanoflows verwendet werden.
-                        // (OnChange, OnEnter, OnLeave, Events etc.)
-                    });
-                    // Auf alle Ladeoperationen warten
-                    return [4 /*yield*/, Promise.all(loadPromises)];
-                case 1:
-                    // Auf alle Ladeoperationen warten
-                    _a.sent();
-                    return [2 /*return*/, { microflows: microflowsUsed, nanoflows: nanoflowsUsed }];
-            }
-        });
-    });
 }
 main().catch(console.error);
