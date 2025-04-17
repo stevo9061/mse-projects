@@ -119,19 +119,40 @@
 [2025-01-27T21:41:03.395Z] Microflow "SF_CreateAndSendEmailForSignup" hat eine Cyclomatic Complexity von 2 
 [2025-01-27T21:41:03.397Z] Microflow "UserAccountValidation" hat eine Cyclomatic Complexity von 3 
 [2025-01-27T21:41:03.398Z] Microflow "GenerateUIDAndURL" hat eine Cyclomatic Complexity von 1 
+
 [2025-01-27T21:41:03.398Z] Gesamte Cyclomatic Complexity aller Microflows: 38 
 
-* Nanoflows: Es sind zwei Nanoflows in dieser App mit einer gesamten Cyclomatic Complexity von 5: 
-  - OIDC.DS_StartWebLogin, CC: 2 
-  - OIDC.ACT_StartWebSignIn, CC: 2
+* JavaActions: Es gibt 7 Java Actions in in dieser App mit einer gesamten Cyclomatic Complexity von 62:
+  - GenerateUUID, CC: 2 
+  - GetAppRootURL, CC: 1
+  - GenerateURL, CC: 2
+  - EncryptString, CC: 7
+  - DecryptString, CC: 27
+  - ReplaceEmailTemplateTokens, CC: 3
+  - SignIn, CC: 6
+  - GenerateRandomPassword, CC: 14
+
+
+Somit ergibt sich für Use-Case 1, die erste Iteration eine CC von: 100
+
+Für die zweite Iteration wurde manuell geprüft, und nicht extra noch ein Skript erstellt:
+
+* Nanoflows: Es sind drei Nanoflows in dieser App hinzugekommen, mit einer gesamten Cyclomatic Complexity von 5: 
+  - OIDC.DS_StartWebLogin, CC: 2 = 1 (Base value) + 1 (if)
+  - OIDC.ACT_StartWebSignIn, CC: 3 (Base value) + 1 error path + 1 (if)
   - DS_GetReturnURL, CC: 1
 
-* JavaActions: Es gibt 7 Java Actions in in dieser App mit einer gesamten Cyclomatic Complexity von 38:
-  - CopyAttachmentContent, CC: 1
-  - GenerateUUID, CC: 1
-  - GetAppRootURL, CC: 2
-  - GenerateURL, CC: 2
-  - EncryptString, CC: 8
-  - DecryptString, CC: 21
-  - ReplaceEmailTemplateTokens, CC: 3
+* Microflows: Es sind 4 Microflows in dieser Iteration hinzugekommen, mit einer gesamten Cyclomatic Complexity von 6:
+  - GetAuthorizationURL, CC: 3 = 1 (Base value) + 2 (if)
+  - SUB_BuildScopeString, CC: 1 = 1 (Base value)
+  - SUB_BuildClaimString, CC: 1 = 1 (Base value) + 1 (if)
+  - SUB_GetCallbackURL, CC: 1 = 1 (Base value) + 2 (if)
 
+* Java Actions: Es sind 5 Java Actions in dieser Iteration hinzugekommen, mit einer gesamten Cyclomatic Complexity von 6:
+  - RandomHash, CC: 1
+  - RandomString, CC: 1
+  - GetCodeCallenge, CC: 1
+  - CreateClaimString, CC: 2
+  - GetApplicationUrl, CC: 1
+
+Somit ergibt sich für Use Case 1, die zweite Iteration eine CC von: 100 (iteration 1) + 17 = 117
